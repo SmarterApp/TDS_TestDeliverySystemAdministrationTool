@@ -24,8 +24,38 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 
-	<context:component-scan
-		base-package="org.opentestsystem.tdsadmin" />
+	<beans:bean id="configurationManager"
+		class="AIR.Common.Configuration.ConfigurationManager" />
+
+	<beans:bean id="appSettings1" factory-bean="configurationManager"
+		factory-method="getAppSettings"/>
+	<beans:bean id="appSettings" factory-bean="appSettings1"
+		factory-method="updateProperties">
+		<beans:constructor-arg>
+			<beans:map>
+				<beans:entry key="DBDialect" value="MYSQL" />
+				<beans:entry key="TDSSessionDBName" value="session" />
+			</beans:map>
+		</beans:constructor-arg>
+	</beans:bean>
+
+	<beans:bean id="applicationDataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<beans:property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<beans:property name="url"
+			value="jdbc:mysql://tds-db.dev.opentestsystem.org:3306/session" />
+		<beans:property name="username" value="dbsbac" />
+		<beans:property name="password" value="osTyMhRM1C" />
+	</beans:bean>
+
+
+
+	<beans:bean id="_dao" class="tds.tdsadmin.db.dao.TDSAdminDAOImpl" />
+	<beans:bean id="_tdsAdminDLL" class="tds.dll.mysql.TDSAdminDLL" />
+	<beans:bean id="tdsSettings" class="TDS.Shared.Configuration.TDSSettings"
+		scope="prototype" />
+
+	<context:component-scan base-package="tds.tdsadmin.rest" />
 
 
 
