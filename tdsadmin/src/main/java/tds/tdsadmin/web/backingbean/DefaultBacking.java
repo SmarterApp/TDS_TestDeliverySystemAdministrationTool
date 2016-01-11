@@ -1,4 +1,4 @@
-package org.opentestsystem.tdsadmin.web.backingbean;
+package tds.tdsadmin.web.backingbean;
 
 import java.util.List;
 
