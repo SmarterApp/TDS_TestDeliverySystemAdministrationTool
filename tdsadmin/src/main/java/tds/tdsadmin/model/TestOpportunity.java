@@ -1,8 +1,13 @@
 package tds.tdsadmin.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class TestOpportunity {
+public class TestOpportunity implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String altSsid;
 	private String name;
 	private String testName;
