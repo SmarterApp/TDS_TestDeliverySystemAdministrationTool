@@ -28,7 +28,7 @@
 		class="AIR.Common.Configuration.ConfigurationManager" />
 
 	<beans:bean id="appSettings1" factory-bean="configurationManager"
-		factory-method="getAppSettings"/>
+		factory-method="getAppSettings" />
 	<beans:bean id="appSettings" factory-bean="appSettings1"
 		factory-method="updateProperties">
 		<beans:constructor-arg>
@@ -43,7 +43,7 @@
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<beans:property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<beans:property name="url"
-			value="jdbc:mysql://tds-db.dev.opentestsystem.org:3306/session" />
+			value="jdbc:mysql://tds-db.dev.opentestsystem.org:3306?useUnicode=true&amp;useFastDateParsing=false&amp;characterEncoding=UTF-8" />
 		<beans:property name="username" value="dbsbac" />
 		<beans:property name="password" value="osTyMhRM1C" />
 	</beans:bean>
