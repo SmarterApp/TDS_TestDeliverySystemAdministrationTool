@@ -18,6 +18,7 @@ public class TestOpportunity implements Serializable {
 	private Date dateCompleted;
 	private Date datePaused;
 	private boolean isSegmented;
+	private int segmentPosition;
 
 	public String getAltSsid() {
 		return altSsid;
@@ -97,5 +98,13 @@ public class TestOpportunity implements Serializable {
 
 	public void setSegmented(boolean isSegmented) {
 		this.isSegmented = isSegmented;
+	}
+
+	public int getSegmentPosition() {
+		return segmentPosition;
+	}
+
+	public void setSegmentPosition(int segmentPosition) {
+		this.segmentPosition = segmentPosition;
 	}
 }
