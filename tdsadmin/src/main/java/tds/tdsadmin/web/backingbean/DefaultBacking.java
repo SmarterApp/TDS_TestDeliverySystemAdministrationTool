@@ -8,6 +8,9 @@ import java.net.URL;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+
+import org.apache.commons.lang.StringUtils;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import tds.tdsadmin.model.OpportunitySerializable;
 import tds.tdsadmin.model.TestOpportunity;
@@ -48,7 +51,6 @@ public class DefaultBacking {
 	public void show() {
 		setSessionid(radiossid);
 		System.out.println("click is working");
-		restGetOpportunities();
 	}
 
 	public List<String> getProcedures() {
@@ -67,9 +69,10 @@ public class DefaultBacking {
 		this.opportunities = opportunities;
 	}
 
-	private void restGetOpportunities() {
+	private void restGetOpportunities(String extSsId, String sessionId) {
 		HttpURLConnection connection = null;
-		String url = "http://localhost:8080/TDSAdmin/rest/getOpportunities?sessionId=four-3";
+		String url = "http://localhost:8080/TDSAdmin/rest/getOpportunities?extSsId=%s&sessionId=%s";
+		url = String.format(url, extSsId, sessionId);
 		try {
 			connection = (HttpURLConnection) new URL(url).openConnection();
 			connection.setDoOutput(true);
@@ -98,5 +101,12 @@ public class DefaultBacking {
 		} finally {
 			connection.disconnect();
 		}
+	}
+
+	public boolean searchOpportunity(String extSsId, String sessionId) {
+		if (StringUtils.isEmpty(extSsId) && StringUtils.isEmpty(sessionId))
+			return false;
+		restGetOpportunities(extSsId, sessionId);
+		return true;
 	}
 }

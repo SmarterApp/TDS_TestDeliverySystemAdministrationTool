@@ -17,7 +17,7 @@
 		<br />
 		<br />
 		<h:outputLabel value="Student ID"></h:outputLabel>
-		<h:inputText id="studentid" value="#{defaultBacking.extssid}"></h:inputText>
+		<h:inputText value="#{defaultBacking.extssid}" binding="#{studentid}"></h:inputText>
 		<h:selectOneRadio value="#{defaultBacking.radiossid}"
 			layout="pageDirection">
 			<f:selectItem itemValue="ssid" itemLabel="Use SSID" />
@@ -27,12 +27,52 @@
 		<h:outputText value="&#160;" />
 		<h:outputText value="&#160;" />
 		<h:outputLabel value="Session ID"></h:outputLabel>
-		<h:inputText id="sessionid" value="#{defaultBacking.sessionid}"></h:inputText>
-
+		<h:inputText binding="#{sessionid}"
+			value="#{defaultBacking.sessionid}"></h:inputText>
 		<br />
 		<br />
-		<h:commandButton type="submit" action="#{defaultBacking.show()}"
-			value="Search for Opportunities"></h:commandButton>
+		<h:commandButton type="submit"
+			action="#{defaultBacking.searchOpportunity(studentid.value,sessionid.value)}"
+			style="horizontal-align:middle;" value="Search for Opportunities"></h:commandButton>
+		<h:dataTable value="#{defaultBacking.opportunities}" var="opp"
+			rendered="#{defaultBacking.opportunities!=null}">
+			<h:column>
+				<f:facet name="header">External SSID</f:facet>
+    				#{opp.altSsid}
+    			</h:column>
+			<h:column>
+				<f:facet name="header">Name</f:facet>
+    				#{opp.name}
+    			</h:column>
+			<h:column>
+				<f:facet name="header">Test Name</f:facet>
+    				#{opp.testName}
+    			</h:column>
+			<h:column>
+				<f:facet name="header">Session ID</f:facet>
+    				#{opp.sessionId}
+    			</h:column>
+			<h:column>
+				<f:facet name="header">Status</f:facet>
+    				#{opp.status}
+    			</h:column>
+			<h:column>
+				<f:facet name="header">Date Started</f:facet>
+    				#{opp.dateStarted}
+    			</h:column>
+			<h:column>
+				<f:facet name="header">Date Expired</f:facet>
+    				#{opp.dateExpired}
+    			</h:column>
+			<h:column>
+				<f:facet name="header">Date Completed</f:facet>
+    				#{opp.dateCompleted}
+    			</h:column>
+			<h:column>
+				<f:facet name="header">Date Paused</f:facet>
+    				#{opp.datePaused}
+    			</h:column>
+		</h:dataTable>
 	</h:form>
 </h:body>
 </html>
