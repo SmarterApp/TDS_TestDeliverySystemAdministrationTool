@@ -4,10 +4,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -71,7 +74,16 @@ public class DefaultBacking {
 
 	private void restGetOpportunities(String extSsId, String sessionId) {
 		HttpURLConnection connection = null;
-		String url = "http://localhost:8080/TDSAdmin/rest/getOpportunities?extSsId=%s&sessionId=%s";
+		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
+				.getRequest();
+		String path = null;
+		try {
+			path = new URL(request.getScheme(), request.getServerName(), request.getServerPort(),
+					request.getContextPath()).toString();
+		} catch (MalformedURLException e1) {
+			return;
+		}
+		String url = path + "/rest/getOpportunities?extSsId=%s&sessionId=%s";
 		url = String.format(url, extSsId, sessionId);
 		try {
 			connection = (HttpURLConnection) new URL(url).openConnection();
