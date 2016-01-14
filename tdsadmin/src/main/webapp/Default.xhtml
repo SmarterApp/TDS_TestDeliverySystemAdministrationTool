@@ -32,7 +32,7 @@
 		<br />
 		<br />
 		<h:commandButton type="submit"
-			action="#{defaultBacking.searchOpportunity(studentid.value,sessionid.value)}"
+			actionListener="#{defaultBacking.searchOpportunity(studentid.value,sessionid.value)}"
 			style="horizontal-align:middle;" value="Search for Opportunities"></h:commandButton>
 		<h:dataTable value="#{defaultBacking.opportunities}" var="opp"
 			rendered="#{defaultBacking.opportunities!=null}">
