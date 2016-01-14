@@ -1,10 +1,8 @@
 package tds.tdsadmin.db.dao;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.List;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import AIR.Common.DB.AbstractDAO;
@@ -69,49 +67,49 @@ public class TDSAdminDAOImpl extends AbstractDAO implements TDSAdminDAO {
 	}
 
 	@Override
-	public SingleDataResultSet resetOpportunity(UUID v_oppKey, String v_requestor, String v_reason)
+	public OpportunitySerializable resetOpportunity(UUID v_oppKey, String v_requestor, String v_reason)
 			throws ReturnStatusException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public SingleDataResultSet invalidateTestOpportunity(UUID v_oppKey, String v_requestor, String v_reason)
+	public OpportunitySerializable invalidateTestOpportunity(UUID v_oppKey, String v_requestor, String v_reason)
 			throws ReturnStatusException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public SingleDataResultSet restoreTestOpportunity(UUID v_oppKey, String v_requestor, String v_reason)
+	public OpportunitySerializable restoreTestOpportunity(UUID v_oppKey, String v_requestor, String v_reason)
 			throws ReturnStatusException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public SingleDataResultSet reopenOpportunity(UUID v_oppKey, String v_requestor, String v_reason)
+	public OpportunitySerializable reopenOpportunity(UUID v_oppKey, String v_requestor, String v_reason)
 			throws ReturnStatusException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public SingleDataResultSet extendingOppGracePeriod(UUID v_oppKey, String v_requestor, int v_selectedsitting,
+	public OpportunitySerializable extendingOppGracePeriod(UUID v_oppKey, String v_requestor, int v_selectedsitting,
 			boolean v_doupdate, String v_reason) throws ReturnStatusException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public SingleDataResultSet alterOpportunityExpiration(UUID v_oppKey, String v_requestor, int v_dayincrement,
+	public OpportunitySerializable alterOpportunityExpiration(UUID v_oppKey, String v_requestor, int v_dayincrement,
 			String v_reason) throws ReturnStatusException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public SingleDataResultSet setOpportunitySegmentPerm(UUID v_oppKey, String v_requestor, boolean v_ispermeable,
+	public OpportunitySerializable setOpportunitySegmentPerm(UUID v_oppKey, String v_requestor, boolean v_ispermeable,
 			String v_restoreon, String v_reason) throws ReturnStatusException {
 		// TODO Auto-generated method stub
 		return null;
