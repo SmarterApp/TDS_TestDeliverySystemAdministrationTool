@@ -1,13 +1,12 @@
 package tds.tdsadmin.db.abstractions;
 
-import java.util.List;
 import java.util.UUID;
 import AIR.Common.DB.results.SingleDataResultSet;
 import TDS.Shared.Exceptions.ReturnStatusException;
-import tds.tdsadmin.model.TestOpportunity;
+import tds.tdsadmin.model.OpportunitySerializable;
 
 public interface TDSAdminDAO {
-	public List<TestOpportunity> getOpportunities(String v_extSsId, String v_sessionId) throws ReturnStatusException;
+	public OpportunitySerializable getOpportunities(String v_extSsId, String v_sessionId) throws ReturnStatusException;
 
 	public SingleDataResultSet resetOpportunity(UUID v_oppKey, String v_requestor, String v_reason)
 			throws ReturnStatusException;

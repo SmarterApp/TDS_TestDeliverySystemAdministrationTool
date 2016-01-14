@@ -17,6 +17,10 @@ import tds.tdsadmin.db.abstractions.TDSAdminDAO;
 import tds.tdsadmin.model.OpportunitySerializable;
 import tds.tdsadmin.model.TestOpportunity;
 
+/**
+ * @author mkhan
+ *
+ */
 public class TDSAdminDAOImpl extends AbstractDAO implements TDSAdminDAO {
 
 	@Autowired

@@ -51,11 +51,6 @@ public class DefaultBacking {
 		this.sessionid = sessionid;
 	}
 
-	public void show() {
-		setSessionid(radiossid);
-		System.out.println("click is working");
-	}
-
 	public List<String> getProcedures() {
 		return procedures;
 	}
@@ -72,7 +67,9 @@ public class DefaultBacking {
 		this.opportunities = opportunities;
 	}
 
-	private void restGetOpportunities(String extSsId, String sessionId) {
+	public boolean searchOpportunity(String extSsId, String sessionId) {
+		if (StringUtils.isEmpty(extSsId) && StringUtils.isEmpty(sessionId))
+			return false;
 		HttpURLConnection connection = null;
 		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
 				.getRequest();
@@ -81,7 +78,7 @@ public class DefaultBacking {
 			path = new URL(request.getScheme(), request.getServerName(), request.getServerPort(),
 					request.getContextPath()).toString();
 		} catch (MalformedURLException e1) {
-			return;
+			return false;
 		}
 		String url = path + "/rest/getOpportunities?extSsId=%s&sessionId=%s";
 		url = String.format(url, extSsId, sessionId);
@@ -113,12 +110,6 @@ public class DefaultBacking {
 		} finally {
 			connection.disconnect();
 		}
-	}
-
-	public boolean searchOpportunity(String extSsId, String sessionId) {
-		if (StringUtils.isEmpty(extSsId) && StringUtils.isEmpty(sessionId))
-			return false;
-		restGetOpportunities(extSsId, sessionId);
 		return true;
 	}
 }
