@@ -17,7 +17,11 @@
 		<br />
 		<br />
 		<h:outputLabel value="Student ID"></h:outputLabel>
-		<h:inputText value="#{defaultBacking.extssid}" binding="#{studentid}"></h:inputText>
+		<h:inputText id="essid" value="#{defaultBacking.extssid}"
+			binding="#{studentid}">
+			<f:validator validatorId="tdsValidator" />
+		</h:inputText>
+		<h:message for="essid" style="color:red"></h:message>
 		<h:selectOneRadio value="#{defaultBacking.radiossid}"
 			layout="pageDirection">
 			<f:selectItem itemValue="ssid" itemLabel="Use SSID" />
@@ -27,13 +31,17 @@
 		<h:outputText value="&#160;" />
 		<h:outputText value="&#160;" />
 		<h:outputLabel value="Session ID"></h:outputLabel>
-		<h:inputText binding="#{sessionid}"
-			value="#{defaultBacking.sessionid}"></h:inputText>
+		<h:inputText id="session" binding="#{sessionid}"
+			value="#{defaultBacking.sessionid}">
+			<f:validator validatorId="tdsValidator" style="color:red" />
+		</h:inputText>
+		<h:message for="session" style="color:red"></h:message>
 		<br />
 		<br />
-		<h:commandButton type="submit"
+		<h:commandButton type="submit" id="search"
 			actionListener="#{defaultBacking.searchOpportunity(studentid.value,sessionid.value)}"
 			style="horizontal-align:middle;" value="Search for Opportunities"></h:commandButton>
+		<h:outputText value="#{defaultBacking.invalidText}" style="color:red"></h:outputText>
 		<h:dataTable value="#{defaultBacking.opportunities}" var="opp"
 			rendered="#{defaultBacking.opportunities!=null}">
 			<h:column>

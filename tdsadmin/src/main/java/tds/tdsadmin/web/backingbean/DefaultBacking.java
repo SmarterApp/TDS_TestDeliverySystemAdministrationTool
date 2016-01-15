@@ -7,6 +7,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
@@ -26,6 +27,7 @@ public class DefaultBacking {
 	private String sessionid = null;
 	private List<String> procedures = null;
 	private List<TestOpportunity> opportunities = null;
+	private String invalidText = null;
 
 	public String getRadiossid() {
 		return radiossid;
@@ -67,9 +69,18 @@ public class DefaultBacking {
 		this.opportunities = opportunities;
 	}
 
+	public String getInvalidText() {
+		return invalidText;
+	}
+
+	public void setInvalidText(String invalidText) {
+		this.invalidText = invalidText;
+	}
+
 	public boolean searchOpportunity(String extSsId, String sessionId) {
-		if (StringUtils.isEmpty(extSsId) && StringUtils.isEmpty(sessionId))
+		if (!validateInput(extSsId, sessionId))
 			return false;
+
 		HttpURLConnection connection = null;
 		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
 				.getRequest();
@@ -111,5 +122,19 @@ public class DefaultBacking {
 			connection.disconnect();
 		}
 		return true;
+	}
+
+	private boolean validateInput(String extSsId, String sessionId) {
+		if (StringUtils.isEmpty(extSsId) && StringUtils.isEmpty(sessionId)) {
+			String msg = "At least one id is required";
+			setInvalidText(msg);
+			return false;
+		} else if (!StringUtils.isEmpty(extSsId) && StringUtils.isEmpty(radiossid)) {
+			setInvalidText("Select either SSID or External SSID radio");
+			return false;
+		} else {
+			setInvalidText(null);
+			return true;
+		}
 	}
 }
