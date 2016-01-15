@@ -1,5 +1,7 @@
 package tds.tdsadmin.rest;
 
+import java.util.UUID;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,4 +47,59 @@ public class TDSAdminController {
 		return results;
 	}
 
+	@RequestMapping(value = "/rest/resetOpportunity", method = RequestMethod.GET)
+	@ResponseBody
+	public OpportunitySerializable resetOpportunity(UUID v_oppKey, String v_requestor, String v_reason)
+			throws ReturnStatusException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@RequestMapping(value = "/rest/invalidateTestOpportunity", method = RequestMethod.GET)
+	@ResponseBody
+	public OpportunitySerializable invalidateTestOpportunity(UUID v_oppKey, String v_requestor, String v_reason)
+			throws ReturnStatusException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@RequestMapping(value = "/rest/restoreTestOpportunity", method = RequestMethod.GET)
+	@ResponseBody
+	public OpportunitySerializable restoreTestOpportunity(UUID v_oppKey, String v_requestor, String v_reason)
+			throws ReturnStatusException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@RequestMapping(value = "/rest/reopenOpportunity", method = RequestMethod.GET)
+	@ResponseBody
+	public OpportunitySerializable reopenOpportunity(UUID v_oppKey, String v_requestor, String v_reason)
+			throws ReturnStatusException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@RequestMapping(value = "/rest/extendingOppGracePeriod", method = RequestMethod.GET)
+	@ResponseBody
+	public OpportunitySerializable extendingOppGracePeriod(UUID v_oppKey, String v_requestor, int v_selectedsitting,
+			boolean v_doupdate, String v_reason) throws ReturnStatusException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@RequestMapping(value = "/rest/alterOpportunityExpiration", method = RequestMethod.GET)
+	@ResponseBody
+	public OpportunitySerializable alterOpportunityExpiration(UUID v_oppKey, String v_requestor, int v_dayincrement,
+			String v_reason) throws ReturnStatusException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@RequestMapping(value = "/rest/setOpportunitySegmentPerm", method = RequestMethod.GET)
+	@ResponseBody
+	public OpportunitySerializable setOpportunitySegmentPerm(UUID v_oppKey, String v_requestor, boolean v_ispermeable,
+			String v_restoreon, String v_reason) throws ReturnStatusException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
