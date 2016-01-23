@@ -3,13 +3,15 @@ package tds.tdsadmin.web.backingbean;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
@@ -20,14 +22,21 @@ import tds.tdsadmin.model.OpportunitySerializable;
 import tds.tdsadmin.model.TestOpportunity;
 
 @ManagedBean
-@RequestScoped
-public class DefaultBacking {
+@ViewScoped
+public class DefaultBacking implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String radiossid = null;
 	private String extssid = null;
 	private String sessionid = null;
 	private List<String> procedures = null;
-	private List<TestOpportunity> opportunities = null;
-	private String invalidText = null;
+	private List<TestOpportunity> opportunities = new ArrayList<TestOpportunity>();
+	private List<TestOpportunity> selectedOpportunites = new ArrayList<TestOpportunity>();
+	private String selectIdText = null;
+	private String selectRadioText = null;
+	private int oppCount = 0;
 
 	public String getRadiossid() {
 		return radiossid;
@@ -69,12 +78,28 @@ public class DefaultBacking {
 		this.opportunities = opportunities;
 	}
 
-	public String getInvalidText() {
-		return invalidText;
+	public String getSelectIdText() {
+		return selectIdText;
 	}
 
-	public void setInvalidText(String invalidText) {
-		this.invalidText = invalidText;
+	public void setSelectIdText(String invalidText) {
+		this.selectIdText = invalidText;
+	}
+
+	public String getSelectRadioText() {
+		return selectRadioText;
+	}
+
+	public void setSelectRadioText(String selectRadioText) {
+		this.selectRadioText = selectRadioText;
+	}
+
+	public int getOppCount() {
+		return this.opportunities.size();
+	}
+
+	public void setOppCount(int oppCount) {
+		this.oppCount = oppCount;
 	}
 
 	public boolean searchOpportunity(String extSsId, String sessionId) {
@@ -127,14 +152,24 @@ public class DefaultBacking {
 	private boolean validateInput(String extSsId, String sessionId) {
 		if (StringUtils.isEmpty(extSsId) && StringUtils.isEmpty(sessionId)) {
 			String msg = "At least one id is required";
-			setInvalidText(msg);
+			setSelectIdText(msg);
 			return false;
 		} else if (!StringUtils.isEmpty(extSsId) && StringUtils.isEmpty(radiossid)) {
-			setInvalidText("Select either SSID or External SSID radio");
+			setSelectRadioText("Either SSID or External SSID must be selected");
 			return false;
 		} else {
-			setInvalidText(null);
+			setSelectIdText(null);
+			setSelectRadioText(null);
 			return true;
+		}
+	}
+
+	public void addorRemoveOpportunity(TestOpportunity opp) {
+		// TestOpportunity opp = null;
+		if (this.selectedOpportunites.contains(opp)) {
+			this.selectedOpportunites.remove(this.selectedOpportunites.indexOf(opp));
+		} else {
+			this.selectedOpportunites.add(opp);
 		}
 	}
 }

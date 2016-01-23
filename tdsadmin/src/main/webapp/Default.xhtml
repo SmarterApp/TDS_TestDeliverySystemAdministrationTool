@@ -18,7 +18,7 @@
 		<br />
 		<h:outputLabel value="Student ID"></h:outputLabel>
 		<h:inputText id="essid" value="#{defaultBacking.extssid}"
-			binding="#{studentid}">
+			maxlength="40" binding="#{studentid}">
 			<f:validator validatorId="tdsValidator" />
 		</h:inputText>
 		<h:message for="essid" style="color:red"></h:message>
@@ -27,11 +27,13 @@
 			<f:selectItem itemValue="ssid" itemLabel="Use SSID" />
 			<f:selectItem itemValue="extssid" itemLabel="Use External SSID" />
 		</h:selectOneRadio>
+		<h:outputText value="#{defaultBacking.selectRadioText}"
+			style="color:red"></h:outputText>
 		<h:outputText value="&#160;" />
 		<h:outputText value="&#160;" />
 		<h:outputText value="&#160;" />
 		<h:outputLabel value="Session ID"></h:outputLabel>
-		<h:inputText id="session" binding="#{sessionid}"
+		<h:inputText id="session" binding="#{sessionid}" maxlength="40"
 			value="#{defaultBacking.sessionid}">
 			<f:validator validatorId="tdsValidator" style="color:red" />
 		</h:inputText>
@@ -41,9 +43,16 @@
 		<h:commandButton type="submit" id="search"
 			actionListener="#{defaultBacking.searchOpportunity(studentid.value,sessionid.value)}"
 			style="horizontal-align:middle;" value="Search for Opportunities"></h:commandButton>
-		<h:outputText value="#{defaultBacking.invalidText}" style="color:red"></h:outputText>
-		<h:dataTable value="#{defaultBacking.opportunities}" var="opp"
-			rendered="#{defaultBacking.opportunities!=null}">
+		<h:outputText value="#{defaultBacking.selectIdText}" style="color:red"></h:outputText>
+		<br /><br /><br />
+		<h:dataTable value="#{defaultBacking.opportunities}" var="opp" bgcolor="Silver"
+			rendered="#{defaultBacking.oppCount>0}">
+			<h:column>
+				<h:selectBooleanCheckbox value="#{opp.selected}"
+					valueChangeListener="#{defaultBacking.addorRemoveOpportunity(opp)}"
+					onchange="submit()">
+				</h:selectBooleanCheckbox>
+			</h:column>
 			<h:column>
 				<f:facet name="header">External SSID</f:facet>
     				#{opp.altSsid}

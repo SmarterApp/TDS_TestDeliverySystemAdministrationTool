@@ -56,6 +56,7 @@ public class TDSAdminDAOImpl extends AbstractDAO implements TDSAdminDAO {
 					opp.setTestName(record.<String> get("_efk_testid"));
 				if (record.hasColumn("insegment"))
 					opp.setSegmentPosition(record.<Integer> get("insegment"));
+				opp.setSelected(false);
 
 				opportunities.add(opp);
 			}
