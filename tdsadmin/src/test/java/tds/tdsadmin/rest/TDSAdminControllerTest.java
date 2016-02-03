@@ -84,6 +84,7 @@ public class TDSAdminControllerTest {
 	@Test
 	public void getOpportunities() throws Exception {
 
+		// test with student id and session id
 		mockMvc.perform(get("/rest/getOpportunities?extSsId=103&sessionId=four-3")
 				.accept(MediaType.parseMediaType("application/json;charset=UTF-8"))).andExpect(status().isOk())
 				.andExpect(content().contentType("application/json;charset=UTF-8"))
@@ -92,6 +93,9 @@ public class TDSAdminControllerTest {
 				.andExpect(jsonPath("$[*].testName", Matchers.containsInAnyOrder("english", "math")))
 				.andExpect(jsonPath("$[*].altSsid", Matchers.containsInAnyOrder("777", "380")))
 				.andExpect(jsonPath("$[*].status", Matchers.hasItems("paused", "expired")));
+
+		// test with no request parameter
+		mockMvc.perform(get("/rest/getOpportunities")).andExpect(status().isBadRequest());
 
 	}
 
