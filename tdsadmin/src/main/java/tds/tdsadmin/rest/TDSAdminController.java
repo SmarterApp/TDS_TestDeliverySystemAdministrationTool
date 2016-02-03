@@ -1,11 +1,15 @@
 package tds.tdsadmin.rest;
 
 import java.util.UUID;
-
+import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.HttpResponseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,14 +34,21 @@ public class TDSAdminController {
 	 * @param ssId
 	 * @param sessionId
 	 * @return
+	 * @throws HttpResponseException
 	 */
 	@RequestMapping(value = "/rest/getOpportunities", method = RequestMethod.GET)
 	@ResponseBody
-	public OpportunitySerializable getOpportunities(@RequestParam(value = "extSsId", required = false) String extSsId,
+	public OpportunitySerializable getOpportunities(HttpServletResponse response,
+			@RequestParam(value = "extSsId", required = false) String extSsId,
 			@RequestParam(value = "ssId", required = false) String ssId,
-			@RequestParam(value = "sessionId", required = false) String sessionId) {
+			@RequestParam(value = "sessionId", required = false) String sessionId) throws HttpResponseException {
 
 		OpportunitySerializable results = new OpportunitySerializable();
+		if (StringUtils.isEmpty(ssId) && StringUtils.isEmpty(sessionId)) {
+			response.setStatus(HttpStatus.SC_BAD_REQUEST);
+			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST,
+					"Needs either external ssid or ssid or session id");
+		}
 		try {
 			results = _dao.getOpportunities(extSsId, sessionId);
 		} catch (ReturnStatusException e) {
@@ -101,5 +112,11 @@ public class TDSAdminController {
 			String v_restoreon, String v_reason) throws ReturnStatusException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@ExceptionHandler(HttpResponseException.class)
+	@ResponseBody
+	public String handleException(HttpResponseException e) {
+		return "HTTP ERROR " + e.getStatusCode() + " : " + e.getMessage();
 	}
 }
