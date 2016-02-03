@@ -44,9 +44,11 @@
 			actionListener="#{defaultBacking.searchOpportunity(studentid.value,sessionid.value)}"
 			style="horizontal-align:middle;" value="Search for Opportunities"></h:commandButton>
 		<h:outputText value="#{defaultBacking.selectIdText}" style="color:red"></h:outputText>
-		<br /><br /><br />
-		<h:dataTable value="#{defaultBacking.opportunities}" var="opp" bgcolor="Silver"
-			rendered="#{defaultBacking.oppCount>0}">
+		<br />
+		<br />
+		<br />
+		<h:dataTable value="#{defaultBacking.opportunities}" var="opp"
+			bgcolor="Silver" rendered="#{defaultBacking.oppCount>0}">
 			<h:column>
 				<h:selectBooleanCheckbox value="#{opp.selected}"
 					valueChangeListener="#{defaultBacking.addorRemoveOpportunity(opp)}"
