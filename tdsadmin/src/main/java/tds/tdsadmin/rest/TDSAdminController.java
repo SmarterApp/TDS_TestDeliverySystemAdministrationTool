@@ -44,7 +44,7 @@ public class TDSAdminController {
 			@RequestParam(value = "sessionId", required = false) String sessionId) throws HttpResponseException {
 
 		OpportunitySerializable results = new OpportunitySerializable();
-		if (StringUtils.isEmpty(ssId) && StringUtils.isEmpty(sessionId)) {
+		if (StringUtils.isEmpty(extSsId) && StringUtils.isEmpty(ssId) && StringUtils.isEmpty(sessionId)) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
 			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST,
 					"Needs either external ssid or ssid or session id");
