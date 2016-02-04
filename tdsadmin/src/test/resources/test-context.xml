@@ -6,6 +6,9 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
+	<context:property-placeholder
+		local-override="true" ignore-resource-not-found="true" />
+
 	<!-- DispatcherServlet Context: defines this servlet's request-processing 
 		infrastructure -->
 
@@ -42,10 +45,9 @@
 	<beans:bean id="applicationDataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<beans:property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<beans:property name="url"
-			value="jdbc:mysql://tds-db.dev.opentestsystem.org:3306?useUnicode=true&amp;useFastDateParsing=false&amp;characterEncoding=UTF-8" />
-		<beans:property name="username" value="dbsbac" />
-		<beans:property name="password" value="TkLsZdWnH72JDb" />
+		<beans:property name="url" value="${jdbc.url}" />
+		<beans:property name="username" value="${username}" />
+		<beans:property name="password" value="${password}" />
 	</beans:bean>
 
 
