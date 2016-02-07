@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://java.sun.com/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui"
 	xmlns:vt="http://java.sun.com/jsf/composite/trainer"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
@@ -16,6 +16,7 @@
 		</h:selectOneMenu>
 		<br />
 		<br />
+
 		<h:outputLabel value="Student ID"></h:outputLabel>
 		<h:inputText id="essid" value="#{defaultBacking.extssid}"
 			maxlength="40" binding="#{studentid}">
@@ -47,55 +48,60 @@
 		<br />
 		<br />
 		<br />
-		<h:dataTable value="#{defaultBacking.opportunities}" var="opp"
-			bgcolor="Silver" rendered="#{defaultBacking.oppCount>0}">
-			<h:column>
+		<p:dataTable value="#{defaultBacking.lazyOpps}" var="opp"
+			rendered="#{defaultBacking.oppCount>0}" selectionMode="single"
+			paginator="true" rows="5" lazy="true"
+			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			rowsPerPageTemplate="5,10,15">
+			<p:column>
 				<h:selectBooleanCheckbox value="#{opp.selected}"
 					valueChangeListener="#{defaultBacking.addorRemoveOpportunity(opp)}"
 					onchange="submit()">
 				</h:selectBooleanCheckbox>
-			</h:column>
-			<h:column>
+			</p:column>
+			<p:column filterBy="#{opp.altSsid}" sortBy="#{opp.altSsid}">
 				<f:facet name="header">External SSID</f:facet>
     				#{opp.altSsid}
-    			</h:column>
-			<h:column>
+    			</p:column>
+			<p:column filterBy="#{opp.name}" sortBy="#{opp.name}">
 				<f:facet name="header">Name</f:facet>
     				#{opp.name}
-    			</h:column>
-			<h:column>
+    			</p:column>
+			<p:column filterBy="#{opp.testName}" sortBy="#{opp.testName}">
 				<f:facet name="header">Test Name</f:facet>
     				#{opp.testName}
-    			</h:column>
-			<h:column>
+    			</p:column>
+			<p:column filterBy="#{opp.sessionId}" sortBy="#{opp.sessionId}">
 				<f:facet name="header">Session ID</f:facet>
     				#{opp.sessionId}
-    			</h:column>
-			<h:column>
+    			</p:column>
+			<p:column filterBy="#{opp.status}" sortBy="#{opp.status}">
 				<f:facet name="header">Status</f:facet>
     				#{opp.status}
-    			</h:column>
-			<h:column>
+    			</p:column>
+			<p:column filterBy="#{opp.dateStarted}" sortBy="#{opp.dateStarted}">
 				<f:facet name="header">Date Started</f:facet>
     				#{opp.dateStarted}
-    			</h:column>
-			<h:column>
+    			</p:column>
+			<p:column filterBy="#{opp.dateExpired}" sortBy="#{opp.dateExpired}">
 				<f:facet name="header">Date Expired</f:facet>
     				#{opp.dateExpired}
-    			</h:column>
-			<h:column>
+    			</p:column>
+			<p:column filterBy="#{opp.dateCompleted}"
+				sortBy="#{opp.dateCompleted}">
 				<f:facet name="header">Date Completed</f:facet>
     				#{opp.dateCompleted}
-    			</h:column>
-			<h:column>
+    			</p:column>
+			<p:column filterBy="#{opp.datePaused}" sortBy="#{opp.datePaused}">
 				<f:facet name="header">Date Paused</f:facet>
     				#{opp.datePaused}
-    			</h:column>
-			<h:column>
+    			</p:column>
+			<p:column filterBy="#{opp.segmentPosition}"
+				sortBy="#{opp.segmentPosition}">
 				<f:facet name="header">Segment Position</f:facet>
     				#{opp.segmentPosition}
-    			</h:column>
-		</h:dataTable>
+    			</p:column>
+		</p:dataTable>
 	</h:form>
 </h:body>
 </html>

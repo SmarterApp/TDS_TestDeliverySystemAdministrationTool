@@ -11,18 +11,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
+import org.primefaces.model.LazyDataModel;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import tds.tdsadmin.model.OpportunitySerializable;
 import tds.tdsadmin.model.TestOpportunity;
+import tds.tdsadmin.model.LazyOppDataModel;
 
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class DefaultBacking implements Serializable {
 	/**
 	 * 
@@ -37,6 +39,7 @@ public class DefaultBacking implements Serializable {
 	private String selectIdText = null;
 	private String selectRadioText = null;
 	private int oppCount = 0;
+	private LazyDataModel<TestOpportunity> lazyOpps;
 
 	public String getRadiossid() {
 		return radiossid;
@@ -102,6 +105,14 @@ public class DefaultBacking implements Serializable {
 		this.oppCount = oppCount;
 	}
 
+	public LazyDataModel<TestOpportunity> getLazyOpps() {
+		return lazyOpps;
+	}
+
+	public void setLazyOpps(List<TestOpportunity> lazyOpps) {
+		this.lazyOpps = new LazyOppDataModel(lazyOpps);
+	}
+
 	public boolean searchOpportunity(String extSsId, String sessionId) {
 		if (!validateInput(extSsId, sessionId))
 			return false;
@@ -139,6 +150,7 @@ public class DefaultBacking implements Serializable {
 				ObjectMapper mapper = new ObjectMapper();
 				OpportunitySerializable opps = mapper.readValue(sb.toString(), OpportunitySerializable.class);
 				setOpportunities(opps);
+				setLazyOpps(opps);
 				System.out.print(sb.toString());
 			}
 
