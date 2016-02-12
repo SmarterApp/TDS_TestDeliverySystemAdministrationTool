@@ -59,45 +59,43 @@
 					onchange="submit()">
 				</h:selectBooleanCheckbox>
 			</p:column>
-			<p:column filterBy="#{opp.altSsid}" sortBy="#{opp.altSsid}">
+			<p:column sortBy="altSsid">
 				<f:facet name="header">External SSID</f:facet>
     				#{opp.altSsid}
     			</p:column>
-			<p:column filterBy="#{opp.name}" sortBy="#{opp.name}">
+			<p:column sortBy="name">
 				<f:facet name="header">Name</f:facet>
     				#{opp.name}
     			</p:column>
-			<p:column filterBy="#{opp.testName}" sortBy="#{opp.testName}">
+			<p:column sortBy="testName">
 				<f:facet name="header">Test Name</f:facet>
     				#{opp.testName}
     			</p:column>
-			<p:column filterBy="#{opp.sessionId}" sortBy="#{opp.sessionId}">
+			<p:column sortBy="sessionId">
 				<f:facet name="header">Session ID</f:facet>
     				#{opp.sessionId}
     			</p:column>
-			<p:column filterBy="#{opp.status}" sortBy="#{opp.status}">
+			<p:column sortBy="status">
 				<f:facet name="header">Status</f:facet>
     				#{opp.status}
     			</p:column>
-			<p:column filterBy="#{opp.dateStarted}" sortBy="#{opp.dateStarted}">
+			<p:column sortBy="dateStarted">
 				<f:facet name="header">Date Started</f:facet>
     				#{opp.dateStarted}
     			</p:column>
-			<p:column filterBy="#{opp.dateExpired}" sortBy="#{opp.dateExpired}">
+			<p:column sortBy="dateExpired">
 				<f:facet name="header">Date Expired</f:facet>
     				#{opp.dateExpired}
     			</p:column>
-			<p:column filterBy="#{opp.dateCompleted}"
-				sortBy="#{opp.dateCompleted}">
+			<p:column sortBy="dateCompleted">
 				<f:facet name="header">Date Completed</f:facet>
     				#{opp.dateCompleted}
     			</p:column>
-			<p:column filterBy="#{opp.datePaused}" sortBy="#{opp.datePaused}">
+			<p:column sortBy="datePaused">
 				<f:facet name="header">Date Paused</f:facet>
     				#{opp.datePaused}
     			</p:column>
-			<p:column filterBy="#{opp.segmentPosition}"
-				sortBy="#{opp.segmentPosition}">
+			<p:column sortBy="segmentPosition">
 				<f:facet name="header">Segment Position</f:facet>
     				#{opp.segmentPosition}
     			</p:column>
