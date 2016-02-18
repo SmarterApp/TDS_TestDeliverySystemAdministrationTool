@@ -8,6 +8,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -33,7 +34,8 @@ public class DefaultBacking implements Serializable {
 	private String radiossid = null;
 	private String extssid = null;
 	private String sessionid = null;
-	private List<String> procedures = null;
+	private HashMap<String, String> procedures = null;
+	private String procedure = null;
 	private List<TestOpportunity> opportunities = new ArrayList<TestOpportunity>();
 	private List<TestOpportunity> selectedOpportunites = new ArrayList<TestOpportunity>();
 	private String selectIdText = null;
@@ -65,12 +67,30 @@ public class DefaultBacking implements Serializable {
 		this.sessionid = sessionid;
 	}
 
-	public List<String> getProcedures() {
+	public HashMap<String, String> getProcedures() {
+		procedures = new HashMap<String, String>();
+		procedures.put("none", "Procedure to call");
+		procedures.put("changeperm", "Change Segment Permeability");
+		procedures.put("reset", "Reset Opportunity");
+		procedures.put("invalidate", "Invalidate Opportunity");
+		procedures.put("restore", "Restore Opportunity");
+		procedures.put("reopen", "Reopen Opportunity");
+		procedures.put("extend", "Extend Grace Period");
+		procedures.put("alter", "Extend Expiration Date");
+
 		return procedures;
 	}
 
-	public void setProcedures(List<String> procedures) {
+	public void setProcedures(HashMap<String, String> procedures) {
 		this.procedures = procedures;
+	}
+
+	public String getProcedure() {
+		return procedure;
+	}
+
+	public void setProcedure(String procedure) {
+		this.procedure = procedure;
 	}
 
 	public List<TestOpportunity> getOpportunities() {
@@ -128,6 +148,8 @@ public class DefaultBacking implements Serializable {
 			return false;
 		}
 		String url = path + "/rest/getOpportunities?extSsId=%s&sessionId=%s";
+		if ("changeperm".equals(procedure))
+			url += "&segmented=true";
 		url = String.format(url, extSsId, sessionId);
 		try {
 			connection = (HttpURLConnection) new URL(url).openConnection();

@@ -11,8 +11,9 @@
 
 <h:body>
 	<h:form>
-		<h:selectOneMenu id="procedure">
-			<f:selectItem itemValue="none" itemLabel="Procedure to call"></f:selectItem>
+		<h:selectOneMenu id="procedure" value="#{defaultBacking.procedure}">
+			<f:selectItems value="#{defaultBacking.procedures.entrySet()}"
+				var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}"></f:selectItems>
 		</h:selectOneMenu>
 		<br />
 		<br />
@@ -95,7 +96,8 @@
 				<f:facet name="header">Date Paused</f:facet>
     				#{opp.datePaused}
     			</p:column>
-			<p:column sortBy="segmentPosition">
+			<p:column sortBy="segmentPosition"
+				rendered='#{"changeperm".equals(defaultBacking.procedure)}'>
 				<f:facet name="header">Segment Position</f:facet>
     				#{opp.segmentPosition}
     			</p:column>
