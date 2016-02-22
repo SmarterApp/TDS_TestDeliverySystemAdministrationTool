@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +22,7 @@ import org.primefaces.model.LazyDataModel;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import tds.tdsadmin.model.OpportunitySerializable;
+import tds.tdsadmin.model.ProcedureResult;
 import tds.tdsadmin.model.TestOpportunity;
 import tds.tdsadmin.model.LazyOppDataModel;
 
@@ -40,6 +42,8 @@ public class DefaultBacking implements Serializable {
 	private List<TestOpportunity> selectedOpportunites = new ArrayList<TestOpportunity>();
 	private String selectIdText = null;
 	private String selectRadioText = null;
+	private String requestor = null;
+	private String reason = null;
 	private int oppCount = 0;
 	private LazyDataModel<TestOpportunity> lazyOpps;
 
@@ -117,6 +121,22 @@ public class DefaultBacking implements Serializable {
 		this.selectRadioText = selectRadioText;
 	}
 
+	public String getRequestor() {
+		return requestor;
+	}
+
+	public void setRequestor(String requestor) {
+		this.requestor = requestor;
+	}
+
+	public String getReason() {
+		return reason;
+	}
+
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
+
 	public int getOppCount() {
 		return this.opportunities.size();
 	}
@@ -147,10 +167,10 @@ public class DefaultBacking implements Serializable {
 		} catch (MalformedURLException e1) {
 			return false;
 		}
-		String url = path + "/rest/getOpportunities?extSsId=%s&sessionId=%s";
-		if ("changeperm".equals(procedure))
-			url += "&segmented=true";
-		url = String.format(url, extSsId, sessionId);
+
+		String url = path + "/rest/getOpportunities?extSsId=%s&sessionId=%s&procedure=%s";
+		url = String.format(url, extSsId, sessionId, procedure);
+
 		try {
 			connection = (HttpURLConnection) new URL(url).openConnection();
 			connection.setDoOutput(true);
@@ -181,6 +201,75 @@ public class DefaultBacking implements Serializable {
 			connection.disconnect();
 		}
 		return true;
+	}
+
+	public void execute() {
+		switch (this.procedure) {
+		case "changeperm":
+			for (TestOpportunity opp : this.selectedOpportunites) {
+				ProcedureResult result = changeSegmentPerm(opp);
+				opp.setResult(result.getStatus());
+			}
+			break;
+		}
+	}
+
+	private ProcedureResult changeSegmentPerm(TestOpportunity testOpp) {
+		HttpURLConnection connection = null;
+		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
+				.getRequest();
+		String path = null;
+		try {
+			path = new URL(request.getScheme(), request.getServerName(), request.getServerPort(),
+					request.getContextPath()).toString();
+		} catch (MalformedURLException e1) {
+
+		}
+
+		String url = path + "/rest/setOpportunitySegmentPerm";
+		String urlParameters = "oppkey=%s&requestor=%s&segmentid=%s&segmentposition=%s&restoreon=%s&ispermeable=%s&reason=%s";
+		// TODO replace null with real values
+		urlParameters = String.format(urlParameters, testOpp.getOppKey(), this.getRequestor(), testOpp.getSegmentName(),
+				testOpp.getSegmentPosition(), testOpp.getRestoreOn(), testOpp.isIspermeable(), this.getReason());
+		byte[] postData = urlParameters.getBytes(StandardCharsets.UTF_8);
+		int postDataLength = postData.length;
+
+		ProcedureResult result = null;
+
+		try {
+			connection = (HttpURLConnection) new URL(url).openConnection();
+			connection.setDoOutput(true);
+			connection.setInstanceFollowRedirects(false);
+			connection.setRequestMethod("POST");
+			connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+			connection.setRequestProperty("charset", "utf-8");
+			connection.setRequestProperty("Content-Length", Integer.toString(postDataLength));
+			connection.setUseCaches(false);
+			connection.getOutputStream().write(postData);
+
+			int status = connection.getResponseCode();
+
+			switch (status) {
+			case 200:
+			case 201:
+				BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+				StringBuilder sb = new StringBuilder();
+				String line;
+				while ((line = br.readLine()) != null) {
+					sb.append(line + "\n");
+				}
+				br.close();
+				ObjectMapper mapper = new ObjectMapper();
+				result = mapper.readValue(sb.toString(), ProcedureResult.class);
+
+				System.out.print(sb.toString());
+			}
+
+		} catch (IOException e) {
+		} finally {
+			connection.disconnect();
+		}
+		return result;
 	}
 
 	private boolean validateInput(String extSsId, String sessionId) {

@@ -3,9 +3,11 @@ package tds.tdsadmin.db.abstractions;
 import java.util.UUID;
 import TDS.Shared.Exceptions.ReturnStatusException;
 import tds.tdsadmin.model.OpportunitySerializable;
+import tds.tdsadmin.model.ProcedureResult;
 
 public interface TDSAdminDAO {
-	public OpportunitySerializable getOpportunities(String v_extSsId, String v_sessionId) throws ReturnStatusException;
+	public OpportunitySerializable getOpportunities(String v_extSsId, String v_sessionId, String v_procedure)
+			throws ReturnStatusException;
 
 	public OpportunitySerializable resetOpportunity(UUID v_oppKey, String v_requestor, String v_reason)
 			throws ReturnStatusException;
@@ -25,6 +27,7 @@ public interface TDSAdminDAO {
 	public OpportunitySerializable alterOpportunityExpiration(UUID v_oppKey, String v_requestor, int v_dayincrement,
 			String v_reason) throws ReturnStatusException;
 
-	public OpportunitySerializable setOpportunitySegmentPerm(UUID v_oppKey, String v_requestor, boolean v_ispermeable,
-			String v_restoreon, String v_reason) throws ReturnStatusException;
+	public ProcedureResult setOpportunitySegmentPerm(UUID v_oppKey, String v_requestor, String v_segmentid,
+			int v_segmentposition, String v_restoreon, int v_ispermeable, String v_reason)
+					throws ReturnStatusException;
 }

@@ -51,7 +51,8 @@
 		<br />
 		<p:dataTable value="#{defaultBacking.lazyOpps}" var="opp"
 			rendered="#{defaultBacking.oppCount>0}" selectionMode="single"
-			paginator="true" rows="5" lazy="true"
+			paginator="true" rows="5" lazy="true" tableStyle="table-layout:auto;"
+			resizableColumns="true" editable="true"
 			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 			rowsPerPageTemplate="5,10,15">
 			<p:column>
@@ -101,7 +102,34 @@
 				<f:facet name="header">Segment Position</f:facet>
     				#{opp.segmentPosition}
     			</p:column>
+			<p:column rendered='#{"changeperm".equals(defaultBacking.procedure)}'>
+				<f:facet name="header">Permeable</f:facet>
+				<h:selectBooleanCheckbox value="#{opp.permeable}" />
+			</p:column>
+			<p:column sortBy="segmentName"
+				rendered='#{"changeperm".equals(defaultBacking.procedure)}'>
+				<f:facet name="header">Segment Name</f:facet>
+    				#{opp.segmentName}
+    			</p:column>
+
+			<p:column rendered='#{"changeperm".equals(defaultBacking.procedure)}'>
+				<f:facet name="header">Restore On</f:facet>
+				<h:selectOneMenu value="#{opp.restoreOn}">
+					<f:selectItem itemLabel="Segment" itemValue="segment"></f:selectItem>
+					<f:selectItem itemLabel="Paused" itemValue="paused"></f:selectItem>
+					<f:selectItem itemLabel="Completed" itemValue="completed"></f:selectItem>
+				</h:selectOneMenu>
+			</p:column>
+			<p:column>
+				<f:facet name="header">Result</f:facet>
+				#{opp.result}
+			</p:column>
 		</p:dataTable>
+
+		<h:inputTextarea value="#{defaultBacking.reason}"></h:inputTextarea>
+		<h:commandButton type="submit" id="execute"
+			actionListener="#{defaultBacking.execute()}"
+			style="horizontal-align:middle;" value="Perform Operation"></h:commandButton>
 	</h:form>
 </h:body>
 </html>
