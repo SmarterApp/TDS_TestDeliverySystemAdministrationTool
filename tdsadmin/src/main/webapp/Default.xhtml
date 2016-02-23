@@ -3,7 +3,6 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:vt="http://java.sun.com/jsf/composite/trainer"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
 	<title>TDS Admin Home Page</title>
@@ -62,7 +61,7 @@
 				</h:selectBooleanCheckbox>
 			</p:column>
 			<p:column sortBy="altSsid">
-				<f:facet name="header">External SSID</f:facet>
+				<f:facet name="header">Ext.SSID</f:facet>
     				#{opp.altSsid}
     			</p:column>
 			<p:column sortBy="name">
@@ -82,20 +81,32 @@
     				#{opp.status}
     			</p:column>
 			<p:column sortBy="dateStarted">
-				<f:facet name="header">Date Started</f:facet>
-    				#{opp.dateStarted}
-    			</p:column>
+				<f:facet name="header">Started On</f:facet>
+				<h:outputText value="#{opp.dateStarted}">
+					<f:convertDateTime pattern="dd.MM.yyyy" />
+				</h:outputText>
+			</p:column>
 			<p:column sortBy="dateExpired">
-				<f:facet name="header">Date Expired</f:facet>
-    				#{opp.dateExpired}
-    			</p:column>
+				<f:facet name="header">Expired On</f:facet>
+				<h:outputText value="#{opp.dateExpired}">
+					<f:convertDateTime pattern="dd.MM.yyyy" />
+				</h:outputText>
+			</p:column>
 			<p:column sortBy="dateCompleted">
-				<f:facet name="header">Date Completed</f:facet>
-    				#{opp.dateCompleted}
-    			</p:column>
+				<f:facet name="header">Completed On</f:facet>
+				<h:outputText value="#{opp.dateCompleted}">
+					<f:convertDateTime pattern="dd.MM.yyyy" />
+				</h:outputText>
+			</p:column>
 			<p:column sortBy="datePaused">
-				<f:facet name="header">Date Paused</f:facet>
-    				#{opp.datePaused}
+				<f:facet name="header">Paused On</f:facet>
+				<h:outputText value="#{opp.datePaused}">
+					<f:convertDateTime pattern="dd.MM.yyyy" />
+				</h:outputText>
+			</p:column>
+			<p:column sortBy="restart">
+				<f:facet name="header">Restarts</f:facet>
+    				#{opp.restart}
     			</p:column>
 			<p:column sortBy="segmentPosition"
 				rendered='#{"changeperm".equals(defaultBacking.procedure)}'>
@@ -111,7 +122,22 @@
 				<f:facet name="header">Segment Name</f:facet>
     				#{opp.segmentName}
     			</p:column>
-
+			<p:column rendered='#{"extend".equals(defaultBacking.procedure)}'>
+				<f:facet name="header">SelectedSitting</f:facet>
+				<h:inputText value="#{opp.selectedSitting}"
+					onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;">
+				</h:inputText>
+			</p:column>
+			<p:column rendered='#{"extend".equals(defaultBacking.procedure)}'>
+				<f:facet name="header">DoUpdate</f:facet>
+				<h:selectBooleanCheckbox value="#{opp.doUpdate}" />
+			</p:column>
+			<p:column rendered='#{"alter".equals(defaultBacking.procedure)}'>
+				<f:facet name="header">DayIncrement</f:facet>
+				<h:inputText value="#{opp.dayIncrement}"
+					onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;">
+				</h:inputText>
+			</p:column>
 			<p:column rendered='#{"changeperm".equals(defaultBacking.procedure)}'>
 				<f:facet name="header">Restore On</f:facet>
 				<h:selectOneMenu value="#{opp.restoreOn}">

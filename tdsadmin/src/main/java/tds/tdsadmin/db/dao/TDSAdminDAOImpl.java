@@ -86,45 +86,172 @@ public class TDSAdminDAOImpl extends AbstractDAO implements TDSAdminDAO {
 	}
 
 	@Override
-	public OpportunitySerializable resetOpportunity(UUID v_oppKey, String v_requestor, String v_reason)
+	public ProcedureResult resetOpportunity(UUID v_oppKey, String v_requestor, String v_reason)
 			throws ReturnStatusException {
-		// TODO Auto-generated method stub
-		return null;
+
+		ProcedureResult result = null;
+
+		try (SQLConnection connection = getSQLConnection()) {
+			SingleDataResultSet results = _tdsAdminDLL.A_resettestopportunity_SP(connection, v_oppKey, v_requestor,
+					v_reason);
+			Iterator<DbResultRecord> records = results.getRecords();
+			if (records.hasNext()) {
+				DbResultRecord record = records.next();
+				result = new ProcedureResult();
+				if (record.hasColumn("status"))
+					result.setStatus(record.<String> get("status"));
+				if (record.hasColumn("reason"))
+					result.setReason(record.<String> get("reason"));
+				if (record.hasColumn("context"))
+					result.setContext(record.<String> get("context"));
+				if (record.hasColumn("appkey"))
+					result.setAppKey(record.<String> get("appkey"));
+			}
+		} catch (SQLException e) {
+			throw new ReturnStatusException(e);
+		}
+		return result;
 	}
 
 	@Override
-	public OpportunitySerializable invalidateTestOpportunity(UUID v_oppKey, String v_requestor, String v_reason)
+	public ProcedureResult invalidateTestOpportunity(UUID v_oppKey, String v_requestor, String v_reason)
 			throws ReturnStatusException {
-		// TODO Auto-generated method stub
-		return null;
+
+		ProcedureResult result = null;
+
+		try (SQLConnection connection = getSQLConnection()) {
+			SingleDataResultSet results = _tdsAdminDLL.A_invalidatetestopportunity_SP(connection, v_oppKey, v_requestor,
+					v_reason);
+			Iterator<DbResultRecord> records = results.getRecords();
+			if (records.hasNext()) {
+				DbResultRecord record = records.next();
+				result = new ProcedureResult();
+				if (record.hasColumn("status"))
+					result.setStatus(record.<String> get("status"));
+				if (record.hasColumn("reason"))
+					result.setReason(record.<String> get("reason"));
+				if (record.hasColumn("context"))
+					result.setContext(record.<String> get("context"));
+				if (record.hasColumn("appkey"))
+					result.setAppKey(record.<String> get("appkey"));
+			}
+		} catch (SQLException e) {
+			throw new ReturnStatusException(e);
+		}
+		return result;
+
 	}
 
 	@Override
-	public OpportunitySerializable restoreTestOpportunity(UUID v_oppKey, String v_requestor, String v_reason)
+	public ProcedureResult restoreTestOpportunity(UUID v_oppKey, String v_requestor, String v_reason)
 			throws ReturnStatusException {
-		// TODO Auto-generated method stub
-		return null;
+
+		ProcedureResult result = null;
+
+		try (SQLConnection connection = getSQLConnection()) {
+			SingleDataResultSet results = _tdsAdminDLL.A_restoretestopportunity_SP(connection, v_oppKey, v_requestor,
+					v_reason);
+			Iterator<DbResultRecord> records = results.getRecords();
+			if (records.hasNext()) {
+				DbResultRecord record = records.next();
+				result = new ProcedureResult();
+				if (record.hasColumn("status"))
+					result.setStatus(record.<String> get("status"));
+				if (record.hasColumn("reason"))
+					result.setReason(record.<String> get("reason"));
+				if (record.hasColumn("context"))
+					result.setContext(record.<String> get("context"));
+				if (record.hasColumn("appkey"))
+					result.setAppKey(record.<String> get("appkey"));
+			}
+		} catch (SQLException e) {
+			throw new ReturnStatusException(e);
+		}
+		return result;
 	}
 
 	@Override
-	public OpportunitySerializable reopenOpportunity(UUID v_oppKey, String v_requestor, String v_reason)
+	public ProcedureResult reopenOpportunity(UUID v_oppKey, String v_requestor, String v_reason)
 			throws ReturnStatusException {
-		// TODO Auto-generated method stub
-		return null;
+
+		ProcedureResult result = null;
+
+		try (SQLConnection connection = getSQLConnection()) {
+			SingleDataResultSet results = _tdsAdminDLL.A_reopenopportunity_SP(connection, v_oppKey, v_requestor,
+					v_reason);
+			Iterator<DbResultRecord> records = results.getRecords();
+			if (records.hasNext()) {
+				DbResultRecord record = records.next();
+				result = new ProcedureResult();
+				if (record.hasColumn("status"))
+					result.setStatus(record.<String> get("status"));
+				if (record.hasColumn("reason"))
+					result.setReason(record.<String> get("reason"));
+				if (record.hasColumn("context"))
+					result.setContext(record.<String> get("context"));
+				if (record.hasColumn("appkey"))
+					result.setAppKey(record.<String> get("appkey"));
+			}
+		} catch (SQLException e) {
+			throw new ReturnStatusException(e);
+		}
+		return result;
 	}
 
 	@Override
-	public OpportunitySerializable extendingOppGracePeriod(UUID v_oppKey, String v_requestor, int v_selectedsitting,
+	public ProcedureResult extendingOppGracePeriod(UUID v_oppKey, String v_requestor, int v_selectedsitting,
 			boolean v_doupdate, String v_reason) throws ReturnStatusException {
-		// TODO Auto-generated method stub
-		return null;
+
+		ProcedureResult result = null;
+
+		try (SQLConnection connection = getSQLConnection()) {
+			SingleDataResultSet results = _tdsAdminDLL.A_extendingoppgraceperiod_SP(connection, v_oppKey, v_requestor,
+					v_selectedsitting, v_doupdate, v_reason);
+			Iterator<DbResultRecord> records = results.getRecords();
+			if (records.hasNext()) {
+				DbResultRecord record = records.next();
+				result = new ProcedureResult();
+				if (record.hasColumn("status"))
+					result.setStatus(record.<String> get("status"));
+				if (record.hasColumn("reason"))
+					result.setReason(record.<String> get("reason"));
+				if (record.hasColumn("context"))
+					result.setContext(record.<String> get("context"));
+				if (record.hasColumn("appkey"))
+					result.setAppKey(record.<String> get("appkey"));
+			}
+		} catch (SQLException e) {
+			throw new ReturnStatusException(e);
+		}
+		return result;
 	}
 
 	@Override
-	public OpportunitySerializable alterOpportunityExpiration(UUID v_oppKey, String v_requestor, int v_dayincrement,
+	public ProcedureResult alterOpportunityExpiration(UUID v_oppKey, String v_requestor, int v_dayincrement,
 			String v_reason) throws ReturnStatusException {
-		// TODO Auto-generated method stub
-		return null;
+
+		ProcedureResult result = null;
+
+		try (SQLConnection connection = getSQLConnection()) {
+			SingleDataResultSet results = _tdsAdminDLL.A_alteropportunityexpiration_SP(connection, v_oppKey,
+					v_requestor, v_dayincrement, v_reason);
+			Iterator<DbResultRecord> records = results.getRecords();
+			if (records.hasNext()) {
+				DbResultRecord record = records.next();
+				result = new ProcedureResult();
+				if (record.hasColumn("status"))
+					result.setStatus(record.<String> get("status"));
+				if (record.hasColumn("reason"))
+					result.setReason(record.<String> get("reason"));
+				if (record.hasColumn("context"))
+					result.setContext(record.<String> get("context"));
+				if (record.hasColumn("appkey"))
+					result.setAppKey(record.<String> get("appkey"));
+			}
+		} catch (SQLException e) {
+			throw new ReturnStatusException(e);
+		}
+		return result;
 	}
 
 	@Override

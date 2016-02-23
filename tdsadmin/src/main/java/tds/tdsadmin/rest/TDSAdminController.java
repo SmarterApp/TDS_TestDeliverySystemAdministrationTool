@@ -60,52 +60,92 @@ public class TDSAdminController {
 		return results;
 	}
 
-	@RequestMapping(value = "/rest/resetOpportunity", method = RequestMethod.GET)
+	@RequestMapping(value = "/rest/resetOpportunity", method = RequestMethod.POST)
 	@ResponseBody
-	public OpportunitySerializable resetOpportunity(UUID v_oppKey, String v_requestor, String v_reason)
-			throws ReturnStatusException {
-		// TODO Auto-generated method stub
-		return null;
+	public ProcedureResult resetOpportunity(@RequestParam(value = "oppkey", required = false) UUID v_oppKey,
+			@RequestParam(value = "requestor", required = false) String v_requestor,
+			@RequestParam(value = "reason", required = false) String v_reason) throws ReturnStatusException {
+		ProcedureResult result = null;
+		try {
+			result = _dao.resetOpportunity(v_oppKey, v_requestor, v_reason);
+		} catch (ReturnStatusException e) {
+			logger.error(e.getMessage());
+		}
+		return result;
 	}
 
-	@RequestMapping(value = "/rest/invalidateTestOpportunity", method = RequestMethod.GET)
+	@RequestMapping(value = "/rest/invalidateTestOpportunity", method = RequestMethod.POST)
 	@ResponseBody
-	public OpportunitySerializable invalidateTestOpportunity(UUID v_oppKey, String v_requestor, String v_reason)
-			throws ReturnStatusException {
-		// TODO Auto-generated method stub
-		return null;
+	public ProcedureResult invalidateTestOpportunity(@RequestParam(value = "oppkey", required = false) UUID v_oppKey,
+			@RequestParam(value = "requestor", required = false) String v_requestor,
+			@RequestParam(value = "reason", required = false) String v_reason) throws ReturnStatusException {
+		ProcedureResult result = null;
+		try {
+			result = _dao.invalidateTestOpportunity(v_oppKey, v_requestor, v_reason);
+		} catch (ReturnStatusException e) {
+			logger.error(e.getMessage());
+		}
+		return result;
 	}
 
-	@RequestMapping(value = "/rest/restoreTestOpportunity", method = RequestMethod.GET)
+	@RequestMapping(value = "/rest/restoreTestOpportunity", method = RequestMethod.POST)
 	@ResponseBody
-	public OpportunitySerializable restoreTestOpportunity(UUID v_oppKey, String v_requestor, String v_reason)
-			throws ReturnStatusException {
-		// TODO Auto-generated method stub
-		return null;
+	public ProcedureResult restoreTestOpportunity(@RequestParam(value = "oppkey", required = false) UUID v_oppKey,
+			@RequestParam(value = "requestor", required = false) String v_requestor,
+			@RequestParam(value = "reason", required = false) String v_reason) throws ReturnStatusException {
+		ProcedureResult result = null;
+		try {
+			result = _dao.restoreTestOpportunity(v_oppKey, v_requestor, v_reason);
+		} catch (ReturnStatusException e) {
+			logger.error(e.getMessage());
+		}
+		return result;
 	}
 
-	@RequestMapping(value = "/rest/reopenOpportunity", method = RequestMethod.GET)
+	@RequestMapping(value = "/rest/reopenOpportunity", method = RequestMethod.POST)
 	@ResponseBody
-	public OpportunitySerializable reopenOpportunity(UUID v_oppKey, String v_requestor, String v_reason)
-			throws ReturnStatusException {
-		// TODO Auto-generated method stub
-		return null;
+	public ProcedureResult reopenOpportunity(@RequestParam(value = "oppkey", required = false) UUID v_oppKey,
+			@RequestParam(value = "requestor", required = false) String v_requestor,
+			@RequestParam(value = "reason", required = false) String v_reason) throws ReturnStatusException {
+		ProcedureResult result = null;
+		try {
+			result = _dao.reopenOpportunity(v_oppKey, v_requestor, v_reason);
+		} catch (ReturnStatusException e) {
+			logger.error(e.getMessage());
+		}
+		return result;
 	}
 
-	@RequestMapping(value = "/rest/extendingOppGracePeriod", method = RequestMethod.GET)
+	@RequestMapping(value = "/rest/extendingOppGracePeriod", method = RequestMethod.POST)
 	@ResponseBody
-	public OpportunitySerializable extendingOppGracePeriod(UUID v_oppKey, String v_requestor, int v_selectedsitting,
-			boolean v_doupdate, String v_reason) throws ReturnStatusException {
-		// TODO Auto-generated method stub
-		return null;
+	public ProcedureResult extendingOppGracePeriod(@RequestParam(value = "oppkey", required = false) UUID v_oppKey,
+			@RequestParam(value = "requestor", required = false) String v_requestor,
+			@RequestParam(value = "selectedsitting", required = false) int v_selectedsitting,
+			@RequestParam(value = "doupdate", required = false) boolean v_doupdate,
+			@RequestParam(value = "reason", required = false) String v_reason) throws ReturnStatusException {
+		ProcedureResult result = null;
+		try {
+			result = _dao.extendingOppGracePeriod(v_oppKey, v_requestor, v_selectedsitting, v_doupdate, v_reason);
+		} catch (ReturnStatusException e) {
+			logger.error(e.getMessage());
+		}
+		return result;
 	}
 
-	@RequestMapping(value = "/rest/alterOpportunityExpiration", method = RequestMethod.GET)
+	@RequestMapping(value = "/rest/alterOpportunityExpiration", method = RequestMethod.POST)
 	@ResponseBody
-	public OpportunitySerializable alterOpportunityExpiration(UUID v_oppKey, String v_requestor, int v_dayincrement,
-			String v_reason) throws ReturnStatusException {
-		// TODO Auto-generated method stub
-		return null;
+	public ProcedureResult alterOpportunityExpiration(@RequestParam(value = "oppkey", required = false) UUID v_oppKey,
+			@RequestParam(value = "requestor", required = false) String v_requestor,
+			@RequestParam(value = "dayincrement", required = false) int v_dayincrement,
+			@RequestParam(value = "reason", required = false) String v_reason) throws ReturnStatusException {
+
+		ProcedureResult result = null;
+		try {
+			result = _dao.alterOpportunityExpiration(v_oppKey, v_requestor, v_dayincrement, v_reason);
+		} catch (ReturnStatusException e) {
+			logger.error(e.getMessage());
+		}
+		return result;
 	}
 
 	@RequestMapping(value = "/rest/setOpportunitySegmentPerm", method = RequestMethod.POST)
@@ -117,6 +157,7 @@ public class TDSAdminController {
 			@RequestParam(value = "restoreon", required = false) String v_restoreon,
 			@RequestParam(value = "ispermeable", required = false) int v_ispermeable,
 			@RequestParam(value = "reason", required = false) String v_reason) throws ReturnStatusException {
+
 		ProcedureResult result = null;
 		try {
 			result = _dao.setOpportunitySegmentPerm(v_oppKey, v_requestor, v_segmentid, v_segmentposition, v_restoreon,

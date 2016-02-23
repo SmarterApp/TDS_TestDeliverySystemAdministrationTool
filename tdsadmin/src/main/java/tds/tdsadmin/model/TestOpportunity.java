@@ -28,6 +28,9 @@ public class TestOpportunity implements Serializable {
 	private boolean permeable;
 	private String reason;
 	private boolean selected;
+	private int selectedSitting;
+	private boolean doUpdate;
+	private int dayIncrement;
 
 	public UUID getOppKey() {
 		return oppKey;
@@ -149,7 +152,7 @@ public class TestOpportunity implements Serializable {
 		this.segmentPosition = segmentPosition;
 	}
 
-	public int isIspermeable() {
+	public int getIspermeable() {
 		ispermeable = (permeable == true) ? 1 : -1;
 		return ispermeable;
 	}
@@ -159,7 +162,7 @@ public class TestOpportunity implements Serializable {
 		permeable = (ispermeable > 0) ? true : false;
 	}
 
-	public boolean isPermeable() {
+	public boolean getPermeable() {
 		return permeable;
 	}
 
@@ -181,5 +184,29 @@ public class TestOpportunity implements Serializable {
 
 	public void setSelected(boolean selected) {
 		this.selected = selected;
+	}
+
+	public int getSelectedSitting() {
+		return selectedSitting;
+	}
+
+	public void setSelectedSitting(int selectedSitting) {
+		this.selectedSitting = selectedSitting;
+	}
+
+	public int getDayIncrement() {
+		return dayIncrement;
+	}
+
+	public void setDayIncrement(int dayIncrement) {
+		this.dayIncrement = dayIncrement;
+	}
+
+	public boolean getDoUpdate() {
+		return doUpdate;
+	}
+
+	public void setDoUpdate(boolean doUpdate) {
+		this.doUpdate = doUpdate;
 	}
 }

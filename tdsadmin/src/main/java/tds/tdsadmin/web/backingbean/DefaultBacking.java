@@ -204,17 +204,37 @@ public class DefaultBacking implements Serializable {
 	}
 
 	public void execute() {
+		String api = null;
 		switch (this.procedure) {
 		case "changeperm":
-			for (TestOpportunity opp : this.selectedOpportunites) {
-				ProcedureResult result = changeSegmentPerm(opp);
-				opp.setResult(result.getStatus());
-			}
+			api = "setOpportunitySegmentPerm";
 			break;
+		case "alter":
+			api = "alterOpportunityExpiration";
+			break;
+		case "extend":
+			api = "extendingOppGracePeriod";
+			break;
+		case "reopen":
+			api = "reopenOpportunity";
+			break;
+		case "reset":
+			api = "resetOpportunity";
+			break;
+		case "invalidate":
+			api = "invalidateTestOpportunity";
+			break;
+		case "restore":
+			api = "restoreTestOpportunity";
+			break;
+		}
+		for (TestOpportunity opp : this.selectedOpportunites) {
+			ProcedureResult result = executeProcedure(opp, api);
+			opp.setResult(result.getStatus());
 		}
 	}
 
-	private ProcedureResult changeSegmentPerm(TestOpportunity testOpp) {
+	private ProcedureResult executeProcedure(TestOpportunity testOpp, String api) {
 		HttpURLConnection connection = null;
 		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
 				.getRequest();
@@ -226,11 +246,8 @@ public class DefaultBacking implements Serializable {
 
 		}
 
-		String url = path + "/rest/setOpportunitySegmentPerm";
-		String urlParameters = "oppkey=%s&requestor=%s&segmentid=%s&segmentposition=%s&restoreon=%s&ispermeable=%s&reason=%s";
-		// TODO replace null with real values
-		urlParameters = String.format(urlParameters, testOpp.getOppKey(), this.getRequestor(), testOpp.getSegmentName(),
-				testOpp.getSegmentPosition(), testOpp.getRestoreOn(), testOpp.isIspermeable(), this.getReason());
+		String url = path + "/rest/" + api;
+		String urlParameters = getUrlParams(testOpp);
 		byte[] postData = urlParameters.getBytes(StandardCharsets.UTF_8);
 		int postDataLength = postData.length;
 
@@ -294,5 +311,21 @@ public class DefaultBacking implements Serializable {
 		} else {
 			this.selectedOpportunites.add(opp);
 		}
+	}
+
+	private String getUrlParams(TestOpportunity testOpp) {
+		String urlParameters = "oppkey=%s&requestor=%s&reason=%s";
+		urlParameters = String.format(urlParameters, testOpp.getOppKey(), this.getRequestor(), this.getReason());
+
+		if ("changeperm".equals(procedure)) {
+			urlParameters = urlParameters + "&segmentid=%s&segmentposition=%s&restoreon=%s&ispermeable=%s";
+			urlParameters = String.format(urlParameters, testOpp.getSegmentName(), testOpp.getSegmentPosition(),
+					testOpp.getRestoreOn(), testOpp.isIspermeable());
+		} else if ("extend".equals(procedure)) {
+
+		} else if ("alter".equals(procedure)) {
+
+		}
+		return urlParameters;
 	}
 }
