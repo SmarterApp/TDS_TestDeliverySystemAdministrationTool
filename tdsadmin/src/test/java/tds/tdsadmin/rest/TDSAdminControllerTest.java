@@ -62,9 +62,9 @@ public class TDSAdminControllerTest {
 		mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
 
 		OpportunitySerializable opps = getOpps();
-		when(_dao.getOpportunities("103", "four-3")).thenReturn(opps);
+		when(_dao.getOpportunities("103", "four-3", "alter")).thenReturn(opps);
 		opps = new OpportunitySerializable();
-		when(_dao.getOpportunities("420", null)).thenReturn(opps);
+		when(_dao.getOpportunities("420", null, "alter")).thenReturn(opps);
 	}
 
 	// Test with MvcResult and ObjectMapper
@@ -98,7 +98,7 @@ public class TDSAdminControllerTest {
 
 		// test with no request parameter
 		mockMvc.perform(get("/rest/getOpportunities")).andExpect(status().isBadRequest());
-		
+
 		// test with non-existing id
 		mockMvc.perform(get("/rest/getOpportunities?extSsId=420")).andExpect(jsonPath("$", Matchers.hasSize(0)));
 	}
