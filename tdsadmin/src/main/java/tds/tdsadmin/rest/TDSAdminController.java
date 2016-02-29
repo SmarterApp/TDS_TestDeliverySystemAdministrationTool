@@ -62,10 +62,15 @@ public class TDSAdminController {
 
 	@RequestMapping(value = "/rest/resetOpportunity", method = RequestMethod.POST)
 	@ResponseBody
-	public ProcedureResult resetOpportunity(@RequestParam(value = "oppkey", required = false) UUID v_oppKey,
+	public ProcedureResult resetOpportunity(HttpServletResponse response,
+			@RequestParam(value = "oppkey", required = false) UUID v_oppKey,
 			@RequestParam(value = "requestor", required = false) String v_requestor,
-			@RequestParam(value = "reason", required = false) String v_reason) throws ReturnStatusException {
+			@RequestParam(value = "reason", required = false) String v_reason) throws HttpResponseException {
 		ProcedureResult result = null;
+		if (v_oppKey == null || StringUtils.isEmpty(v_requestor) || StringUtils.isEmpty(v_reason)) {
+			response.setStatus(HttpStatus.SC_BAD_REQUEST);
+			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST, "Needs parameters: oppkey, requestor, reason");
+		}
 		try {
 			result = _dao.resetOpportunity(v_oppKey, v_requestor, v_reason);
 		} catch (ReturnStatusException e) {
@@ -76,10 +81,15 @@ public class TDSAdminController {
 
 	@RequestMapping(value = "/rest/invalidateTestOpportunity", method = RequestMethod.POST)
 	@ResponseBody
-	public ProcedureResult invalidateTestOpportunity(@RequestParam(value = "oppkey", required = false) UUID v_oppKey,
+	public ProcedureResult invalidateTestOpportunity(HttpServletResponse response,
+			@RequestParam(value = "oppkey", required = false) UUID v_oppKey,
 			@RequestParam(value = "requestor", required = false) String v_requestor,
-			@RequestParam(value = "reason", required = false) String v_reason) throws ReturnStatusException {
+			@RequestParam(value = "reason", required = false) String v_reason) throws HttpResponseException {
 		ProcedureResult result = null;
+		if (v_oppKey == null || StringUtils.isEmpty(v_requestor) || StringUtils.isEmpty(v_reason)) {
+			response.setStatus(HttpStatus.SC_BAD_REQUEST);
+			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST, "Needs parameters: oppkey, requestor, reason");
+		}
 		try {
 			result = _dao.invalidateTestOpportunity(v_oppKey, v_requestor, v_reason);
 		} catch (ReturnStatusException e) {
@@ -90,10 +100,15 @@ public class TDSAdminController {
 
 	@RequestMapping(value = "/rest/restoreTestOpportunity", method = RequestMethod.POST)
 	@ResponseBody
-	public ProcedureResult restoreTestOpportunity(@RequestParam(value = "oppkey", required = false) UUID v_oppKey,
+	public ProcedureResult restoreTestOpportunity(HttpServletResponse response,
+			@RequestParam(value = "oppkey", required = false) UUID v_oppKey,
 			@RequestParam(value = "requestor", required = false) String v_requestor,
-			@RequestParam(value = "reason", required = false) String v_reason) throws ReturnStatusException {
+			@RequestParam(value = "reason", required = false) String v_reason) throws HttpResponseException {
 		ProcedureResult result = null;
+		if (v_oppKey == null || StringUtils.isEmpty(v_requestor) || StringUtils.isEmpty(v_reason)) {
+			response.setStatus(HttpStatus.SC_BAD_REQUEST);
+			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST, "Needs parameters: oppkey, requestor, reason");
+		}
 		try {
 			result = _dao.restoreTestOpportunity(v_oppKey, v_requestor, v_reason);
 		} catch (ReturnStatusException e) {
@@ -104,10 +119,15 @@ public class TDSAdminController {
 
 	@RequestMapping(value = "/rest/reopenOpportunity", method = RequestMethod.POST)
 	@ResponseBody
-	public ProcedureResult reopenOpportunity(@RequestParam(value = "oppkey", required = false) UUID v_oppKey,
+	public ProcedureResult reopenOpportunity(HttpServletResponse response,
+			@RequestParam(value = "oppkey", required = false) UUID v_oppKey,
 			@RequestParam(value = "requestor", required = false) String v_requestor,
-			@RequestParam(value = "reason", required = false) String v_reason) throws ReturnStatusException {
+			@RequestParam(value = "reason", required = false) String v_reason) throws HttpResponseException {
 		ProcedureResult result = null;
+		if (v_oppKey == null || StringUtils.isEmpty(v_requestor) || StringUtils.isEmpty(v_reason)) {
+			response.setStatus(HttpStatus.SC_BAD_REQUEST);
+			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST, "Needs parameters: oppkey, requestor, reason");
+		}
 		try {
 			result = _dao.reopenOpportunity(v_oppKey, v_requestor, v_reason);
 		} catch (ReturnStatusException e) {
@@ -118,12 +138,17 @@ public class TDSAdminController {
 
 	@RequestMapping(value = "/rest/extendingOppGracePeriod", method = RequestMethod.POST)
 	@ResponseBody
-	public ProcedureResult extendingOppGracePeriod(@RequestParam(value = "oppkey", required = false) UUID v_oppKey,
+	public ProcedureResult extendingOppGracePeriod(HttpServletResponse response,
+			@RequestParam(value = "oppkey", required = false) UUID v_oppKey,
 			@RequestParam(value = "requestor", required = false) String v_requestor,
 			@RequestParam(value = "selectedsitting", required = false) int v_selectedsitting,
 			@RequestParam(value = "doupdate", required = false) boolean v_doupdate,
-			@RequestParam(value = "reason", required = false) String v_reason) throws ReturnStatusException {
+			@RequestParam(value = "reason", required = false) String v_reason) throws HttpResponseException {
 		ProcedureResult result = null;
+		if (v_oppKey == null || StringUtils.isEmpty(v_requestor) || StringUtils.isEmpty(v_reason)) {
+			response.setStatus(HttpStatus.SC_BAD_REQUEST);
+			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST, "Needs parameters: oppkey, requestor, reason");
+		}
 		try {
 			result = _dao.extendingOppGracePeriod(v_oppKey, v_requestor, v_selectedsitting, v_doupdate, v_reason);
 		} catch (ReturnStatusException e) {
@@ -134,12 +159,17 @@ public class TDSAdminController {
 
 	@RequestMapping(value = "/rest/alterOpportunityExpiration", method = RequestMethod.POST)
 	@ResponseBody
-	public ProcedureResult alterOpportunityExpiration(@RequestParam(value = "oppkey", required = false) UUID v_oppKey,
+	public ProcedureResult alterOpportunityExpiration(HttpServletResponse response,
+			@RequestParam(value = "oppkey", required = false) UUID v_oppKey,
 			@RequestParam(value = "requestor", required = false) String v_requestor,
 			@RequestParam(value = "dayincrement", required = false) int v_dayincrement,
-			@RequestParam(value = "reason", required = false) String v_reason) throws ReturnStatusException {
+			@RequestParam(value = "reason", required = false) String v_reason) throws HttpResponseException {
 
 		ProcedureResult result = null;
+		if (v_oppKey == null || StringUtils.isEmpty(v_requestor) || StringUtils.isEmpty(v_reason)) {
+			response.setStatus(HttpStatus.SC_BAD_REQUEST);
+			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST, "Needs parameters: oppkey, requestor, reason");
+		}
 		try {
 			result = _dao.alterOpportunityExpiration(v_oppKey, v_requestor, v_dayincrement, v_reason);
 		} catch (ReturnStatusException e) {
@@ -150,15 +180,21 @@ public class TDSAdminController {
 
 	@RequestMapping(value = "/rest/setOpportunitySegmentPerm", method = RequestMethod.POST)
 	@ResponseBody
-	public ProcedureResult setOpportunitySegmentPerm(@RequestParam(value = "oppkey", required = false) UUID v_oppKey,
+	public ProcedureResult setOpportunitySegmentPerm(HttpServletResponse response,
+			@RequestParam(value = "oppkey", required = false) UUID v_oppKey,
 			@RequestParam(value = "requestor", required = false) String v_requestor,
 			@RequestParam(value = "segmentid", required = false) String v_segmentid,
-			@RequestParam(value = "segmentposition", required = false) int v_segmentposition,
+			@RequestParam(value = "segmentposition", required = false, defaultValue = "0") int v_segmentposition,
 			@RequestParam(value = "restoreon", required = false) String v_restoreon,
-			@RequestParam(value = "ispermeable", required = false) int v_ispermeable,
-			@RequestParam(value = "reason", required = false) String v_reason) throws ReturnStatusException {
+			@RequestParam(value = "ispermeable", required = false, defaultValue = "0") int v_ispermeable,
+			@RequestParam(value = "reason", required = false) String v_reason) throws HttpResponseException {
 
 		ProcedureResult result = null;
+		if (v_oppKey == null || StringUtils.isEmpty(v_segmentid) || StringUtils.isEmpty(v_restoreon)) {
+			response.setStatus(HttpStatus.SC_BAD_REQUEST);
+			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST,
+					"Needs parameters: oppkey, segmentid, restoreon");
+		}
 		try {
 			result = _dao.setOpportunitySegmentPerm(v_oppKey, v_requestor, v_segmentid, v_segmentposition, v_restoreon,
 					v_ispermeable, v_reason);

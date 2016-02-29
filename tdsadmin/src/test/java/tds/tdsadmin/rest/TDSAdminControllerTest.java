@@ -26,10 +26,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import TDS.Shared.Exceptions.ReturnStatusException;
 import tds.tdsadmin.db.abstractions.TDSAdminDAO;
 import tds.tdsadmin.model.OpportunitySerializable;
+import tds.tdsadmin.model.ProcedureResult;
 import tds.tdsadmin.model.TestOpportunity;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.UUID;
 
 import org.hamcrest.Matchers;
 
@@ -60,32 +64,16 @@ public class TDSAdminControllerTest {
 		// controller._dao = this._dao;
 		MockitoAnnotations.initMocks(this);
 		mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
-
-		OpportunitySerializable opps = getOpps();
-		when(_dao.getOpportunities("103", "four-3", "alter")).thenReturn(opps);
-		opps = new OpportunitySerializable();
-		when(_dao.getOpportunities("420", null, "alter")).thenReturn(opps);
-	}
-
-	// Test with MvcResult and ObjectMapper
-	@Test
-	public void test() throws Exception {
-
-		MvcResult result = mockMvc.perform(get("/rest/getOpportunities?extSsId=103&sessionId=four-3")).andReturn();
-		assertEquals(result.getResponse().getStatus(), 200);
-
-		ObjectMapper mapper = new ObjectMapper();
-		OpportunitySerializable resultOpps = mapper.readValue(result.getResponse().getContentAsString(),
-				OpportunitySerializable.class);
-
-		assertEquals(result.getResponse().getContentType(), "application/json;charset=UTF-8");
-		assertEquals(resultOpps.size(), 2);
 	}
 
 	// Test with jayway jsonpath
 	@Test
 	public void getOpportunities() throws Exception {
 
+		OpportunitySerializable opps = getOpps();
+		when(_dao.getOpportunities("103", "four-3", null)).thenReturn(opps);
+		opps = new OpportunitySerializable();
+		when(_dao.getOpportunities("420", null, null)).thenReturn(opps);
 		// test with student id and session id
 		mockMvc.perform(get("/rest/getOpportunities?extSsId=103&sessionId=four-3")
 				.accept(MediaType.parseMediaType("application/json;charset=UTF-8"))).andExpect(status().isOk())
@@ -101,6 +89,30 @@ public class TDSAdminControllerTest {
 
 		// test with non-existing id
 		mockMvc.perform(get("/rest/getOpportunities?extSsId=420")).andExpect(jsonPath("$", Matchers.hasSize(0)));
+	}
+
+	@Test
+	public void changeSegementPerm() throws Exception {
+
+		ProcedureResult result = this.getResult("appkey1", "sbac", "na", "success");
+		UUID oppkey = UUID.randomUUID();
+		when(_dao.setOpportunitySegmentPerm(oppkey, null, "dummysegment", 0, "segment", 0, "na")).thenReturn(result);
+
+		// test with student id and session id
+		mockMvc.perform(post("/rest/setOpportunitySegmentPerm").param("oppkey", String.format("%s", oppkey))
+				.param("segmentposition", "0").param("segmentid", "dummysegment").param("restoreon", "segment")
+				.param("reason", "na").contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.parseMediaType("application/json;charset=UTF-8"))).andExpect(status().isOk())
+				// .andExpect(content().contentType("application/json;charset=UTF-8"))
+
+				.andExpect(jsonPath("$.status", Matchers.comparesEqualTo("success")))
+				.andExpect(jsonPath("$.appKey", Matchers.comparesEqualTo("appkey1")))
+				.andExpect(jsonPath("$.context", Matchers.comparesEqualTo("sbac")))
+				.andExpect(jsonPath("$.reason", Matchers.comparesEqualTo("na")));
+
+		// test with no request parameter
+		mockMvc.perform(post("/rest/setOpportunitySegmentPerm")).andExpect(status().isBadRequest());
+
 	}
 
 	public OpportunitySerializable getOpps() {
@@ -122,6 +134,15 @@ public class TDSAdminControllerTest {
 		opps.add(opp2);
 
 		return opps;
+	}
+
+	private ProcedureResult getResult(String appkey, String context, String reason, String status) {
+		ProcedureResult result = new ProcedureResult();
+		result.setAppKey(appkey);
+		result.setContext(context);
+		result.setReason(reason);
+		result.setStatus(status);
+		return result;
 	}
 
 }
