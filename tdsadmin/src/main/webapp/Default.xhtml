@@ -10,7 +10,9 @@
 
 <h:body>
 	<h:form>
-		<h:selectOneMenu id="procedure" value="#{defaultBacking.procedure}">
+		<h:selectOneMenu id="procedure" value="#{defaultBacking.procedure}"
+			valueChangeListener="#{defaultBacking.procedureChange()}"
+			onchange="submit()">
 			<f:selectItems value="#{defaultBacking.procedures.entrySet()}"
 				var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}"></f:selectItems>
 		</h:selectOneMenu>
@@ -48,7 +50,7 @@
 		<br />
 		<br />
 		<br />
-		<p:dataTable value="#{defaultBacking.lazyOpps}" var="opp"
+		<p:dataTable value="#{defaultBacking.lazyOpps}" var="opp" id="mytable"
 			rendered="#{defaultBacking.oppCount>0}" selectionMode="single"
 			paginator="true" rows="5" lazy="true" tableStyle="table-layout:auto;"
 			resizableColumns="true" editable="true"
@@ -152,6 +154,7 @@
 			</p:column>
 		</p:dataTable>
 
+		<h:outputLabel>Reason</h:outputLabel>
 		<h:inputTextarea value="#{defaultBacking.reason}"></h:inputTextarea>
 		<h:commandButton type="submit" id="execute"
 			actionListener="#{defaultBacking.execute()}"

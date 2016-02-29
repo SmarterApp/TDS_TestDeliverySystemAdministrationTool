@@ -157,6 +157,9 @@ public class DefaultBacking implements Serializable {
 		if (!validateInput(extSsId, sessionId))
 			return false;
 
+		// clear selectedOpportunities
+		this.selectedOpportunites.clear();
+
 		HttpURLConnection connection = null;
 		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
 				.getRequest();
@@ -230,7 +233,11 @@ public class DefaultBacking implements Serializable {
 		}
 		for (TestOpportunity opp : this.selectedOpportunites) {
 			ProcedureResult result = executeProcedure(opp, api);
-			opp.setResult(result.getStatus());
+			if (result != null)
+				opp.setResult(result.getStatus());
+			else
+				opp.setResult("failed");
+			opp.setSelected(false);
 		}
 	}
 
@@ -320,12 +327,25 @@ public class DefaultBacking implements Serializable {
 		if ("changeperm".equals(procedure)) {
 			urlParameters = urlParameters + "&segmentid=%s&segmentposition=%s&restoreon=%s&ispermeable=%s";
 			urlParameters = String.format(urlParameters, testOpp.getSegmentName(), testOpp.getSegmentPosition(),
-					testOpp.getRestoreOn(), testOpp.isIspermeable());
+					testOpp.getRestoreOn(), testOpp.getIspermeable());
 		} else if ("extend".equals(procedure)) {
-
+			urlParameters += "&selectedsitting=%s&doupdate=%s";
+			urlParameters = String.format(urlParameters, testOpp.getSelectedSitting(), testOpp.getDoUpdate());
 		} else if ("alter".equals(procedure)) {
-
+			urlParameters += "&dayincrement=%s";
+			urlParameters = String.format(urlParameters, testOpp.getDayIncrement());
 		}
 		return urlParameters;
+	}
+
+	public void procedureChange() {
+		for (TestOpportunity opp : this.selectedOpportunites) {
+			opp.setSelected(false);
+		}
+		this.opportunities.clear();
+		this.selectedOpportunites.clear();
+		this.setOppCount(0);
+		while (lazyOpps != null)
+			this.lazyOpps = null;
 	}
 }
