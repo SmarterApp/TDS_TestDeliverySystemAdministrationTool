@@ -39,7 +39,6 @@ public class DefaultBacking implements Serializable {
 	private HashMap<String, String> procedures = null;
 	private String procedure = null;
 	private List<TestOpportunity> opportunities = new ArrayList<TestOpportunity>();
-	private List<TestOpportunity> selectedOpportunites = new ArrayList<TestOpportunity>();
 	private String selectIdText = null;
 	private String selectRadioText = null;
 	private String requestor = null;
@@ -157,8 +156,7 @@ public class DefaultBacking implements Serializable {
 		if (!validateInput(extSsId, sessionId))
 			return false;
 
-		// clear selectedOpportunities
-		this.selectedOpportunites.clear();
+		this.opportunities.clear();
 
 		HttpURLConnection connection = null;
 		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
@@ -231,7 +229,9 @@ public class DefaultBacking implements Serializable {
 			api = "restoreTestOpportunity";
 			break;
 		}
-		for (TestOpportunity opp : this.selectedOpportunites) {
+		for (TestOpportunity opp : this.opportunities) {
+			if (!opp.getSelected())
+				continue;
 			ProcedureResult result = executeProcedure(opp, api);
 			if (result != null)
 				opp.setResult(result.getStatus());
@@ -311,15 +311,6 @@ public class DefaultBacking implements Serializable {
 		}
 	}
 
-	public void addorRemoveOpportunity(TestOpportunity opp) {
-		// TestOpportunity opp = null;
-		if (this.selectedOpportunites.contains(opp)) {
-			this.selectedOpportunites.remove(this.selectedOpportunites.indexOf(opp));
-		} else {
-			this.selectedOpportunites.add(opp);
-		}
-	}
-
 	private String getUrlParams(TestOpportunity testOpp) {
 		String urlParameters = "oppkey=%s&requestor=%s&reason=%s";
 		urlParameters = String.format(urlParameters, testOpp.getOppKey(), this.getRequestor(), this.getReason());
@@ -339,11 +330,7 @@ public class DefaultBacking implements Serializable {
 	}
 
 	public void procedureChange() {
-		for (TestOpportunity opp : this.selectedOpportunites) {
-			opp.setSelected(false);
-		}
 		this.opportunities.clear();
-		this.selectedOpportunites.clear();
 		this.setOppCount(0);
 		while (lazyOpps != null)
 			this.lazyOpps = null;
