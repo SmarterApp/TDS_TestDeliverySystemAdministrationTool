@@ -96,15 +96,13 @@ public class TDSAdminControllerTest {
 
 		ProcedureResult result = this.getResult("appkey1", "sbac", "na", "success");
 		UUID oppkey = UUID.randomUUID();
-		when(_dao.setOpportunitySegmentPerm(oppkey, null, "dummysegment", 0, "segment", 0, "na")).thenReturn(result);
+		when(_dao.setOpportunitySegmentPerm(oppkey, "user", "dummysegment", 0, "segment", 0, "na")).thenReturn(result);
 
 		// test with student id and session id
 		mockMvc.perform(post("/rest/setOpportunitySegmentPerm").param("oppkey", String.format("%s", oppkey))
 				.param("segmentposition", "0").param("segmentid", "dummysegment").param("restoreon", "segment")
-				.param("reason", "na").contentType(MediaType.APPLICATION_JSON)
+				.param("reason", "na").param("requestor", "user").contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.parseMediaType("application/json;charset=UTF-8"))).andExpect(status().isOk())
-				// .andExpect(content().contentType("application/json;charset=UTF-8"))
-
 				.andExpect(jsonPath("$.status", Matchers.comparesEqualTo("success")))
 				.andExpect(jsonPath("$.appKey", Matchers.comparesEqualTo("appkey1")))
 				.andExpect(jsonPath("$.context", Matchers.comparesEqualTo("sbac")))
@@ -113,6 +111,122 @@ public class TDSAdminControllerTest {
 		// test with no request parameter
 		mockMvc.perform(post("/rest/setOpportunitySegmentPerm")).andExpect(status().isBadRequest());
 
+	}
+
+	@Test
+	public void alterExpiration() throws Exception {
+		ProcedureResult result = this.getResult("appkey1", "sbac", "na", "success");
+		UUID oppkey = UUID.randomUUID();
+		when(_dao.alterOpportunityExpiration(oppkey, "user", 100, "na")).thenReturn(result);
+
+		// test with student id and session id
+		mockMvc.perform(post("/rest/alterOpportunityExpiration").param("oppkey", String.format("%s", oppkey))
+				.param("reason", "na").param("dayincrement", "100").param("requestor", "user")
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.parseMediaType("application/json;charset=UTF-8"))).andExpect(status().isOk())
+				.andExpect(jsonPath("$.status", Matchers.comparesEqualTo("success")))
+				.andExpect(jsonPath("$.appKey", Matchers.comparesEqualTo("appkey1")))
+				.andExpect(jsonPath("$.context", Matchers.comparesEqualTo("sbac")))
+				.andExpect(jsonPath("$.reason", Matchers.comparesEqualTo("na")));
+
+		// test with no request parameter
+		mockMvc.perform(post("/rest/alterOpportunityExpiration")).andExpect(status().isBadRequest());
+	}
+
+	@Test
+	public void extendGracePeriod() throws Exception {
+		ProcedureResult result = this.getResult("appkey1", "sbac", "na", "success");
+		UUID oppkey = UUID.randomUUID();
+		when(_dao.extendingOppGracePeriod(oppkey, "user", 4, true, "na")).thenReturn(result);
+
+		// test with student id and session id
+		mockMvc.perform(post("/rest/extendingOppGracePeriod").param("oppkey", String.format("%s", oppkey))
+				.param("reason", "na").param("dayincrement", "100").param("requestor", "user")
+				.param("selectedsitting", "4").param("doupdate", "true").contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.parseMediaType("application/json;charset=UTF-8"))).andExpect(status().isOk())
+				.andExpect(jsonPath("$.status", Matchers.comparesEqualTo("success")))
+				.andExpect(jsonPath("$.appKey", Matchers.comparesEqualTo("appkey1")))
+				.andExpect(jsonPath("$.context", Matchers.comparesEqualTo("sbac")))
+				.andExpect(jsonPath("$.reason", Matchers.comparesEqualTo("na")));
+
+		// test with no request parameter
+		mockMvc.perform(post("/rest/extendingOppGracePeriod")).andExpect(status().isBadRequest());
+	}
+
+	@Test
+	public void reopen() throws Exception {
+		ProcedureResult result = this.getResult("appkey1", "sbac", "na", "success");
+		UUID oppkey = UUID.randomUUID();
+		when(_dao.reopenOpportunity(oppkey, "user", "na")).thenReturn(result);
+
+		// test with student id and session id
+		mockMvc.perform(post("/rest/reopenOpportunity").param("oppkey", String.format("%s", oppkey))
+				.param("reason", "na").param("requestor", "user").contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.parseMediaType("application/json;charset=UTF-8"))).andExpect(status().isOk())
+				.andExpect(jsonPath("$.status", Matchers.comparesEqualTo("success")))
+				.andExpect(jsonPath("$.appKey", Matchers.comparesEqualTo("appkey1")))
+				.andExpect(jsonPath("$.context", Matchers.comparesEqualTo("sbac")))
+				.andExpect(jsonPath("$.reason", Matchers.comparesEqualTo("na")));
+
+		// test with no request parameter
+		mockMvc.perform(post("/rest/reopenOpportunity")).andExpect(status().isBadRequest());
+	}
+
+	@Test
+	public void restore() throws Exception {
+		ProcedureResult result = this.getResult("appkey1", "sbac", "na", "success");
+		UUID oppkey = UUID.randomUUID();
+		when(_dao.restoreTestOpportunity(oppkey, "user", "na")).thenReturn(result);
+
+		// test with student id and session id
+		mockMvc.perform(post("/rest/restoreTestOpportunity").param("oppkey", String.format("%s", oppkey))
+				.param("reason", "na").param("requestor", "user").contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.parseMediaType("application/json;charset=UTF-8"))).andExpect(status().isOk())
+				.andExpect(jsonPath("$.status", Matchers.comparesEqualTo("success")))
+				.andExpect(jsonPath("$.appKey", Matchers.comparesEqualTo("appkey1")))
+				.andExpect(jsonPath("$.context", Matchers.comparesEqualTo("sbac")))
+				.andExpect(jsonPath("$.reason", Matchers.comparesEqualTo("na")));
+
+		// test with no request parameter
+		mockMvc.perform(post("/rest/restoreTestOpportunity")).andExpect(status().isBadRequest());
+	}
+
+	@Test
+	public void invalidate() throws Exception {
+		ProcedureResult result = this.getResult("appkey1", "sbac", "na", "success");
+		UUID oppkey = UUID.randomUUID();
+		when(_dao.invalidateTestOpportunity(oppkey, "user", "na")).thenReturn(result);
+
+		// test with student id and session id
+		mockMvc.perform(post("/rest/invalidateTestOpportunity").param("oppkey", String.format("%s", oppkey))
+				.param("reason", "na").param("requestor", "user").contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.parseMediaType("application/json;charset=UTF-8"))).andExpect(status().isOk())
+				.andExpect(jsonPath("$.status", Matchers.comparesEqualTo("success")))
+				.andExpect(jsonPath("$.appKey", Matchers.comparesEqualTo("appkey1")))
+				.andExpect(jsonPath("$.context", Matchers.comparesEqualTo("sbac")))
+				.andExpect(jsonPath("$.reason", Matchers.comparesEqualTo("na")));
+
+		// test with no request parameter
+		mockMvc.perform(post("/rest/invalidateTestOpportunity")).andExpect(status().isBadRequest());
+	}
+
+	@Test
+	public void reset() throws Exception {
+		ProcedureResult result = this.getResult("appkey1", "sbac", "na", "success");
+		UUID oppkey = UUID.randomUUID();
+		when(_dao.resetOpportunity(oppkey, "user", "na")).thenReturn(result);
+
+		// test with student id and session id
+		mockMvc.perform(post("/rest/resetOpportunity").param("oppkey", String.format("%s", oppkey))
+				.param("reason", "na").param("requestor", "user").contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.parseMediaType("application/json;charset=UTF-8"))).andExpect(status().isOk())
+				.andExpect(jsonPath("$.status", Matchers.comparesEqualTo("success")))
+				.andExpect(jsonPath("$.appKey", Matchers.comparesEqualTo("appkey1")))
+				.andExpect(jsonPath("$.context", Matchers.comparesEqualTo("sbac")))
+				.andExpect(jsonPath("$.reason", Matchers.comparesEqualTo("na")));
+
+		// test with no request parameter
+		mockMvc.perform(post("/rest/resetOpportunity")).andExpect(status().isBadRequest());
 	}
 
 	public OpportunitySerializable getOpps() {

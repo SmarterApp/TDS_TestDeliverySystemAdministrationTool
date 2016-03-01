@@ -141,7 +141,7 @@ public class TDSAdminController {
 	public ProcedureResult extendingOppGracePeriod(HttpServletResponse response,
 			@RequestParam(value = "oppkey", required = false) UUID v_oppKey,
 			@RequestParam(value = "requestor", required = false) String v_requestor,
-			@RequestParam(value = "selectedsitting", required = false) int v_selectedsitting,
+			@RequestParam(value = "selectedsitting", required = false, defaultValue = "0") int v_selectedsitting,
 			@RequestParam(value = "doupdate", required = false) boolean v_doupdate,
 			@RequestParam(value = "reason", required = false) String v_reason) throws HttpResponseException {
 		ProcedureResult result = null;
@@ -162,7 +162,7 @@ public class TDSAdminController {
 	public ProcedureResult alterOpportunityExpiration(HttpServletResponse response,
 			@RequestParam(value = "oppkey", required = false) UUID v_oppKey,
 			@RequestParam(value = "requestor", required = false) String v_requestor,
-			@RequestParam(value = "dayincrement", required = false) int v_dayincrement,
+			@RequestParam(value = "dayincrement", required = false, defaultValue = "0") int v_dayincrement,
 			@RequestParam(value = "reason", required = false) String v_reason) throws HttpResponseException {
 
 		ProcedureResult result = null;
