@@ -67,7 +67,7 @@ public class TDSAdminController {
 			@RequestParam(value = "requestor", required = false) String v_requestor,
 			@RequestParam(value = "reason", required = false) String v_reason) throws HttpResponseException {
 		ProcedureResult result = null;
-		if (v_oppKey == null || StringUtils.isEmpty(v_requestor) || StringUtils.isEmpty(v_reason)) {
+		if (v_oppKey == null) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
 			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST, "Needs parameters: oppkey, requestor, reason");
 		}
@@ -86,7 +86,7 @@ public class TDSAdminController {
 			@RequestParam(value = "requestor", required = false) String v_requestor,
 			@RequestParam(value = "reason", required = false) String v_reason) throws HttpResponseException {
 		ProcedureResult result = null;
-		if (v_oppKey == null || StringUtils.isEmpty(v_requestor) || StringUtils.isEmpty(v_reason)) {
+		if (v_oppKey == null) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
 			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST, "Needs parameters: oppkey, requestor, reason");
 		}
@@ -105,7 +105,7 @@ public class TDSAdminController {
 			@RequestParam(value = "requestor", required = false) String v_requestor,
 			@RequestParam(value = "reason", required = false) String v_reason) throws HttpResponseException {
 		ProcedureResult result = null;
-		if (v_oppKey == null || StringUtils.isEmpty(v_requestor) || StringUtils.isEmpty(v_reason)) {
+		if (v_oppKey == null) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
 			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST, "Needs parameters: oppkey, requestor, reason");
 		}
@@ -124,7 +124,7 @@ public class TDSAdminController {
 			@RequestParam(value = "requestor", required = false) String v_requestor,
 			@RequestParam(value = "reason", required = false) String v_reason) throws HttpResponseException {
 		ProcedureResult result = null;
-		if (v_oppKey == null || StringUtils.isEmpty(v_requestor) || StringUtils.isEmpty(v_reason)) {
+		if (v_oppKey == null) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
 			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST, "Needs parameters: oppkey, requestor, reason");
 		}
@@ -145,7 +145,7 @@ public class TDSAdminController {
 			@RequestParam(value = "doupdate", required = false) boolean v_doupdate,
 			@RequestParam(value = "reason", required = false) String v_reason) throws HttpResponseException {
 		ProcedureResult result = null;
-		if (v_oppKey == null || StringUtils.isEmpty(v_requestor) || StringUtils.isEmpty(v_reason)) {
+		if (v_oppKey == null) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
 			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST, "Needs parameters: oppkey, requestor, reason");
 		}
@@ -166,7 +166,7 @@ public class TDSAdminController {
 			@RequestParam(value = "reason", required = false) String v_reason) throws HttpResponseException {
 
 		ProcedureResult result = null;
-		if (v_oppKey == null || StringUtils.isEmpty(v_requestor) || StringUtils.isEmpty(v_reason)) {
+		if (v_oppKey == null) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
 			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST, "Needs parameters: oppkey, requestor, reason");
 		}
