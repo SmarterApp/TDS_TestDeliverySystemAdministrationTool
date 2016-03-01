@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<title>TDS Admin Home Page</title>
+</h:head>
+
+<h:body>
+	<h:form>
+		<h:selectOneMenu id="procedure" value="#{defaultBacking.procedure}"
+			valueChangeListener="#{defaultBacking.procedureChange()}"
+			onchange="submit()">
+			<f:selectItems value="#{defaultBacking.procedures.entrySet()}"
+				var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}"></f:selectItems>
+		</h:selectOneMenu>
+		<br />
+		<br />
+
+		<h:outputLabel value="Student ID"></h:outputLabel>
+		<h:inputText id="essid" value="#{defaultBacking.extssid}"
+			maxlength="40" binding="#{studentid}">
+			<f:validator validatorId="tdsValidator" />
+		</h:inputText>
+		<h:message for="essid" style="color:red"></h:message>
+		<h:selectOneRadio value="#{defaultBacking.radiossid}"
+			layout="pageDirection">
+			<f:selectItem itemValue="ssid" itemLabel="Use SSID" />
+			<f:selectItem itemValue="extssid" itemLabel="Use External SSID" />
+		</h:selectOneRadio>
+		<h:outputText value="#{defaultBacking.selectRadioText}"
+			style="color:red"></h:outputText>
+		<h:outputText value="&#160;" />
+		<h:outputText value="&#160;" />
+		<h:outputText value="&#160;" />
+		<h:outputLabel value="Session ID"></h:outputLabel>
+		<h:inputText id="session" binding="#{sessionid}" maxlength="40"
+			value="#{defaultBacking.sessionid}">
+			<f:validator validatorId="tdsValidator" style="color:red" />
+		</h:inputText>
+		<h:message for="session" style="color:red"></h:message>
+		<br />
+		<br />
+		<h:commandButton type="submit" id="search"
+			actionListener="#{defaultBacking.searchOpportunity(studentid.value,sessionid.value)}"
+			style="horizontal-align:middle;" value="Search for Opportunities"></h:commandButton>
+		<h:outputText value="#{defaultBacking.selectIdText}" style="color:red"></h:outputText>
+		<br />
+		<br />
+		<br />
+		<p:dataTable value="#{defaultBacking.lazyOpps}" var="opp" id="mytable"
+			rendered="#{defaultBacking.oppCount>0}" selectionMode="single"
+			paginator="true" rows="5" lazy="true" tableStyle="table-layout:auto;"
+			resizableColumns="true" editable="true"
+			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			rowsPerPageTemplate="5,10,15">
+			<p:column>
+				<h:selectBooleanCheckbox value="#{opp.selected}">
+				</h:selectBooleanCheckbox>
+			</p:column>
+			<p:column sortBy="altSsid">
+				<f:facet name="header">Ext.SSID</f:facet>
+    				#{opp.altSsid}
+    			</p:column>
+			<p:column sortBy="name">
+				<f:facet name="header">Name</f:facet>
+    				#{opp.name}
+    			</p:column>
+			<p:column sortBy="testName">
+				<f:facet name="header">Test Name</f:facet>
+    				#{opp.testName}
+    			</p:column>
+			<p:column sortBy="sessionId">
+				<f:facet name="header">Session ID</f:facet>
+    				#{opp.sessionId}
+    			</p:column>
+			<p:column sortBy="status">
+				<f:facet name="header">Status</f:facet>
+    				#{opp.status}
+    			</p:column>
+			<p:column sortBy="dateStarted">
+				<f:facet name="header">Started On</f:facet>
+				<h:outputText value="#{opp.dateStarted}">
+					<f:convertDateTime pattern="dd.MM.yyyy" />
+				</h:outputText>
+			</p:column>
+			<p:column sortBy="dateExpired">
+				<f:facet name="header">Expired On</f:facet>
+				<h:outputText value="#{opp.dateExpired}">
+					<f:convertDateTime pattern="dd.MM.yyyy" />
+				</h:outputText>
+			</p:column>
+			<p:column sortBy="dateCompleted">
+				<f:facet name="header">Completed On</f:facet>
+				<h:outputText value="#{opp.dateCompleted}">
+					<f:convertDateTime pattern="dd.MM.yyyy" />
+				</h:outputText>
+			</p:column>
+			<p:column sortBy="datePaused">
+				<f:facet name="header">Paused On</f:facet>
+				<h:outputText value="#{opp.datePaused}">
+					<f:convertDateTime pattern="dd.MM.yyyy" />
+				</h:outputText>
+			</p:column>
+			<p:column sortBy="restart">
+				<f:facet name="header">Restarts</f:facet>
+    				#{opp.restart}
+    			</p:column>
+			<p:column sortBy="segmentPosition"
+				rendered='#{"changeperm".equals(defaultBacking.procedure)}'>
+				<f:facet name="header">Segment Position</f:facet>
+    				#{opp.segmentPosition}
+    			</p:column>
+			<p:column rendered='#{"changeperm".equals(defaultBacking.procedure)}'>
+				<f:facet name="header">Permeable</f:facet>
+				<h:selectBooleanCheckbox value="#{opp.permeable}" />
+			</p:column>
+			<p:column sortBy="segmentName"
+				rendered='#{"changeperm".equals(defaultBacking.procedure)}'>
+				<f:facet name="header">Segment Name</f:facet>
+    				#{opp.segmentName}
+    			</p:column>
+			<p:column rendered='#{"extend".equals(defaultBacking.procedure)}'>
+				<f:facet name="header">SelectedSitting</f:facet>
+				<h:inputText value="#{opp.selectedSitting}"
+					onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;">
+				</h:inputText>
+			</p:column>
+			<p:column rendered='#{"extend".equals(defaultBacking.procedure)}'>
+				<f:facet name="header">DoUpdate</f:facet>
+				<h:selectBooleanCheckbox value="#{opp.doUpdate}" />
+			</p:column>
+			<p:column rendered='#{"alter".equals(defaultBacking.procedure)}'>
+				<f:facet name="header">DayIncrement</f:facet>
+				<h:inputText value="#{opp.dayIncrement}"
+					onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;">
+				</h:inputText>
+			</p:column>
+			<p:column rendered='#{"changeperm".equals(defaultBacking.procedure)}'>
+				<f:facet name="header">Restore On</f:facet>
+				<h:selectOneMenu value="#{opp.restoreOn}">
+					<f:selectItem itemLabel="Segment" itemValue="segment"></f:selectItem>
+					<f:selectItem itemLabel="Paused" itemValue="paused"></f:selectItem>
+					<f:selectItem itemLabel="Completed" itemValue="completed"></f:selectItem>
+				</h:selectOneMenu>
+			</p:column>
+			<p:column>
+				<f:facet name="header">Result</f:facet>
+				#{opp.result}
+			</p:column>
+		</p:dataTable>
+
+		<h:outputLabel>Reason</h:outputLabel>
+		<h:inputTextarea value="#{defaultBacking.reason}"></h:inputTextarea>
+		<h:commandButton type="submit" id="execute"
+			actionListener="#{defaultBacking.execute()}"
+			style="horizontal-align:middle;" value="Perform Operation"></h:commandButton>
+	</h:form>
+</h:body>
+</html>
