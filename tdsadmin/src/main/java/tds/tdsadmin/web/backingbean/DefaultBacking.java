@@ -72,7 +72,6 @@ public class DefaultBacking implements Serializable {
 
 	public HashMap<String, String> getProcedures() {
 		procedures = new HashMap<String, String>();
-		procedures.put("none", "Procedure to call");
 		procedures.put("changeperm", "Change Segment Permeability");
 		procedures.put("reset", "Reset Opportunity");
 		procedures.put("invalidate", "Invalidate Opportunity");
