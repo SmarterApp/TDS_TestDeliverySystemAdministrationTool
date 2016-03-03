@@ -50,6 +50,8 @@
 		<br />
 		<br />
 		<br />
+		<h:outputText rendered="#{defaultBacking.nomatch}" style="color:red">No matching opportunity found.</h:outputText>
+		<br />
 		<p:dataTable value="#{defaultBacking.lazyOpps}" var="opp" id="mytable"
 			rendered="#{defaultBacking.oppCount>0}" selectionMode="single"
 			paginator="true" rows="5" lazy="true" tableStyle="table-layout:auto;"
