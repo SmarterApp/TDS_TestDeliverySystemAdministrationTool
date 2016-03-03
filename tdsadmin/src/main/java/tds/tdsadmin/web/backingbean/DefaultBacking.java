@@ -39,6 +39,7 @@ public class DefaultBacking implements Serializable {
 	private HashMap<String, String> procedures = null;
 	private String procedure = null;
 	private List<TestOpportunity> opportunities = new ArrayList<TestOpportunity>();
+	private List<TestOpportunity> selectedOpportunities = new ArrayList<TestOpportunity>();
 	private String selectIdText = null;
 	private String selectRadioText = null;
 	private String requestor = null;
@@ -153,7 +154,7 @@ public class DefaultBacking implements Serializable {
 	}
 
 	public boolean getExecuteDisabled() {
-		if (this.selectedOpportunites != null && this.selectedOpportunites.size() > 0)
+		if (this.selectedOpportunities != null && this.selectedOpportunities.size() > 0)
 			return false;
 		return true;
 	}
@@ -166,6 +167,8 @@ public class DefaultBacking implements Serializable {
 		if (!validateInput(extSsId, sessionId))
 			return false;
 
+		// clear selectedOpportunities
+		this.selectedOpportunities.clear();
 		this.opportunities.clear();
 
 		HttpURLConnection connection = null;
@@ -239,9 +242,7 @@ public class DefaultBacking implements Serializable {
 			api = "restoreTestOpportunity";
 			break;
 		}
-		for (TestOpportunity opp : this.opportunities) {
-			if (!opp.getSelected())
-				continue;
+		for (TestOpportunity opp : this.selectedOpportunities) {
 			ProcedureResult result = executeProcedure(opp, api);
 			if (result != null)
 				opp.setResult(result.getStatus());
@@ -339,8 +340,21 @@ public class DefaultBacking implements Serializable {
 		return urlParameters;
 	}
 
+	public void addorRemoveOpportunity(TestOpportunity opp) {
+		// TestOpportunity opp = null;
+		if (this.selectedOpportunities.contains(opp)) {
+			this.selectedOpportunities.remove(this.selectedOpportunities.indexOf(opp));
+		} else {
+			this.selectedOpportunities.add(opp);
+		}
+	}
+
 	public void procedureChange() {
+		for (TestOpportunity opp : this.selectedOpportunities) {
+			opp.setSelected(false);
+		}
 		this.opportunities.clear();
+		this.selectedOpportunities.clear();
 		this.setOppCount(0);
 		while (lazyOpps != null)
 			this.lazyOpps = null;
