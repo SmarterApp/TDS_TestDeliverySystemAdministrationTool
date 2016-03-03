@@ -39,7 +39,8 @@ public class DefaultBacking implements Serializable {
 	private HashMap<String, String> procedures = null;
 	private String procedure = null;
 	private List<TestOpportunity> opportunities = new ArrayList<TestOpportunity>();
-//	private List<TestOpportunity> selectedOpportunities = new ArrayList<TestOpportunity>();
+	// private List<TestOpportunity> selectedOpportunities = new
+	// ArrayList<TestOpportunity>();
 	private String selectIdText = null;
 	private String selectRadioText = null;
 	private String requestor = null;
@@ -155,10 +156,12 @@ public class DefaultBacking implements Serializable {
 	}
 
 	public boolean getExecuteDisabled() {
-/*		if (this.selectedOpportunities != null && this.selectedOpportunities.size() > 0)
-			return false;*/
-		for(TestOpportunity opp:this.opportunities)
-			if(opp.getSelected())
+		/*
+		 * if (this.selectedOpportunities != null &&
+		 * this.selectedOpportunities.size() > 0) return false;
+		 */
+		for (TestOpportunity opp : this.opportunities)
+			if (opp.getSelected())
 				return false;
 		return true;
 	}
@@ -180,7 +183,7 @@ public class DefaultBacking implements Serializable {
 			return false;
 
 		// clear selectedOpportunities
-		//this.selectedOpportunities.clear();
+		// this.selectedOpportunities.clear();
 		this.opportunities.clear();
 
 		HttpURLConnection connection = null;
@@ -257,13 +260,16 @@ public class DefaultBacking implements Serializable {
 			break;
 		}
 		for (TestOpportunity opp : this.opportunities) {
-			if(!opp.getSelected())
+			if (!opp.getSelected())
 				continue;
 			ProcedureResult result = executeProcedure(opp, api);
-			if (result != null)
+			if (result != null) {
 				opp.setResult(result.getStatus());
-			else
+				opp.setReason(result.getReason());
+			} else {
 				opp.setResult("failed");
+				opp.setReason("No information available.");
+			}
 			opp.setSelected(false);
 		}
 	}
@@ -356,21 +362,21 @@ public class DefaultBacking implements Serializable {
 		return urlParameters;
 	}
 
-/*	public void addorRemoveOpportunity(TestOpportunity opp) {
-		// TestOpportunity opp = null;
-		if (this.selectedOpportunities.contains(opp)) {
-			this.selectedOpportunities.remove(this.selectedOpportunities.indexOf(opp));
-		} else {
-			this.selectedOpportunities.add(opp);
-		}
-	}*/
+	/*
+	 * public void addorRemoveOpportunity(TestOpportunity opp) { //
+	 * TestOpportunity opp = null; if (this.selectedOpportunities.contains(opp))
+	 * {
+	 * this.selectedOpportunities.remove(this.selectedOpportunities.indexOf(opp)
+	 * ); } else { this.selectedOpportunities.add(opp); } }
+	 */
 
 	public void procedureChange() {
-		/*for (TestOpportunity opp : this.selectedOpportunities) {
-			opp.setSelected(false);
-		}*/
+		/*
+		 * for (TestOpportunity opp : this.selectedOpportunities) {
+		 * opp.setSelected(false); }
+		 */
 		this.opportunities.clear();
-//		this.selectedOpportunities.clear();
+		// this.selectedOpportunities.clear();
 		this.setOppCount(0);
 		while (lazyOpps != null)
 			this.lazyOpps = null;

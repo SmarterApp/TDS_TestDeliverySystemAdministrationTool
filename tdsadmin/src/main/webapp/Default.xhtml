@@ -50,16 +50,15 @@
 		<br />
 		<br />
 		<br />
-		
+
 		<p:dataTable value="#{defaultBacking.lazyOpps}" var="opp" id="mytable"
 			rendered="#{defaultBacking.oppCount>0}" selectionMode="single"
 			paginator="true" rows="5" lazy="true" tableStyle="table-layout:auto;"
-			resizableColumns="true" editable="true"
+			resizableColumns="true" editable="true" rowIndexVar="index"
 			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 			rowsPerPageTemplate="5,10,15">
 			<p:column>
-				<h:selectBooleanCheckbox value="#{opp.selected}"
-					onchange="submit()">
+				<h:selectBooleanCheckbox value="#{opp.selected}" onchange="submit()">
 				</h:selectBooleanCheckbox>
 			</p:column>
 			<p:column sortBy="altSsid">
@@ -146,8 +145,11 @@
 			</p:column>
 			<p:column sortBy="result">
 				<f:facet name="header">Result</f:facet>
-				#{opp.result}
+				<h:outputText value="#{opp.result}" id="result">
+				</h:outputText>
+				<p:tooltip id="mytooltip" for="result" value="#{opp.reason}"></p:tooltip>
 			</p:column>
+
 		</p:dataTable>
 
 		<h:outputLabel>Reason</h:outputLabel>
