@@ -49,6 +49,7 @@ public class DefaultBacking implements Serializable {
 	private LazyDataModel<TestOpportunity> lazyOpps;
 	private boolean executeDisabled;
 	private boolean nomatch;
+	private String executionResult;
 
 	public String getRadiossid() {
 		return radiossid;
@@ -178,6 +179,14 @@ public class DefaultBacking implements Serializable {
 		this.nomatch = nomatch;
 	}
 
+	public String getExecutionResult() {
+		return executionResult;
+	}
+
+	public void setExecutionResult(String executionResult) {
+		this.executionResult = executionResult;
+	}
+
 	public boolean searchOpportunity(String extSsId, String sessionId) {
 		if (!validateInput(extSsId, sessionId))
 			return false;
@@ -185,6 +194,7 @@ public class DefaultBacking implements Serializable {
 		// clear selectedOpportunities
 		// this.selectedOpportunities.clear();
 		this.opportunities.clear();
+		this.setExecutionResult(null);
 
 		HttpURLConnection connection = null;
 		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
@@ -259,6 +269,8 @@ public class DefaultBacking implements Serializable {
 			api = "restoreTestOpportunity";
 			break;
 		}
+		String msg = "";
+		int success = 0, failure = 0;
 		for (TestOpportunity opp : this.opportunities) {
 			if (!opp.getSelected())
 				continue;
@@ -271,7 +283,13 @@ public class DefaultBacking implements Serializable {
 				opp.setReason("No information available.");
 			}
 			opp.setSelected(false);
+			if ("success".equals(opp.getResult()))
+				success++;
+			else
+				failure++;
 		}
+		msg += "Succes:" + success + ", failure:" + failure;
+		this.setExecutionResult(msg);
 	}
 
 	private ProcedureResult executeProcedure(TestOpportunity testOpp, String api) {
@@ -380,5 +398,6 @@ public class DefaultBacking implements Serializable {
 		this.setOppCount(0);
 		while (lazyOpps != null)
 			this.lazyOpps = null;
+		this.setExecutionResult(null);
 	}
 }
