@@ -73,8 +73,9 @@
     			</p:column>
 			<p:column sortBy="testName">
 				<f:facet name="header">Test Name</f:facet>
-    				#{opp.testName}
-    			</p:column>
+				<h:outputText id="subject" value="#{opp.subject}"></h:outputText>
+				<p:tooltip id="subjecttip" for="subject" value="#{opp.testName}"></p:tooltip>
+			</p:column>
 			<p:column sortBy="sessionId">
 				<f:facet name="header">Session ID</f:facet>
     				#{opp.sessionId}
