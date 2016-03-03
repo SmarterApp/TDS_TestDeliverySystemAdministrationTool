@@ -45,6 +45,7 @@ public class DefaultBacking implements Serializable {
 	private String reason = null;
 	private int oppCount = 0;
 	private LazyDataModel<TestOpportunity> lazyOpps;
+	private boolean executeDisabled;
 
 	public String getRadiossid() {
 		return radiossid;
@@ -149,6 +150,16 @@ public class DefaultBacking implements Serializable {
 
 	public void setLazyOpps(List<TestOpportunity> lazyOpps) {
 		this.lazyOpps = new LazyOppDataModel(lazyOpps);
+	}
+
+	public boolean getExecuteDisabled() {
+		if (this.selectedOpportunites != null && this.selectedOpportunites.size() > 0)
+			return false;
+		return true;
+	}
+
+	public void setExecuteDisabled(boolean executeDisabled) {
+		this.executeDisabled = executeDisabled;
 	}
 
 	public boolean searchOpportunity(String extSsId, String sessionId) {
