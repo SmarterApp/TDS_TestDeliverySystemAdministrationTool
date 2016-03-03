@@ -156,7 +156,8 @@
 
 		<h:outputLabel>Reason</h:outputLabel>
 		<h:inputTextarea value="#{defaultBacking.reason}"></h:inputTextarea>
-		<h:commandButton type="submit" id="execute"
+		<h:commandButton type="submit" id="executeProcedure"
+			disabled="#{defaultBacking.executeDisabled}"
 			actionListener="#{defaultBacking.execute()}"
 			style="horizontal-align:middle;" value="Perform Operation"></h:commandButton>
 	</h:form>
