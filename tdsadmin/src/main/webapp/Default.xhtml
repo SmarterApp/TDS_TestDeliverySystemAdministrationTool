@@ -87,25 +87,25 @@
 			<p:column sortBy="dateStarted">
 				<f:facet name="header">Started On</f:facet>
 				<h:outputText value="#{opp.dateStarted}">
-					<f:convertDateTime pattern="dd.MM.yyyy" />
+					<f:convertDateTime pattern="dd-MMM-yyyy" />
 				</h:outputText>
 			</p:column>
 			<p:column sortBy="dateExpired">
 				<f:facet name="header">Expired On</f:facet>
 				<h:outputText value="#{opp.dateExpired}">
-					<f:convertDateTime pattern="dd.MM.yyyy" />
+					<f:convertDateTime pattern="dd-MMM-yyyy" />
 				</h:outputText>
 			</p:column>
 			<p:column sortBy="dateCompleted">
 				<f:facet name="header">Completed On</f:facet>
 				<h:outputText value="#{opp.dateCompleted}">
-					<f:convertDateTime pattern="dd.MM.yyyy" />
+					<f:convertDateTime pattern="dd-MMM-yyyy" />
 				</h:outputText>
 			</p:column>
 			<p:column sortBy="datePaused">
 				<f:facet name="header">Paused On</f:facet>
 				<h:outputText value="#{opp.datePaused}">
-					<f:convertDateTime pattern="dd.MM.yyyy" />
+					<f:convertDateTime pattern="dd-MMM-yyyy" />
 				</h:outputText>
 			</p:column>
 			<p:column sortBy="restart">
