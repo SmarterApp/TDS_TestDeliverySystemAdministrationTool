@@ -39,7 +39,7 @@ public class DefaultBacking implements Serializable {
 	private HashMap<String, String> procedures = null;
 	private String procedure = null;
 	private List<TestOpportunity> opportunities = new ArrayList<TestOpportunity>();
-	private List<TestOpportunity> selectedOpportunities = new ArrayList<TestOpportunity>();
+//	private List<TestOpportunity> selectedOpportunities = new ArrayList<TestOpportunity>();
 	private String selectIdText = null;
 	private String selectRadioText = null;
 	private String requestor = null;
@@ -47,6 +47,7 @@ public class DefaultBacking implements Serializable {
 	private int oppCount = 0;
 	private LazyDataModel<TestOpportunity> lazyOpps;
 	private boolean executeDisabled;
+	private boolean nomatch;
 
 	public String getRadiossid() {
 		return radiossid;
@@ -154,8 +155,11 @@ public class DefaultBacking implements Serializable {
 	}
 
 	public boolean getExecuteDisabled() {
-		if (this.selectedOpportunities != null && this.selectedOpportunities.size() > 0)
-			return false;
+/*		if (this.selectedOpportunities != null && this.selectedOpportunities.size() > 0)
+			return false;*/
+		for(TestOpportunity opp:this.opportunities)
+			if(opp.getSelected())
+				return false;
 		return true;
 	}
 
@@ -163,12 +167,20 @@ public class DefaultBacking implements Serializable {
 		this.executeDisabled = executeDisabled;
 	}
 
+	public boolean getNomatch() {
+		return nomatch;
+	}
+
+	public void setNomatch(boolean nomatch) {
+		this.nomatch = nomatch;
+	}
+
 	public boolean searchOpportunity(String extSsId, String sessionId) {
 		if (!validateInput(extSsId, sessionId))
 			return false;
 
 		// clear selectedOpportunities
-		this.selectedOpportunities.clear();
+		//this.selectedOpportunities.clear();
 		this.opportunities.clear();
 
 		HttpURLConnection connection = null;
@@ -214,6 +226,8 @@ public class DefaultBacking implements Serializable {
 		} finally {
 			connection.disconnect();
 		}
+		if (this.opportunities.size() <= 0)
+			setNomatch(true);
 		return true;
 	}
 
@@ -242,7 +256,9 @@ public class DefaultBacking implements Serializable {
 			api = "restoreTestOpportunity";
 			break;
 		}
-		for (TestOpportunity opp : this.selectedOpportunities) {
+		for (TestOpportunity opp : this.opportunities) {
+			if(!opp.getSelected())
+				continue;
 			ProcedureResult result = executeProcedure(opp, api);
 			if (result != null)
 				opp.setResult(result.getStatus());
@@ -340,21 +356,21 @@ public class DefaultBacking implements Serializable {
 		return urlParameters;
 	}
 
-	public void addorRemoveOpportunity(TestOpportunity opp) {
+/*	public void addorRemoveOpportunity(TestOpportunity opp) {
 		// TestOpportunity opp = null;
 		if (this.selectedOpportunities.contains(opp)) {
 			this.selectedOpportunities.remove(this.selectedOpportunities.indexOf(opp));
 		} else {
 			this.selectedOpportunities.add(opp);
 		}
-	}
+	}*/
 
 	public void procedureChange() {
-		for (TestOpportunity opp : this.selectedOpportunities) {
+		/*for (TestOpportunity opp : this.selectedOpportunities) {
 			opp.setSelected(false);
-		}
+		}*/
 		this.opportunities.clear();
-		this.selectedOpportunities.clear();
+//		this.selectedOpportunities.clear();
 		this.setOppCount(0);
 		while (lazyOpps != null)
 			this.lazyOpps = null;
