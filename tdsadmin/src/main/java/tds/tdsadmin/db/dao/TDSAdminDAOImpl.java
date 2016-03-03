@@ -48,6 +48,8 @@ public class TDSAdminDAOImpl extends AbstractDAO implements TDSAdminDAO {
 					opp.setName(record.<String> get("testeename"));
 				if (record.hasColumn("_efk_testid"))
 					opp.setTestName(record.<String> get("_efk_testid"));
+				if (record.hasColumn("subject"))
+					opp.setSubject(record.<String> get("subject"));
 				if (record.hasColumn("datecompleted"))
 					opp.setDateCompleted(record.<Date> get("datecompleted"));
 				if (record.hasColumn("dateexpired"))

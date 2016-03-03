@@ -13,6 +13,7 @@ public class TestOpportunity implements Serializable {
 	private String altSsid;
 	private String name;
 	private String testName;
+	private String subject;
 	private String sessionId;
 	private String status;
 	private Date dateStarted;
@@ -62,6 +63,14 @@ public class TestOpportunity implements Serializable {
 
 	public void setTestName(String testName) {
 		this.testName = testName;
+	}
+
+	public String getSubject() {
+		return subject;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
 	}
 
 	public String getSessionId() {
