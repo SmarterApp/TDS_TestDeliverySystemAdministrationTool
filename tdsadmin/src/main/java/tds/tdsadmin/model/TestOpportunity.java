@@ -199,6 +199,8 @@ public class TestOpportunity implements Serializable {
 	}
 
 	public void setDayIncrement(int dayIncrement) {
+		if (dayIncrement > 0)
+			this.setSelected(true);
 		this.dayIncrement = dayIncrement;
 	}
 
