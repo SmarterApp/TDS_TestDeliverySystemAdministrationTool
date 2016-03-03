@@ -29,7 +29,7 @@ public class TestOpportunity implements Serializable {
 	private String reason;
 	private boolean selected;
 	private int selectedSitting;
-	private boolean doUpdate;
+	private boolean doUpdate = true;
 	private int dayIncrement;
 
 	public UUID getOppKey() {

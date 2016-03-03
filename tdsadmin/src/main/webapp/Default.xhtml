@@ -130,10 +130,6 @@
 					onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;">
 				</h:inputText>
 			</p:column>
-			<p:column rendered='#{"extend".equals(defaultBacking.procedure)}'>
-				<f:facet name="header">DoUpdate</f:facet>
-				<h:selectBooleanCheckbox value="#{opp.doUpdate}" />
-			</p:column>
 			<p:column rendered='#{"alter".equals(defaultBacking.procedure)}'>
 				<f:facet name="header">DayIncrement</f:facet>
 				<h:inputText value="#{opp.dayIncrement}"
