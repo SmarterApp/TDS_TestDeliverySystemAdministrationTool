@@ -11,15 +11,12 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.lang.StringUtils;
 import org.primefaces.model.LazyDataModel;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import tds.tdsadmin.model.OpportunitySerializable;
 import tds.tdsadmin.model.ProcedureResult;
@@ -48,7 +45,7 @@ public class DefaultBacking implements Serializable {
 	private int oppCount = 0;
 	private LazyDataModel<TestOpportunity> lazyOpps;
 	private boolean executeDisabled;
-	private boolean nomatch;
+	private String nomatch;
 	private String executionResult;
 
 	public String getRadiossid() {
@@ -171,11 +168,11 @@ public class DefaultBacking implements Serializable {
 		this.executeDisabled = executeDisabled;
 	}
 
-	public boolean getNomatch() {
+	public String getNomatch() {
 		return nomatch;
 	}
 
-	public void setNomatch(boolean nomatch) {
+	public void setNomatch(String nomatch) {
 		this.nomatch = nomatch;
 	}
 
@@ -195,6 +192,7 @@ public class DefaultBacking implements Serializable {
 		// this.selectedOpportunities.clear();
 		this.opportunities.clear();
 		this.setExecutionResult(null);
+		this.setNomatch(null);
 
 		HttpURLConnection connection = null;
 		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
@@ -240,7 +238,7 @@ public class DefaultBacking implements Serializable {
 			connection.disconnect();
 		}
 		if (this.opportunities.size() <= 0)
-			setNomatch(true);
+			setNomatch("No matching opportunity found");
 		return true;
 	}
 
@@ -399,5 +397,13 @@ public class DefaultBacking implements Serializable {
 		while (lazyOpps != null)
 			this.lazyOpps = null;
 		this.setExecutionResult(null);
+		this.setNomatch(null);
+	}
+
+	public String getStyle(String result) {
+		if ("success".equalsIgnoreCase(result))
+			return "color:green";
+		else
+			return "color:red";
 	}
 }
