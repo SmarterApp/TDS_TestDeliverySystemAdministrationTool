@@ -53,6 +53,7 @@
 
 		<h:outputText value="#{defaultBacking.executionResult}"
 			style="color:green"></h:outputText>
+		<h:outputText value="#{defaultBacking.nomatch}" style="color:red"></h:outputText>
 		<p:dataTable value="#{defaultBacking.lazyOpps}" var="opp" id="mytable"
 			rendered="#{defaultBacking.oppCount>0}" selectionMode="single"
 			paginator="true" rows="5" lazy="true" tableStyle="table-layout:auto;"
@@ -148,7 +149,8 @@
 			</p:column>
 			<p:column sortBy="result">
 				<f:facet name="header">Result</f:facet>
-				<h:outputText value="#{opp.result}" id="result">
+				<h:outputText value="#{opp.result}" id="result"
+					style="#{defaultBacking.getStyle(opp.result)}">
 				</h:outputText>
 				<p:tooltip id="mytooltip" for="result" value="#{opp.reason}"></p:tooltip>
 			</p:column>
