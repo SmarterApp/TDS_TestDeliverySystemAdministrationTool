@@ -13,7 +13,7 @@ import javax.faces.validator.ValidatorException;
 @FacesValidator("tdsValidator")
 public class TDSValidator implements Validator {
 
-	private static final String INPUT_PATTERN = "[A-Za-z0-9\\-]+";
+	private static final String INPUT_PATTERN = "[A-Za-z0-9\\-]*";
 
 	private Pattern pattern;
 	private Matcher matcher;

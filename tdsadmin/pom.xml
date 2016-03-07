@@ -26,8 +26,50 @@
 		<org.springframework-version>3.1.1.RELEASE</org.springframework-version>
 		<org.aspectj-version>1.6.10</org.aspectj-version>
 		<org.slf4j-version>1.6.6</org.slf4j-version>
+		<prog.mgmnt.client.version>0.0.4-SNAPSHOT</prog.mgmnt.client.version>
+		<sb11-mna-client.version>0.0.4-SNAPSHOT</sb11-mna-client.version>
+		<sb11-shared-code.version>0.0.6-SNAPSHOT</sb11-shared-code.version>
 	</properties>
 	<dependencies>
+		<!-- Start: Program management integration dependency -->
+		<dependency>
+			<groupId>org.opentestsystem.shared</groupId>
+			<artifactId>prog-mgmnt-client</artifactId>
+			<version>${prog.mgmnt.client.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.opentestsystem.shared</groupId>
+			<artifactId>prog-mgmnt-client-null-impl</artifactId>
+			<version>${prog.mgmnt.client.version}</version>
+		</dependency>
+		<!-- End: Program management integration dependency -->
+		<!-- Start: Monitoring and Alerting integration dependency -->
+		<dependency>
+			<groupId>org.opentestsystem.shared</groupId>
+			<artifactId>monitoring-alerting.client-null-impl</artifactId>
+			<version>${sb11-mna-client.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.opentestsystem.shared</groupId>
+			<artifactId>monitoring-alerting.client</artifactId>
+			<version> ${sb11-mna-client.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.opentestsystem.shared</groupId>
+			<artifactId>sb11-shared-code</artifactId>
+			<version>${sb11-shared-code.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.mchange</groupId>
+			<artifactId>c3p0</artifactId>
+			<scope>compile</scope>
+		</dependency>
+
+		<!-- End: Monitoring and Alerting integration dependency -->
+
 		<dependency>
 			<groupId>org.opentestsystem.shared</groupId>
 			<artifactId>shared-db</artifactId>
