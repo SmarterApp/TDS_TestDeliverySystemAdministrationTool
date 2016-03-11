@@ -9,6 +9,10 @@
 </h:head>
 
 <h:body>
+	<ul>
+		<li>Logged in as: ${userBean.getFullName()}</li>
+		<li><a href="saml/logout">Logout</a></li>
+	</ul>
 	<h:form>
 		<h:selectOneMenu id="procedure" value="#{defaultBacking.procedure}"
 			valueChangeListener="#{defaultBacking.procedureChange()}"
