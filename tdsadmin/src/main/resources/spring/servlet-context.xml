@@ -73,6 +73,8 @@
 	<beans:bean id="_tdsAdminDLL" class="tds.dll.mysql.TDSAdminDLL" />
 	<beans:bean id="tdsSettings" class="TDS.Shared.Configuration.TDSSettings"
 		scope="prototype" />
+	<beans:bean
+		class="org.opentestsystem.shared.security.service.UserServiceImpl"></beans:bean>
 
 	<context:component-scan base-package="tds.tdsadmin.rest" />
 
