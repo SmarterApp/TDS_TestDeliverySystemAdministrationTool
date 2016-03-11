@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://java.sun.com/jsf/passthrough"
+	xmlns:vt="http://java.sun.com/jsf/composite/trainer"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<title>TDS Admin Home Page</title>
+</h:head>
+
+<h:body>
+	<h:form>
+		<h:selectOneMenu id="procedure">
+			<f:selectItem itemValue="none" itemLabel="Procedure to call"></f:selectItem>
+		</h:selectOneMenu>
+		<br />
+		<br />
+		<h:outputLabel value="Student ID"></h:outputLabel>
+		<h:inputText id="studentid" value="#{defaultBacking.extssid}"></h:inputText>
+		<h:selectOneRadio value="#{defaultBacking.radiossid}"
+			layout="pageDirection">
+			<f:selectItem itemValue="ssid" itemLabel="Use SSID" />
+			<f:selectItem itemValue="extssid" itemLabel="Use External SSID" />
+		</h:selectOneRadio>
+		<h:outputText value="&#160;" />
+		<h:outputText value="&#160;" />
+		<h:outputText value="&#160;" />
+		<h:outputLabel value="Session ID"></h:outputLabel>
+		<h:inputText id="sessionid" value="#{defaultBacking.sessionid}"></h:inputText>
+
+		<br />
+		<br />
+		<h:commandButton type="submit" action="#{defaultBacking.show()}"
+			value="Search for Opportunities"></h:commandButton>
+	</h:form>
+</h:body>
+</html>
