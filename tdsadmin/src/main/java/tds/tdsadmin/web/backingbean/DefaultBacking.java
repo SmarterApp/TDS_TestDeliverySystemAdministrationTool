@@ -205,7 +205,8 @@ public class DefaultBacking implements Serializable {
 			return false;
 		}
 
-		String url = path + "/rest/getOpportunities?extSsId=%s&sessionId=%s&procedure=%s";
+		String ssid = ("ssid".equals(this.radiossid)) ? "ssId" : "extSsId";
+		String url = path + "/rest/getOpportunities?" + ssid + "=%s&sessionId=%s&procedure=%s";
 		url = String.format(url, extSsId, sessionId, procedure);
 
 		try {

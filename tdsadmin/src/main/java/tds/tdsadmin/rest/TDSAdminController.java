@@ -1,10 +1,17 @@
 package tds.tdsadmin.rest;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpResponseException;
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.opentestsystem.shared.security.domain.SbacUser;
+import org.opentestsystem.shared.trapi.ITrClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import TDS.Shared.Exceptions.ReturnStatusException;
 import tds.tdsadmin.db.abstractions.TDSAdminDAO;
 import tds.tdsadmin.model.OpportunitySerializable;
@@ -29,6 +37,32 @@ public class TDSAdminController {
 
 	@Autowired
 	TDSAdminDAO _dao = null;
+
+	@Autowired
+	ITrClient _trClient = null;
+
+	private List<String> getExtSSID(String ssid) {
+		// SbacUser user = (SbacUser)
+		// SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		List<String> externalssid = new ArrayList<String>();
+		String artUri = "student?entityId=" + ssid;
+		String response = _trClient.getForObject(artUri);
+		JsonNode node;
+		try {
+			node = new ObjectMapper().readTree(response);
+			node = node.get("searchResults");
+			if (node.isArray()) {
+				for (JsonNode child : node) {
+					String extid = child.get("externalSsid").asText();
+					if (ssid.equals(child.get("entityId").asText()) && !StringUtils.isEmpty(extid))
+						externalssid.add(extid);
+				}
+			}
+		} catch (IOException e) {
+			logger.error(e.getMessage());
+		}
+		return externalssid;
+	}
 
 	/**
 	 * @param extSsId
@@ -52,7 +86,12 @@ public class TDSAdminController {
 					"Needs either external ssid or ssid or session id");
 		}
 		try {
-			results = _dao.getOpportunities(extSsId, sessionId, procedure);
+			if (!StringUtils.isEmpty(ssId)) {
+				for (String extid : getExtSSID(ssId)) {
+					results.addAll(_dao.getOpportunities(extid, sessionId, procedure));
+				}
+			} else
+				results = _dao.getOpportunities(extSsId, sessionId, procedure);
 		} catch (ReturnStatusException e) {
 			logger.error(e.getMessage());
 		}
