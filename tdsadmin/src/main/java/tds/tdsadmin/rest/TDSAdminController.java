@@ -8,6 +8,7 @@ import org.apache.http.client.HttpResponseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,6 +40,7 @@ public class TDSAdminController {
 	 */
 	@RequestMapping(value = "/rest/getOpportunities", method = RequestMethod.GET)
 	@ResponseBody
+	@Secured({ "ROLE_Opportunity Read", "ROLE_Opportunity Modify" })
 	public OpportunitySerializable getOpportunities(HttpServletResponse response,
 			@RequestParam(value = "extSsId", required = false) String extSsId,
 			@RequestParam(value = "ssId", required = false) String ssId,
@@ -62,6 +64,7 @@ public class TDSAdminController {
 
 	@RequestMapping(value = "/rest/resetOpportunity", method = RequestMethod.POST)
 	@ResponseBody
+	@Secured({ "ROLE_Opportunity Modify" })
 	public ProcedureResult resetOpportunity(HttpServletResponse response,
 			@RequestParam(value = "oppkey", required = false) UUID v_oppKey,
 			@RequestParam(value = "requestor", required = false) String v_requestor,
@@ -81,6 +84,7 @@ public class TDSAdminController {
 
 	@RequestMapping(value = "/rest/invalidateTestOpportunity", method = RequestMethod.POST)
 	@ResponseBody
+	@Secured({ "ROLE_Opportunity Modify" })
 	public ProcedureResult invalidateTestOpportunity(HttpServletResponse response,
 			@RequestParam(value = "oppkey", required = false) UUID v_oppKey,
 			@RequestParam(value = "requestor", required = false) String v_requestor,
@@ -100,6 +104,7 @@ public class TDSAdminController {
 
 	@RequestMapping(value = "/rest/restoreTestOpportunity", method = RequestMethod.POST)
 	@ResponseBody
+	@Secured({ "ROLE_Opportunity Modify" })
 	public ProcedureResult restoreTestOpportunity(HttpServletResponse response,
 			@RequestParam(value = "oppkey", required = false) UUID v_oppKey,
 			@RequestParam(value = "requestor", required = false) String v_requestor,
@@ -119,6 +124,7 @@ public class TDSAdminController {
 
 	@RequestMapping(value = "/rest/reopenOpportunity", method = RequestMethod.POST)
 	@ResponseBody
+	@Secured({ "ROLE_Opportunity Modify" })
 	public ProcedureResult reopenOpportunity(HttpServletResponse response,
 			@RequestParam(value = "oppkey", required = false) UUID v_oppKey,
 			@RequestParam(value = "requestor", required = false) String v_requestor,
@@ -138,6 +144,7 @@ public class TDSAdminController {
 
 	@RequestMapping(value = "/rest/extendingOppGracePeriod", method = RequestMethod.POST)
 	@ResponseBody
+	@Secured({ "ROLE_Opportunity Modify" })
 	public ProcedureResult extendingOppGracePeriod(HttpServletResponse response,
 			@RequestParam(value = "oppkey", required = false) UUID v_oppKey,
 			@RequestParam(value = "requestor", required = false) String v_requestor,
@@ -159,6 +166,7 @@ public class TDSAdminController {
 
 	@RequestMapping(value = "/rest/alterOpportunityExpiration", method = RequestMethod.POST)
 	@ResponseBody
+	@Secured({ "ROLE_Opportunity Modify" })
 	public ProcedureResult alterOpportunityExpiration(HttpServletResponse response,
 			@RequestParam(value = "oppkey", required = false) UUID v_oppKey,
 			@RequestParam(value = "requestor", required = false) String v_requestor,
@@ -180,6 +188,7 @@ public class TDSAdminController {
 
 	@RequestMapping(value = "/rest/setOpportunitySegmentPerm", method = RequestMethod.POST)
 	@ResponseBody
+	@Secured({ "ROLE_Opportunity Modify" })
 	public ProcedureResult setOpportunitySegmentPerm(HttpServletResponse response,
 			@RequestParam(value = "oppkey", required = false) UUID v_oppKey,
 			@RequestParam(value = "requestor", required = false) String v_requestor,
