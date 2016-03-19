@@ -6,6 +6,9 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
+	<beans:import resource="classpath:security/securityContext.xml" />
+	<beans:import resource="classpath:security/samlmetadata-context.xml" />
+
 	<context:property-placeholder
 		local-override="true" ignore-resource-not-found="true" />
 
