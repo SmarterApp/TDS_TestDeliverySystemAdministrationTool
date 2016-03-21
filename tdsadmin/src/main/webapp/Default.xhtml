@@ -30,7 +30,7 @@ ul.adminForm {
 
 .adminForm li>input, .adminForm select, .adminForm textarea {
 	min-width: 200px;
-	margin: 0 1em 0 0;
+	margin: 0 .25em 0 0;
 }
 
 .checkHolder {
@@ -48,13 +48,13 @@ ul.adminForm {
 }
 
 .checkHolder label {
-	margin-left: 0;
+	margin-left: .5em;
 	margin-right: 20px;
 	width: auto;
 }
 
 .adminForm button {
-	margin-left: 257px;
+	margin: 0.5em 0 0.5em 252px;
 }
 /*Table style Overrides*/
 .ui-widget-header {
@@ -114,15 +114,17 @@ ul.adminForm {
 					test="#{userBean.getUser().hasPermission('ROLE_Opportunity Read') or userBean.getUser().hasPermission('ROLE_Opportunity Modify') }">
 					<h:form>
 						<ul class="adminForm">
-							<li><h:selectOneMenu id="procedure"
+							<li><h:outputLabel value="Select Procedure to Execute:"></h:outputLabel>
+								<h:selectOneMenu id="procedure"
 									value="#{defaultBacking.procedure}"
 									valueChangeListener="#{defaultBacking.procedureChange()}"
 									onchange="submit()">
+
 									<f:selectItems value="#{defaultBacking.procedures.entrySet()}"
 										var="entry" itemValue="#{entry.key}"
 										itemLabel="#{entry.value}"></f:selectItems>
 								</h:selectOneMenu></li>
-							<li><h:outputLabel value="Student ID"></h:outputLabel> <h:inputText
+							<li><h:outputLabel value="Student ID:"></h:outputLabel> <h:inputText
 									id="essid" value="#{defaultBacking.extssid}" maxlength="40"
 									binding="#{studentid}">
 									<f:validator validatorId="tdsValidator" />
@@ -130,8 +132,7 @@ ul.adminForm {
 								<fieldset>
 									<legend>Student ID</legend>
 									<div class="checkHolder">
-										<h:selectOneRadio value="#{defaultBacking.radiossid}"
-											layout="pageDirection">
+										<h:selectOneRadio value="#{defaultBacking.radiossid}">
 											<f:selectItem itemValue="ssid" itemLabel="Use SSID" />
 
 											<f:selectItem itemValue="extssid"
@@ -141,25 +142,25 @@ ul.adminForm {
 											style="color:red"></h:outputText>
 									</div>
 								</fieldset></li>
-							<li><h:outputText value="&#160;" /> <h:outputText
-									value="&#160;" /> <h:outputText value="&#160;" /> <h:outputLabel
-									value="Session ID"></h:outputLabel> <h:inputText id="session"
-									binding="#{sessionid}" maxlength="40"
+							<li><h:outputLabel value="Session ID:"></h:outputLabel> <h:inputText
+									id="session" binding="#{sessionid}" maxlength="40"
 									value="#{defaultBacking.sessionid}">
 									<f:validator validatorId="tdsValidator" style="color:red" />
 								</h:inputText></li>
 							<li><h:message for="session" style="color:red"></h:message>
 							</li>
 						</ul>
-						<div class="buttonRow">
-							<p:commandButton id="search" ajax="false"
-								actionListener="#{defaultBacking.searchOpportunity(studentid.value,sessionid.value)}"
-								style="horizontal-align:middle;"
-								styleClass="boxBtn ng-isolate-scope ng-scope"
-								value="Search for Opportunities"></p:commandButton>
-							<h:outputText value="#{defaultBacking.selectIdText}"
-								style="color:red"></h:outputText>
-							<br /> <br /> <br />
+						<div class="adminForm">
+							<div class="buttonRow">
+								<p:commandButton id="search" ajax="false"
+									actionListener="#{defaultBacking.searchOpportunity(studentid.value,sessionid.value)}"
+									style="horizontal-align:middle;"
+									styleClass="boxBtn ng-isolate-scope ng-scope"
+									value="Search for Opportunities"></p:commandButton>
+								<h:outputText value="#{defaultBacking.selectIdText}"
+									style="color:red"></h:outputText>
+
+							</div>
 						</div>
 						<h:outputText value="#{defaultBacking.executionResult}"
 							style="color:green"></h:outputText>
@@ -267,16 +268,20 @@ ul.adminForm {
 								</p:column>
 							</p:dataTable>
 						</div>
-
-						<h5 tabindex="-1">Search Filters</h5>
-						<h:outputLabel>Reason</h:outputLabel>
-						<h:inputTextarea value="#{defaultBacking.reason}"></h:inputTextarea>
-						<div class="buttonRow">
-							<p:commandButton id="executeProcedure" ajax="false"
-								disabled="#{defaultBacking.executeDisabled}"
-								actionListener="#{defaultBacking.execute()}"
-								style="horizontal-align:middle;"
-								value="Execute Procedure on Selected Opportunities"></p:commandButton>
+						<!--It would be nice to have a meangingful header for this part of the form-->
+						<!--<h5 tabindex="-1">Search Filters</h5>-->
+						<ul class="adminForm">
+							<li><h:outputLabel>Reason</h:outputLabel> <h:inputTextarea
+									value="#{defaultBacking.reason}"></h:inputTextarea></li>
+						</ul>
+						<div class="adminForm">
+							<div class="buttonRow">
+								<p:commandButton id="executeProcedure" ajax="false"
+									disabled="#{defaultBacking.executeDisabled}"
+									actionListener="#{defaultBacking.execute()}"
+									style="horizontal-align:middle;"
+									value="Execute Procedure on Selected Opportunities"></p:commandButton>
+							</div>
 						</div>
 
 					</h:form>
