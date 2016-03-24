@@ -8,8 +8,12 @@ import java.util.Map;
 
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class LazyOppDataModel extends LazyDataModel<TestOpportunity> {
+
+	private static final Logger _logger = LoggerFactory.getLogger(LazyOppDataModel.class);
 
 	private static final long serialVersionUID = 1L;
 
@@ -58,7 +62,7 @@ public class LazyOppDataModel extends LazyDataModel<TestOpportunity> {
 							break;
 						}
 					} catch (Exception e) {
-						match = false;
+						_logger.error(e.getMessage(), e);
 					}
 				}
 			}

@@ -12,6 +12,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.http.client.HttpResponseException;
 import org.opentestsystem.shared.security.domain.SbacUser;
 import org.primefaces.model.LazyDataModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.jsf.FacesContextUtils;
@@ -25,6 +27,8 @@ import tds.tdsadmin.model.LazyOppDataModel;
 @ManagedBean
 @SessionScoped
 public class DefaultBacking implements Serializable {
+
+	private static final Logger _logger = LoggerFactory.getLogger(DefaultBacking.class);
 
 	private static final long serialVersionUID = 1L;
 	private String radiossid = null;
@@ -205,7 +209,7 @@ public class DefaultBacking implements Serializable {
 			setOpportunities(opps);
 			setLazyOpps(opps);
 		} catch (HttpResponseException e) {
-			// TODO
+			_logger.error(e.getMessage(), e);
 		}
 		if (this.opportunities.size() <= 0)
 			setNomatch("No matching opportunity found");
@@ -273,7 +277,7 @@ public class DefaultBacking implements Serializable {
 				break;
 			}
 		} catch (HttpResponseException e) {
-			// TODO
+			_logger.error(e.getMessage(), e);
 		}
 		return result;
 	}
