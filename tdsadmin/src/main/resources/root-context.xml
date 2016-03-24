@@ -57,6 +57,6 @@
 	<beans:bean id="_tdsAdminDLL" class="tds.dll.mysql.TDSAdminDLL" />
 	<beans:bean id="tdsSettings" class="TDS.Shared.Configuration.TDSSettings"
 		scope="prototype" />
-	<beans:bean id="tdsAdminDAO" class="tds.tdsadmin.db.dao.TDSAdminDAOImpl" />
+	<beans:bean class="tds.tdsadmin.db.dao.TDSAdminDAOImpl" />
 	
 </beans:beans>

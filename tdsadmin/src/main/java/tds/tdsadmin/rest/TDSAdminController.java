@@ -29,7 +29,15 @@ public class TDSAdminController {
 	private static final Logger logger = LoggerFactory.getLogger(TDSAdminController.class);
 
 	@Autowired
-	TDSAdminDAO _dao = null;
+	private TDSAdminDAO _dao = null;
+
+	public TDSAdminDAO getDao() {
+		return _dao;
+	}
+
+	public void setDao(TDSAdminDAO _dao) {
+		this._dao = _dao;
+	}
 
 	/**
 	 * @param extSsId
@@ -41,6 +49,7 @@ public class TDSAdminController {
 	@RequestMapping(value = "/rest/getOpportunities", method = RequestMethod.GET)
 	@ResponseBody
 	@Secured({ "ROLE_Opportunity Read", "ROLE_Opportunity Modify" })
+	// @Secured({ "ROLE_invalid role" })
 	public OpportunitySerializable getOpportunities(HttpServletResponse response,
 			@RequestParam(value = "extSsId", required = false) String extSsId,
 			@RequestParam(value = "ssId", required = false) String ssId,
@@ -54,7 +63,7 @@ public class TDSAdminController {
 					"Needs either external ssid or ssid or session id");
 		}
 		try {
-			results = _dao.getOpportunities(extSsId, sessionId, procedure);
+			results = getDao().getOpportunities(extSsId, sessionId, procedure);
 		} catch (ReturnStatusException e) {
 			logger.error(e.getMessage());
 		}
@@ -75,7 +84,7 @@ public class TDSAdminController {
 			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST, "Needs parameters: oppkey, requestor, reason");
 		}
 		try {
-			result = _dao.resetOpportunity(v_oppKey, v_requestor, v_reason);
+			result = getDao().resetOpportunity(v_oppKey, v_requestor, v_reason);
 		} catch (ReturnStatusException e) {
 			logger.error(e.getMessage());
 		}
@@ -95,7 +104,7 @@ public class TDSAdminController {
 			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST, "Needs parameters: oppkey, requestor, reason");
 		}
 		try {
-			result = _dao.invalidateTestOpportunity(v_oppKey, v_requestor, v_reason);
+			result = getDao().invalidateTestOpportunity(v_oppKey, v_requestor, v_reason);
 		} catch (ReturnStatusException e) {
 			logger.error(e.getMessage());
 		}
@@ -115,7 +124,7 @@ public class TDSAdminController {
 			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST, "Needs parameters: oppkey, requestor, reason");
 		}
 		try {
-			result = _dao.restoreTestOpportunity(v_oppKey, v_requestor, v_reason);
+			result = getDao().restoreTestOpportunity(v_oppKey, v_requestor, v_reason);
 		} catch (ReturnStatusException e) {
 			logger.error(e.getMessage());
 		}
@@ -135,7 +144,7 @@ public class TDSAdminController {
 			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST, "Needs parameters: oppkey, requestor, reason");
 		}
 		try {
-			result = _dao.reopenOpportunity(v_oppKey, v_requestor, v_reason);
+			result = getDao().reopenOpportunity(v_oppKey, v_requestor, v_reason);
 		} catch (ReturnStatusException e) {
 			logger.error(e.getMessage());
 		}
@@ -157,7 +166,7 @@ public class TDSAdminController {
 			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST, "Needs parameters: oppkey, requestor, reason");
 		}
 		try {
-			result = _dao.extendingOppGracePeriod(v_oppKey, v_requestor, v_selectedsitting, v_doupdate, v_reason);
+			result = getDao().extendingOppGracePeriod(v_oppKey, v_requestor, v_selectedsitting, v_doupdate, v_reason);
 		} catch (ReturnStatusException e) {
 			logger.error(e.getMessage());
 		}
@@ -179,7 +188,7 @@ public class TDSAdminController {
 			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST, "Needs parameters: oppkey, requestor, reason");
 		}
 		try {
-			result = _dao.alterOpportunityExpiration(v_oppKey, v_requestor, v_dayincrement, v_reason);
+			result = getDao().alterOpportunityExpiration(v_oppKey, v_requestor, v_dayincrement, v_reason);
 		} catch (ReturnStatusException e) {
 			logger.error(e.getMessage());
 		}
@@ -205,8 +214,8 @@ public class TDSAdminController {
 					"Needs parameters: oppkey, segmentid, restoreon");
 		}
 		try {
-			result = _dao.setOpportunitySegmentPerm(v_oppKey, v_requestor, v_segmentid, v_segmentposition, v_restoreon,
-					v_ispermeable, v_reason);
+			result = getDao().setOpportunitySegmentPerm(v_oppKey, v_requestor, v_segmentid, v_segmentposition,
+					v_restoreon, v_ispermeable, v_reason);
 		} catch (ReturnStatusException e) {
 			logger.error(e.getMessage());
 		}
