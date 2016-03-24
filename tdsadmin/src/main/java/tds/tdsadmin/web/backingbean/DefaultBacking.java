@@ -16,16 +16,28 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
+import org.opentestsystem.shared.security.service.UserService;
 import org.primefaces.model.LazyDataModel;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.jsf.FacesContextUtils;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import tds.tdsadmin.model.OpportunitySerializable;
 import tds.tdsadmin.model.ProcedureResult;
 import tds.tdsadmin.model.TestOpportunity;
+import tds.tdsadmin.db.abstractions.TDSAdminDAO;
 import tds.tdsadmin.model.LazyOppDataModel;
 
 @ManagedBean
 @SessionScoped
 public class DefaultBacking implements Serializable {
+	WebApplicationContext ctx;
+
+	public DefaultBacking() {
+		WebApplicationContext ctx = FacesContextUtils.getWebApplicationContext(FacesContext.getCurrentInstance());
+		System.out.println(ctx.getBean(TDSAdminDAO.class));
+	}
+
 	/**
 	 * 
 	 */
