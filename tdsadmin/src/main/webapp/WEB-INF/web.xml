@@ -5,7 +5,7 @@
 	version="2.5">
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath:/spring/root-context.xml</param-value>
+		<param-value>/WEB-INF/root-context.xml</param-value>
 	</context-param>
 
 	<!--Start: Added for Program Management and Monitoring and Alerting dependency -->
@@ -27,7 +27,7 @@
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
-			<param-value>classpath:/spring/servlet-context.xml</param-value>
+			<param-value>/WEB-INF/servlet-context.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
