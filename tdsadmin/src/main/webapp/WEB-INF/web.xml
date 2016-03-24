@@ -5,7 +5,7 @@
 	version="2.5">
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/root-context.xml</param-value>
+		<param-value>classpath:root-context.xml</param-value>
 	</context-param>
 
 	<!--Start: Added for Program Management and Monitoring and Alerting dependency -->
@@ -19,6 +19,9 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 	<listener>
+		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+	</listener>
+	<listener>
 		<description>sessionListener</description>
 		<listener-class>AIR.Common.Web.Session.SessionListener</listener-class>
 	</listener>
@@ -27,7 +30,7 @@
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
-			<param-value>/WEB-INF/servlet-context.xml</param-value>
+			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
