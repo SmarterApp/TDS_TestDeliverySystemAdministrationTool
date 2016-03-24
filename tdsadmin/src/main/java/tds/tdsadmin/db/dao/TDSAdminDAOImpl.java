@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.UUID;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import AIR.Common.DB.AbstractDAO;
 import AIR.Common.DB.SQLConnection;
@@ -23,6 +25,8 @@ import tds.tdsadmin.model.TestOpportunity;
  *
  */
 public class TDSAdminDAOImpl extends AbstractDAO implements TDSAdminDAO {
+
+	private static final Logger _logger = LoggerFactory.getLogger(TDSAdminDAOImpl.class);
 
 	@Autowired
 	private ITDSAdminDLL _tdsAdminDLL = null;
@@ -81,7 +85,7 @@ public class TDSAdminDAOImpl extends AbstractDAO implements TDSAdminDAO {
 				opportunities.add(opp);
 			}
 		} catch (SQLException e) {
-
+			_logger.error(e.getMessage(), e);
 			throw new ReturnStatusException(e);
 		}
 		return opportunities;
@@ -110,6 +114,7 @@ public class TDSAdminDAOImpl extends AbstractDAO implements TDSAdminDAO {
 					result.setAppKey(record.<String> get("appkey"));
 			}
 		} catch (SQLException e) {
+			_logger.error(e.getMessage(), e);
 			throw new ReturnStatusException(e);
 		}
 		return result;
@@ -138,6 +143,7 @@ public class TDSAdminDAOImpl extends AbstractDAO implements TDSAdminDAO {
 					result.setAppKey(record.<String> get("appkey"));
 			}
 		} catch (SQLException e) {
+			_logger.error(e.getMessage(), e);
 			throw new ReturnStatusException(e);
 		}
 		return result;
@@ -167,6 +173,7 @@ public class TDSAdminDAOImpl extends AbstractDAO implements TDSAdminDAO {
 					result.setAppKey(record.<String> get("appkey"));
 			}
 		} catch (SQLException e) {
+			_logger.error(e.getMessage(), e);
 			throw new ReturnStatusException(e);
 		}
 		return result;
@@ -195,6 +202,7 @@ public class TDSAdminDAOImpl extends AbstractDAO implements TDSAdminDAO {
 					result.setAppKey(record.<String> get("appkey"));
 			}
 		} catch (SQLException e) {
+			_logger.error(e.getMessage(), e);
 			throw new ReturnStatusException(e);
 		}
 		return result;
@@ -223,6 +231,7 @@ public class TDSAdminDAOImpl extends AbstractDAO implements TDSAdminDAO {
 					result.setAppKey(record.<String> get("appkey"));
 			}
 		} catch (SQLException e) {
+			_logger.error(e.getMessage(), e);
 			throw new ReturnStatusException(e);
 		}
 		return result;
@@ -251,6 +260,7 @@ public class TDSAdminDAOImpl extends AbstractDAO implements TDSAdminDAO {
 					result.setAppKey(record.<String> get("appkey"));
 			}
 		} catch (SQLException e) {
+			_logger.error(e.getMessage(), e);
 			throw new ReturnStatusException(e);
 		}
 		return result;
@@ -279,6 +289,7 @@ public class TDSAdminDAOImpl extends AbstractDAO implements TDSAdminDAO {
 					result.setAppKey(record.<String> get("appkey"));
 			}
 		} catch (SQLException e) {
+			_logger.error(e.getMessage(), e);
 			throw new ReturnStatusException(e);
 		}
 		return result;
