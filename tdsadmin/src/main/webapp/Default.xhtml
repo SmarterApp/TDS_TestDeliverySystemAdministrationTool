@@ -173,6 +173,7 @@
 
 				<h:outputLabel rendered="#{defaultBacking.oppCount>0}">Reason</h:outputLabel>
 				<h:inputTextarea rendered="#{defaultBacking.oppCount>0}"
+					disabled="#{defaultBacking.executeDisabled}"
 					value="#{defaultBacking.reason}"></h:inputTextarea>
 				<h:commandButton rendered="#{defaultBacking.oppCount>0}"
 					type="submit" id="executeProcedure"
