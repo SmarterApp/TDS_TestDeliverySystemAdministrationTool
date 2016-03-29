@@ -17,11 +17,11 @@ public class LazySorter implements Comparator<TestOpportunity> {
 		this.sortOrder = sortOrder;
 	}
 
-	public int compare(TestOpportunity TestOpportunity1, TestOpportunity TestOpportunity2) {
+	public int compare(TestOpportunity testOpportunity1, TestOpportunity testOpportunity2) {
 		try {
 			
-			Object value1 = FieldUtils.getFieldValue(TestOpportunity1, sortField);//TestOpportunity.class.getField(this.sortField).get(TestOpportunity1);
-			Object value2 = FieldUtils.getFieldValue(TestOpportunity2, sortField);//TestOpportunity.class.getField(this.sortField).get(TestOpportunity2);
+			Object value1 = FieldUtils.getFieldValue(testOpportunity1, sortField);//TestOpportunity.class.getField(this.sortField).get(TestOpportunity1);
+			Object value2 = FieldUtils.getFieldValue(testOpportunity2, sortField);//TestOpportunity.class.getField(this.sortField).get(TestOpportunity2);
 
 			int value;
 			if (value1 == null && value2 == null)
