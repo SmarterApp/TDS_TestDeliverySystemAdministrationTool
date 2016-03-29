@@ -70,7 +70,8 @@
 					editable="true" rowIndexVar="index"
 					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 					rowsPerPageTemplate="5,10,15">
-					<p:column>
+					<p:column
+						rendered="#{userBean.getUser().hasPermission('ROLE_Opportunity Modify')}">
 						<h:selectBooleanCheckbox value="#{opp.selected}"
 							onchange="submit()">
 						</h:selectBooleanCheckbox>
@@ -170,9 +171,12 @@
 
 				</p:dataTable>
 
-				<h:outputLabel>Reason</h:outputLabel>
-				<h:inputTextarea value="#{defaultBacking.reason}"></h:inputTextarea>
-				<h:commandButton type="submit" id="executeProcedure"
+				<h:outputLabel rendered="#{defaultBacking.oppCount>0}">Reason</h:outputLabel>
+				<h:inputTextarea rendered="#{defaultBacking.oppCount>0}"
+					disabled="#{defaultBacking.executeDisabled}"
+					value="#{defaultBacking.reason}"></h:inputTextarea>
+				<h:commandButton rendered="#{defaultBacking.oppCount>0}"
+					type="submit" id="executeProcedure"
 					disabled="#{defaultBacking.executeDisabled}"
 					actionListener="#{defaultBacking.execute()}"
 					style="horizontal-align:middle;"
