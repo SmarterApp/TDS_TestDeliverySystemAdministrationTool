@@ -42,8 +42,6 @@ public class TDSAdminController {
 	ITrClient _trClient = null;
 
 	private List<String> getExtSSID(String ssid) {
-		// SbacUser user = (SbacUser)
-		// SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		List<String> externalssid = new ArrayList<String>();
 		String artUri = "student?entityId=" + ssid;
 		String response = _trClient.getForObject(artUri);
