@@ -21,17 +21,17 @@ public class LazyOppDataModel extends LazyDataModel<TestOpportunity> {
 
 	@Override
 	public TestOpportunity getRowData(String rowKey) {
-		for (TestOpportunity TestOpportunity : datasource) {
-			if (TestOpportunity.getAltSsid().equals(rowKey))
-				return TestOpportunity;
+		for (TestOpportunity testOpportunity : datasource) {
+			if (testOpportunity.getAltSsid().equals(rowKey))
+				return testOpportunity;
 		}
 
 		return null;
 	}
 
 	@Override
-	public Object getRowKey(TestOpportunity TestOpportunity) {
-		return TestOpportunity.getAltSsid();
+	public Object getRowKey(TestOpportunity testOpportunity) {
+		return testOpportunity.getAltSsid();
 	}
 
 	@Override
@@ -40,7 +40,7 @@ public class LazyOppDataModel extends LazyDataModel<TestOpportunity> {
 		List<TestOpportunity> data = new ArrayList<TestOpportunity>();
 
 		// filter
-		for (TestOpportunity TestOpportunity : datasource) {
+		for (TestOpportunity testOpportunity : datasource) {
 			boolean match = true;
 
 			if (filters != null) {
@@ -49,7 +49,7 @@ public class LazyOppDataModel extends LazyDataModel<TestOpportunity> {
 						String filterProperty = it.next();
 						Object filterValue = filters.get(filterProperty);
 						String fieldValue = String
-								.valueOf(TestOpportunity.getClass().getField(filterProperty).get(TestOpportunity));
+								.valueOf(testOpportunity.getClass().getField(filterProperty).get(testOpportunity));
 
 						if (filterValue == null || fieldValue.startsWith(filterValue.toString())) {
 							match = true;
@@ -64,7 +64,7 @@ public class LazyOppDataModel extends LazyDataModel<TestOpportunity> {
 			}
 
 			if (match) {
-				data.add(TestOpportunity);
+				data.add(testOpportunity);
 			}
 		}
 
