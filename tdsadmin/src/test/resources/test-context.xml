@@ -58,7 +58,7 @@
 	<beans:bean id="tdsSettings" class="TDS.Shared.Configuration.TDSSettings"
 		scope="prototype" />
 
-	<beans:bean id="iT_trClient" class="tds.tdsadmin.trclient.TestTrClient"></beans:bean>
+	<beans:bean id="_trClient" class="tds.tdsadmin.trclient.TestTrClient"></beans:bean>
 
 	<context:component-scan base-package="tds.tdsadmin.rest" />
 
