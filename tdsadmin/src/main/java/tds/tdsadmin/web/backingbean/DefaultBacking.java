@@ -213,8 +213,6 @@ public class DefaultBacking implements Serializable {
 			extSsId = null;
 		OpportunitySerializable opps;
 		try {
-		String ssid = ("ssid".equals(this.radiossid)) ? "ssId" : "extSsId";
-		String url = path + "/rest/getOpportunities?extSsId=%s&sessionId=%s&procedure=%s";
 			opps = controller.getOpportunities(response, extSsId, ssId, sessionId, procedure);
 			setOpportunities(opps);
 			setLazyOpps(opps);
