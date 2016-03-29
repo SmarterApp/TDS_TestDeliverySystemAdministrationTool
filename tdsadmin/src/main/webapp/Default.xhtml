@@ -173,7 +173,8 @@ ul.adminForm {
 								editable="true" rowIndexVar="index"
 								paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 								rowsPerPageTemplate="5,10,15">
-								<p:column>
+								<p:column
+									rendered="#{userBean.getUser().hasPermission('ROLE_Opportunity Modify')}">
 									<h:selectBooleanCheckbox value="#{opp.selected}"
 										onchange="submit()">
 									</h:selectBooleanCheckbox>
@@ -270,12 +271,15 @@ ul.adminForm {
 						<!--It would be nice to have a meangingful header for this part of the form-->
 						<!--<h5 tabindex="-1">Search Filters</h5>-->
 						<ul class="adminForm">
-							<li><h:outputLabel>Reason</h:outputLabel> <h:inputTextarea
+							<li><h:outputLabel rendered="#{defaultBacking.oppCount>0}">Reason</h:outputLabel>
+								<h:inputTextarea rendered="#{defaultBacking.oppCount>0}"
+									disabled="#{defaultBacking.executeDisabled}"
 									value="#{defaultBacking.reason}"></h:inputTextarea></li>
 						</ul>
 						<div class="adminForm">
 							<div class="buttonRow">
 								<p:commandButton id="executeProcedure" ajax="false"
+									rendered="#{defaultBacking.oppCount>0}"
 									disabled="#{defaultBacking.executeDisabled}"
 									actionListener="#{defaultBacking.execute()}"
 									style="horizontal-align:middle;"
