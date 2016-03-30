@@ -1,34 +1,43 @@
+/*******************************************************************************
+ * Educational Online Test Delivery System
+ * Copyright (c) 2016 American Institutes for Research
+ * 
+ * Distributed under the AIR Open Source License, Version 1.0
+ * See accompanying file AIR-License-1_0.txt or at 
+ * http://www.smarterapp.org/documents/American_Institutes_for_Research_Open_Source_Software_License.pdf
+ ******************************************************************************/
 package tds.tdsadmin.web.backingbean;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.Serializable;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
+import org.apache.http.client.HttpResponseException;
+import org.opentestsystem.shared.security.domain.SbacUser;
 import org.primefaces.model.LazyDataModel;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.jsf.FacesContextUtils;
 import tds.tdsadmin.model.OpportunitySerializable;
 import tds.tdsadmin.model.ProcedureResult;
 import tds.tdsadmin.model.TestOpportunity;
+import tds.tdsadmin.rest.TDSAdminController;
+import tds.tdsadmin.db.abstractions.TDSAdminDAO;
 import tds.tdsadmin.model.LazyOppDataModel;
 
 @ManagedBean
 @SessionScoped
 public class DefaultBacking implements Serializable {
-	/**
-	 * 
-	 */
+
+	private static final Logger _logger = LoggerFactory.getLogger(DefaultBacking.class);
+
 	private static final long serialVersionUID = 1L;
 	private String radiossid = null;
 	private String extssid = null;
@@ -36,8 +45,6 @@ public class DefaultBacking implements Serializable {
 	private HashMap<String, String> procedures = null;
 	private String procedure = null;
 	private List<TestOpportunity> opportunities = new ArrayList<TestOpportunity>();
-	// private List<TestOpportunity> selectedOpportunities = new
-	// ArrayList<TestOpportunity>();
 	private String selectIdText = null;
 	private String selectRadioText = null;
 	private String requestor = null;
@@ -47,6 +54,20 @@ public class DefaultBacking implements Serializable {
 	private boolean executeDisabled;
 	private String nomatch;
 	private String executionResult;
+
+	private HttpServletResponse response;
+
+	private TDSAdminController controller;
+
+	public DefaultBacking() {
+		WebApplicationContext ctx = FacesContextUtils.getWebApplicationContext(FacesContext.getCurrentInstance());
+		TDSAdminDAO tdsAdminDAO = ctx.getBean(TDSAdminDAO.class);
+		controller = new TDSAdminController();
+		this.controller.setDao(tdsAdminDAO);
+		response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+		SbacUser user = (SbacUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		this.setRequestor(user.getEmail());
+	}
 
 	public String getRadiossid() {
 		return radiossid;
@@ -154,10 +175,6 @@ public class DefaultBacking implements Serializable {
 	}
 
 	public boolean getExecuteDisabled() {
-		/*
-		 * if (this.selectedOpportunities != null &&
-		 * this.selectedOpportunities.size() > 0) return false;
-		 */
 		for (TestOpportunity opp : this.opportunities)
 			if (opp.getSelected())
 				return false;
@@ -187,55 +204,20 @@ public class DefaultBacking implements Serializable {
 	public boolean searchOpportunity(String extSsId, String sessionId) {
 		if (!validateInput(extSsId, sessionId))
 			return false;
-
-		// clear selectedOpportunities
-		// this.selectedOpportunities.clear();
 		this.opportunities.clear();
 		this.setExecutionResult(null);
 		this.setNomatch(null);
 
-		HttpURLConnection connection = null;
-		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
-				.getRequest();
-		String path = null;
+		String ssId = "ssid".equals(radiossid) ? extSsId : null;
+		if (!StringUtils.isEmpty(ssId))
+			extSsId = null;
+		OpportunitySerializable opps;
 		try {
-			path = new URL(request.getScheme(), request.getServerName(), request.getServerPort(),
-					request.getContextPath()).toString();
-		} catch (MalformedURLException e1) {
-			return false;
-		}
-
-		String url = path + "/rest/getOpportunities?extSsId=%s&sessionId=%s&procedure=%s";
-		url = String.format(url, extSsId, sessionId, procedure);
-
-		try {
-			connection = (HttpURLConnection) new URL(url).openConnection();
-			connection.setDoOutput(true);
-			connection.setDoInput(true);
-			connection.setRequestMethod("GET");
-			connection.connect();
-			int status = connection.getResponseCode();
-
-			switch (status) {
-			case 200:
-			case 201:
-				BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-				StringBuilder sb = new StringBuilder();
-				String line;
-				while ((line = br.readLine()) != null) {
-					sb.append(line + "\n");
-				}
-				br.close();
-				ObjectMapper mapper = new ObjectMapper();
-				OpportunitySerializable opps = mapper.readValue(sb.toString(), OpportunitySerializable.class);
-				setOpportunities(opps);
-				setLazyOpps(opps);
-				System.out.print(sb.toString());
-			}
-
-		} catch (IOException e) {
-		} finally {
-			connection.disconnect();
+			opps = controller.getOpportunities(response, extSsId, ssId, sessionId, procedure);
+			setOpportunities(opps);
+			setLazyOpps(opps);
+		} catch (HttpResponseException e) {
+			_logger.error(e.getMessage(), e);
 		}
 		if (this.opportunities.size() <= 0)
 			setNomatch("No matching opportunity found");
@@ -243,36 +225,12 @@ public class DefaultBacking implements Serializable {
 	}
 
 	public void execute() {
-		String api = null;
-		switch (this.procedure) {
-		case "changeperm":
-			api = "setOpportunitySegmentPerm";
-			break;
-		case "alter":
-			api = "alterOpportunityExpiration";
-			break;
-		case "extend":
-			api = "extendingOppGracePeriod";
-			break;
-		case "reopen":
-			api = "reopenOpportunity";
-			break;
-		case "reset":
-			api = "resetOpportunity";
-			break;
-		case "invalidate":
-			api = "invalidateTestOpportunity";
-			break;
-		case "restore":
-			api = "restoreTestOpportunity";
-			break;
-		}
 		String msg = "";
 		int success = 0, failure = 0;
 		for (TestOpportunity opp : this.opportunities) {
 			if (!opp.getSelected())
 				continue;
-			ProcedureResult result = executeProcedure(opp, api);
+			ProcedureResult result = executeProcedure(opp);
 			if (result != null) {
 				opp.setResult(result.getStatus());
 				opp.setReason(result.getReason());
@@ -290,57 +248,44 @@ public class DefaultBacking implements Serializable {
 		this.setExecutionResult(msg);
 	}
 
-	private ProcedureResult executeProcedure(TestOpportunity testOpp, String api) {
-		HttpURLConnection connection = null;
-		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
-				.getRequest();
-		String path = null;
-		try {
-			path = new URL(request.getScheme(), request.getServerName(), request.getServerPort(),
-					request.getContextPath()).toString();
-		} catch (MalformedURLException e1) {
-
-		}
-
-		String url = path + "/rest/" + api;
-		String urlParameters = getUrlParams(testOpp);
-		byte[] postData = urlParameters.getBytes(StandardCharsets.UTF_8);
-		int postDataLength = postData.length;
-
+	private ProcedureResult executeProcedure(TestOpportunity testOpp) {
 		ProcedureResult result = null;
-
 		try {
-			connection = (HttpURLConnection) new URL(url).openConnection();
-			connection.setDoOutput(true);
-			connection.setInstanceFollowRedirects(false);
-			connection.setRequestMethod("POST");
-			connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-			connection.setRequestProperty("charset", "utf-8");
-			connection.setRequestProperty("Content-Length", Integer.toString(postDataLength));
-			connection.setUseCaches(false);
-			connection.getOutputStream().write(postData);
+			switch (this.procedure) {
+			case "changeperm":
+				result = controller.setOpportunitySegmentPerm(response, testOpp.getOppKey(), this.getRequestor(),
+						testOpp.getSegmentName(), testOpp.getSegmentPosition(), testOpp.getRestoreOn(),
+						testOpp.getIspermeable(), this.getReason());
+				break;
+			case "alter":
+				result = controller.alterOpportunityExpiration(response, testOpp.getOppKey(), this.getRequestor(),
+						testOpp.getDayIncrement(), this.getReason());
+				break;
+			case "extend":
+				result = controller.extendingOppGracePeriod(response, testOpp.getOppKey(), this.getRequestor(),
+						testOpp.getSelectedSitting(), testOpp.getDoUpdate(), this.getReason());
+				break;
+			case "reopen":
+				result = controller.reopenOpportunity(response, testOpp.getOppKey(), this.getRequestor(),
+						this.getReason());
+				break;
+			case "reset":
+				result = controller.resetOpportunity(response, testOpp.getOppKey(), this.getRequestor(),
+						this.getReason());
+				break;
+			case "invalidate":
+				result = controller.invalidateTestOpportunity(response, testOpp.getOppKey(), this.getRequestor(),
+						this.getReason());
+				break;
+			case "restore":
 
-			int status = connection.getResponseCode();
+				result = controller.restoreTestOpportunity(response, testOpp.getOppKey(), this.getRequestor(),
+						this.getReason());
 
-			switch (status) {
-			case 200:
-			case 201:
-				BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-				StringBuilder sb = new StringBuilder();
-				String line;
-				while ((line = br.readLine()) != null) {
-					sb.append(line + "\n");
-				}
-				br.close();
-				ObjectMapper mapper = new ObjectMapper();
-				result = mapper.readValue(sb.toString(), ProcedureResult.class);
-
-				System.out.print(sb.toString());
+				break;
 			}
-
-		} catch (IOException e) {
-		} finally {
-			connection.disconnect();
+		} catch (HttpResponseException e) {
+			_logger.error(e.getMessage(), e);
 		}
 		return result;
 	}
@@ -359,32 +304,6 @@ public class DefaultBacking implements Serializable {
 			return true;
 		}
 	}
-
-	private String getUrlParams(TestOpportunity testOpp) {
-		String urlParameters = "oppkey=%s&requestor=%s&reason=%s";
-		urlParameters = String.format(urlParameters, testOpp.getOppKey(), this.getRequestor(), this.getReason());
-
-		if ("changeperm".equals(procedure)) {
-			urlParameters = urlParameters + "&segmentid=%s&segmentposition=%s&restoreon=%s&ispermeable=%s";
-			urlParameters = String.format(urlParameters, testOpp.getSegmentName(), testOpp.getSegmentPosition(),
-					testOpp.getRestoreOn(), testOpp.getIspermeable());
-		} else if ("extend".equals(procedure)) {
-			urlParameters += "&selectedsitting=%s&doupdate=%s";
-			urlParameters = String.format(urlParameters, testOpp.getSelectedSitting(), testOpp.getDoUpdate());
-		} else if ("alter".equals(procedure)) {
-			urlParameters += "&dayincrement=%s";
-			urlParameters = String.format(urlParameters, testOpp.getDayIncrement());
-		}
-		return urlParameters;
-	}
-
-	/*
-	 * public void addorRemoveOpportunity(TestOpportunity opp) { //
-	 * TestOpportunity opp = null; if (this.selectedOpportunities.contains(opp))
-	 * {
-	 * this.selectedOpportunities.remove(this.selectedOpportunities.indexOf(opp)
-	 * ); } else { this.selectedOpportunities.add(opp); } }
-	 */
 
 	public void procedureChange() {
 		/*
