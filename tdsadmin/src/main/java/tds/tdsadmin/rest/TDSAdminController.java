@@ -82,6 +82,7 @@ public class TDSAdminController implements Serializable {
 						externalssid.add(extid);
 				}
 			}
+			logger.debug("Parsing the student info from ART is successful for ssid:" + ssid);
 		} catch (IOException e) {
 			logger.error(e.getMessage());
 		}
@@ -118,6 +119,9 @@ public class TDSAdminController implements Serializable {
 				}
 			} else
 				results = getDao().getOpportunities(extSsId, sessionId, procedure);
+			logger.debug(
+					String.format("Get Opportunities successful for SSID:%s, Ext SSID:%s, SessionID=%s, Procedure=%s",
+							ssId, extSsId, sessionId, procedure));
 		} catch (ReturnStatusException e) {
 			logger.error(e.getMessage());
 		}
@@ -139,6 +143,8 @@ public class TDSAdminController implements Serializable {
 		}
 		try {
 			result = getDao().resetOpportunity(v_oppKey, v_requestor, v_reason);
+			logger.debug(String.format("Reset successful for Oppkey=%s, Requestor=%s, Reason=%s", v_oppKey, v_requestor,
+					v_reason));
 		} catch (ReturnStatusException e) {
 			logger.error(e.getMessage());
 		}
@@ -159,6 +165,8 @@ public class TDSAdminController implements Serializable {
 		}
 		try {
 			result = getDao().invalidateTestOpportunity(v_oppKey, v_requestor, v_reason);
+			logger.debug(String.format("Invalidate successful for Oppkey=%s, Requestor=%s, Reason=%s", v_oppKey,
+					v_requestor, v_reason));
 		} catch (ReturnStatusException e) {
 			logger.error(e.getMessage());
 		}
@@ -179,6 +187,8 @@ public class TDSAdminController implements Serializable {
 		}
 		try {
 			result = getDao().restoreTestOpportunity(v_oppKey, v_requestor, v_reason);
+			logger.debug(String.format("Restore successful for Oppkey=%s, Requestor=%s, Reason=%s", v_oppKey,
+					v_requestor, v_reason));
 		} catch (ReturnStatusException e) {
 			logger.error(e.getMessage());
 		}
@@ -199,6 +209,8 @@ public class TDSAdminController implements Serializable {
 		}
 		try {
 			result = getDao().reopenOpportunity(v_oppKey, v_requestor, v_reason);
+			logger.debug(String.format("Reopen successful for Oppkey=%s, Requestor=%s, Reason=%s", v_oppKey,
+					v_requestor, v_reason));
 		} catch (ReturnStatusException e) {
 			logger.error(e.getMessage());
 		}
@@ -221,6 +233,9 @@ public class TDSAdminController implements Serializable {
 		}
 		try {
 			result = getDao().extendingOppGracePeriod(v_oppKey, v_requestor, v_selectedsitting, v_doupdate, v_reason);
+			logger.debug(String.format(
+					"Extend grace period successful for Oppkey=%s, Requestor=%s, SelectedSitting=%s, Doupdate=%s, Reason=%s",
+					v_oppKey, v_requestor, v_selectedsitting, v_doupdate, v_reason));
 		} catch (ReturnStatusException e) {
 			logger.error(e.getMessage());
 		}
@@ -243,6 +258,8 @@ public class TDSAdminController implements Serializable {
 		}
 		try {
 			result = getDao().alterOpportunityExpiration(v_oppKey, v_requestor, v_dayincrement, v_reason);
+			logger.debug(String.format("Reset successful for Oppkey=%s, Requestor=%s, Reason=%s", v_oppKey, v_requestor,
+					v_reason));
 		} catch (ReturnStatusException e) {
 			logger.error(e.getMessage());
 		}
@@ -270,6 +287,9 @@ public class TDSAdminController implements Serializable {
 		try {
 			result = getDao().setOpportunitySegmentPerm(v_oppKey, v_requestor, v_segmentid, v_segmentposition,
 					v_restoreon, v_ispermeable, v_reason);
+			logger.debug(String.format(
+					"Set opportunity segment permeability successful for Oppkey=%s, Requestor=%s, SegmentId=%s, SegmentPosition=%s, RestoreOn=%s, Ispermeable=%s, Reason=%s",
+					v_oppKey, v_requestor, v_segmentid, v_segmentposition, v_restoreon, v_ispermeable, v_reason));
 		} catch (ReturnStatusException e) {
 			logger.error(e.getMessage());
 		}
@@ -279,6 +299,7 @@ public class TDSAdminController implements Serializable {
 	@ExceptionHandler(HttpResponseException.class)
 	@ResponseBody
 	public String handleException(HttpResponseException e) {
+		logger.error(e.getMessage());
 		return "HTTP ERROR " + e.getStatusCode() + " : " + e.getMessage();
 	}
 }

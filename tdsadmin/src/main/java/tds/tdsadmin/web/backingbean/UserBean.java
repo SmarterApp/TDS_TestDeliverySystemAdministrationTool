@@ -53,6 +53,7 @@ public class UserBean {
 
 	public SbacUser getUser() {
 		SbacUser user = (SbacUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		_logger.debug("Logged in user is:" + user);
 		return user;
 	}
 
