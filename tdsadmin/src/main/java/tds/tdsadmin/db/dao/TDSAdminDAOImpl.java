@@ -8,6 +8,7 @@
  ******************************************************************************/
 package tds.tdsadmin.db.dao;
 
+import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.Iterator;
@@ -32,7 +33,7 @@ import tds.tdsadmin.model.TestOpportunity;
  * @author mkhan
  *
  */
-public class TDSAdminDAOImpl extends AbstractDAO implements TDSAdminDAO {
+public class TDSAdminDAOImpl extends AbstractDAO implements TDSAdminDAO, Serializable {
 
 	private static final Logger _logger = LoggerFactory.getLogger(TDSAdminDAOImpl.class);
 
