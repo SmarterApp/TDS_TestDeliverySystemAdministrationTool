@@ -70,6 +70,10 @@ public class DefaultBacking implements Serializable {
 		response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
 		SbacUser user = (SbacUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		this.setRequestor(user.getEmail());
+		if (trClient == null)
+			_logger.error("TrClient is null");
+		if (tdsAdminDAO == null)
+			_logger.error("tdsAdminDAO is null");
 	}
 
 	public String getRadiossid() {
@@ -205,8 +209,10 @@ public class DefaultBacking implements Serializable {
 	}
 
 	public boolean searchOpportunity(String extSsId, String sessionId) {
-		if (!validateInput(extSsId, sessionId))
+		if (!validateInput(extSsId, sessionId)) {
+			_logger.error("Input validation failed for Ext SSID:" + extSsId + ", SessionId=" + sessionId);
 			return false;
+		}
 		this.opportunities.clear();
 		this.setExecutionResult(null);
 		this.setNomatch(null);
@@ -219,6 +225,9 @@ public class DefaultBacking implements Serializable {
 			opps = controller.getOpportunities(response, extSsId, ssId, sessionId, procedure);
 			setOpportunities(opps);
 			setLazyOpps(opps);
+			_logger.debug(
+					String.format("Fetching opportunities successful for SSID:%s,ExtSSID=%s,SessionId=%s, Procedure=%s",
+							ssId, extSsId, sessionId, procedure));
 		} catch (HttpResponseException e) {
 			_logger.error(e.getMessage(), e);
 		}
@@ -287,6 +296,7 @@ public class DefaultBacking implements Serializable {
 
 				break;
 			}
+			_logger.debug(String.format("Success for procedure=%s, oppkey=%s", procedure, testOpp.getOppKey()));
 		} catch (HttpResponseException e) {
 			_logger.error(e.getMessage(), e);
 		}

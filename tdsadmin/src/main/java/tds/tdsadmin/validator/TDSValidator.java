@@ -18,8 +18,14 @@ import javax.faces.validator.FacesValidator;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import tds.tdsadmin.rest.TDSAdminController;
+
 @FacesValidator("tdsValidator")
 public class TDSValidator implements Validator {
+	private static final Logger logger = LoggerFactory.getLogger(TDSValidator.class);
 
 	private static final String INPUT_PATTERN = "[A-Za-z0-9\\-]*";
 
@@ -48,6 +54,7 @@ public class TDSValidator implements Validator {
 				msg = "Maximum input length is 40";
 			FacesMessage fmsg = new FacesMessage(msg, msg);
 			fmsg.setSeverity(FacesMessage.SEVERITY_ERROR);
+			logger.error(msg + " for element:" + elemId);
 			throw new ValidatorException(fmsg);
 		}
 	}
