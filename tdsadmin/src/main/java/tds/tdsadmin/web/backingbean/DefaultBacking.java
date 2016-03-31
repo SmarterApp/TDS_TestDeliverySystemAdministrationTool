@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.client.HttpResponseException;
 import org.opentestsystem.shared.security.domain.SbacUser;
+import org.opentestsystem.shared.trapi.ITrClient;
 import org.primefaces.model.LazyDataModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,6 +65,8 @@ public class DefaultBacking implements Serializable {
 		TDSAdminDAO tdsAdminDAO = ctx.getBean(TDSAdminDAO.class);
 		controller = new TDSAdminController();
 		this.controller.setDao(tdsAdminDAO);
+		ITrClient trClient = ctx.getBean(ITrClient.class);
+		this.controller.setTrClient(trClient);
 		response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
 		SbacUser user = (SbacUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		this.setRequestor(user.getEmail());

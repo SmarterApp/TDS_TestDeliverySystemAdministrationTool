@@ -9,6 +9,7 @@
 package tds.tdsadmin.rest;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -40,7 +41,7 @@ import tds.tdsadmin.model.ProcedureResult;
  * Handles requests for the application home page.
  */
 @Controller
-public class TDSAdminController {
+public class TDSAdminController implements Serializable {
 
 	private static final Logger logger = LoggerFactory.getLogger(TDSAdminController.class);
 
@@ -48,12 +49,28 @@ public class TDSAdminController {
 	private TDSAdminDAO _dao = null;
 
 	@Autowired
-	ITrClient _trClient = null;
+	private ITrClient _trClient = null;
+
+	public TDSAdminDAO getDao() {
+		return _dao;
+	}
+
+	public void setDao(TDSAdminDAO _dao) {
+		this._dao = _dao;
+	}
+
+	public ITrClient getTrClient() {
+		return _trClient;
+	}
+
+	public void setTrClient(ITrClient _trClient) {
+		this._trClient = _trClient;
+	}
 
 	private List<String> getExtSSID(String ssid) {
 		List<String> externalssid = new ArrayList<String>();
 		String artUri = "student?entityId=" + ssid;
-		String response = _trClient.getForObject(artUri);
+		String response = getTrClient().getForObject(artUri);
 		JsonNode node;
 		try {
 			node = new ObjectMapper().readTree(response);
@@ -69,14 +86,6 @@ public class TDSAdminController {
 			logger.error(e.getMessage());
 		}
 		return externalssid;
-	}
-
-	public TDSAdminDAO getDao() {
-		return _dao;
-	}
-
-	public void setDao(TDSAdminDAO _dao) {
-		this._dao = _dao;
 	}
 
 	/**
@@ -96,10 +105,11 @@ public class TDSAdminController {
 			@RequestParam(value = "procedure", required = false) String procedure) throws HttpResponseException {
 
 		OpportunitySerializable results = new OpportunitySerializable();
-		if (StringUtils.isEmpty(extSsId) && StringUtils.isEmpty(ssId) && StringUtils.isEmpty(sessionId)) {
+		if (StringUtils.isEmpty(procedure)
+				|| StringUtils.isEmpty(extSsId) && StringUtils.isEmpty(ssId) && StringUtils.isEmpty(sessionId)) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
 			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST,
-					"Needs either external ssid or ssid or session id");
+					"Needs either external ssid or ssid or session id along with procedure");
 		}
 		try {
 			if (!StringUtils.isEmpty(ssId)) {
@@ -107,7 +117,7 @@ public class TDSAdminController {
 					results.addAll(_dao.getOpportunities(extid, sessionId, procedure));
 				}
 			} else
-			results = getDao().getOpportunities(extSsId, sessionId, procedure);
+				results = getDao().getOpportunities(extSsId, sessionId, procedure);
 		} catch (ReturnStatusException e) {
 			logger.error(e.getMessage());
 		}
