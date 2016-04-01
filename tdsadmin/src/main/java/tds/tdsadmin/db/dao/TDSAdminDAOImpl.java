@@ -93,8 +93,8 @@ public class TDSAdminDAOImpl extends AbstractDAO implements TDSAdminDAO, Seriali
 
 				opportunities.add(opp);
 			}
-			_logger.info(String.format("External ssid=%s, SessionId=%s, Procedure=%s.", v_extSsId, v_sessionId,
-					v_procedure));
+			_logger.info(String.format("Get opportunity successful for External ssid=%s, SessionId=%s, Procedure=%s.",
+					v_extSsId, v_sessionId, v_procedure));
 		} catch (SQLException e) {
 			_logger.error(e.getMessage(), e);
 			throw new ReturnStatusException(e);

@@ -26,7 +26,8 @@
 		<beans:constructor-arg>
 			<beans:map>
 				<beans:entry key="DBDialect" value="MYSQL" />
-				<beans:entry key="TDSSessionDBName" value="session" />
+				<beans:entry key="TDSSessionDBName"
+					value="${tdsadmin.TDSSessionDBName:adminSession}" />
 			</beans:map>
 		</beans:constructor-arg>
 	</beans:bean>
