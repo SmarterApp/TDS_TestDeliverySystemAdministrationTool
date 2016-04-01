@@ -93,7 +93,7 @@ public class TDSAdminDAOImpl extends AbstractDAO implements TDSAdminDAO, Seriali
 
 				opportunities.add(opp);
 			}
-			_logger.debug(String.format("External ssid=%s, SessionId=%s, Procedure=%s.", v_extSsId, v_sessionId,
+			_logger.info(String.format("External ssid=%s, SessionId=%s, Procedure=%s.", v_extSsId, v_sessionId,
 					v_procedure));
 		} catch (SQLException e) {
 			_logger.error(e.getMessage(), e);
@@ -124,7 +124,7 @@ public class TDSAdminDAOImpl extends AbstractDAO implements TDSAdminDAO, Seriali
 				if (record.hasColumn("appkey"))
 					result.setAppKey(record.<String> get("appkey"));
 			}
-			_logger.debug(String.format("Reset successful for: Oppkey=%s, Requestor=%s, Reason=%s.", v_oppKey,
+			_logger.info(String.format("Reset successful for: Oppkey=%s, Requestor=%s, Reason=%s.", v_oppKey,
 					v_requestor, v_reason));
 		} catch (SQLException e) {
 			_logger.error(e.getMessage(), e);
@@ -155,7 +155,7 @@ public class TDSAdminDAOImpl extends AbstractDAO implements TDSAdminDAO, Seriali
 				if (record.hasColumn("appkey"))
 					result.setAppKey(record.<String> get("appkey"));
 			}
-			_logger.debug(String.format("Invalidate successful for: Oppkey=%s, Requestor=%s, Reason=%s.", v_oppKey,
+			_logger.info(String.format("Invalidate successful for: Oppkey=%s, Requestor=%s, Reason=%s.", v_oppKey,
 					v_requestor, v_reason));
 		} catch (SQLException e) {
 			_logger.error(e.getMessage(), e);
@@ -187,7 +187,7 @@ public class TDSAdminDAOImpl extends AbstractDAO implements TDSAdminDAO, Seriali
 				if (record.hasColumn("appkey"))
 					result.setAppKey(record.<String> get("appkey"));
 			}
-			_logger.debug(String.format("Restore successful for: Oppkey=%s, Requestor=%s, Reason=%s.", v_oppKey,
+			_logger.info(String.format("Restore successful for: Oppkey=%s, Requestor=%s, Reason=%s.", v_oppKey,
 					v_requestor, v_reason));
 		} catch (SQLException e) {
 			_logger.error(e.getMessage(), e);
@@ -218,7 +218,7 @@ public class TDSAdminDAOImpl extends AbstractDAO implements TDSAdminDAO, Seriali
 				if (record.hasColumn("appkey"))
 					result.setAppKey(record.<String> get("appkey"));
 			}
-			_logger.debug(String.format("Reopen successful for: Oppkey=%s, Requestor=%s, Reason=%s.", v_oppKey,
+			_logger.info(String.format("Reopen successful for: Oppkey=%s, Requestor=%s, Reason=%s.", v_oppKey,
 					v_requestor, v_reason));
 		} catch (SQLException e) {
 			_logger.error(e.getMessage(), e);
@@ -249,7 +249,7 @@ public class TDSAdminDAOImpl extends AbstractDAO implements TDSAdminDAO, Seriali
 				if (record.hasColumn("appkey"))
 					result.setAppKey(record.<String> get("appkey"));
 			}
-			_logger.debug(String.format(
+			_logger.info(String.format(
 					"Extending grace period successful for: Oppkey=%s, Requestor=%s, Reason=%s, SelectedSitting=%s, Doupdate=%s.",
 					v_oppKey, v_requestor, v_reason, v_selectedsitting, v_doupdate));
 		} catch (SQLException e) {
@@ -281,7 +281,7 @@ public class TDSAdminDAOImpl extends AbstractDAO implements TDSAdminDAO, Seriali
 				if (record.hasColumn("appkey"))
 					result.setAppKey(record.<String> get("appkey"));
 			}
-			_logger.debug(String.format(
+			_logger.info(String.format(
 					"Alter expiration successful for: Oppkey=%s, Requestor=%s, Reason=%s, DayIncrement=%s.", v_oppKey,
 					v_requestor, v_reason, v_dayincrement));
 		} catch (SQLException e) {
@@ -313,7 +313,7 @@ public class TDSAdminDAOImpl extends AbstractDAO implements TDSAdminDAO, Seriali
 				if (record.hasColumn("appkey"))
 					result.setAppKey(record.<String> get("appkey"));
 			}
-			_logger.debug(String.format(
+			_logger.info(String.format(
 					"Set segment permeability successful for: Oppkey=%s, Requestor=%s, Reason=%s, SegmentId=%s, SegmentPosition=%s, RestoreOn=%s, Ispermeable=%s.",
 					v_oppKey, v_requestor, v_reason, v_segmentid, v_segmentposition, v_restoreon, v_ispermeable));
 		} catch (SQLException e) {

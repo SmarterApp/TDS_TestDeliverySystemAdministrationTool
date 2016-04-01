@@ -225,7 +225,7 @@ public class DefaultBacking implements Serializable {
 			opps = controller.getOpportunities(response, extSsId, ssId, sessionId, procedure);
 			setOpportunities(opps);
 			setLazyOpps(opps);
-			_logger.debug(
+			_logger.info(
 					String.format("Fetching opportunities successful for SSID:%s,ExtSSID=%s,SessionId=%s, Procedure=%s",
 							ssId, extSsId, sessionId, procedure));
 		} catch (HttpResponseException e) {
@@ -296,7 +296,7 @@ public class DefaultBacking implements Serializable {
 
 				break;
 			}
-			_logger.debug(String.format("Success for procedure=%s, oppkey=%s", procedure, testOpp.getOppKey()));
+			_logger.info(String.format("Success for procedure=%s, oppkey=%s", procedure, testOpp.getOppKey()));
 		} catch (HttpResponseException e) {
 			_logger.error(e.getMessage(), e);
 		}
