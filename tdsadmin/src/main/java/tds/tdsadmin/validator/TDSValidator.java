@@ -54,7 +54,7 @@ public class TDSValidator implements Validator {
 				msg = "Maximum input length is 40";
 			FacesMessage fmsg = new FacesMessage(msg, msg);
 			fmsg.setSeverity(FacesMessage.SEVERITY_ERROR);
-			logger.error(msg + " for element:" + elemId);
+			logger.error(String.format(msg + " for element:%s", elemId));
 			throw new ValidatorException(fmsg);
 		}
 	}

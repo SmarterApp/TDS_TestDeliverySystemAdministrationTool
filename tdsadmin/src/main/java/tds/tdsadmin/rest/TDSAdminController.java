@@ -82,7 +82,7 @@ public class TDSAdminController implements Serializable {
 						externalssid.add(extid);
 				}
 			}
-			logger.info("Parsing the student info from ART is successful for ssid:" + ssid);
+			logger.info(String.format("Parsing the student info from ART is successful for ssid:%s", ssid));
 		} catch (IOException e) {
 			logger.error(e.getMessage());
 		}
