@@ -60,6 +60,14 @@
 
 	<!--Start: Following filter is added for integrating SSO -->
 	<filter>
+		<filter-name>requestContextFilter</filter-name>
+		<filter-class>org.springframework.web.filter.RequestContextFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>requestContextFilter</filter-name>
+		<url-pattern>*.xhtml</url-pattern>
+	</filter-mapping>
+	<filter>
 		<filter-name>springSecurityFilterChain</filter-name>
 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
 	</filter>
@@ -73,4 +81,7 @@
 	<welcome-file-list>
 		<welcome-file>Default.xhtml</welcome-file>
 	</welcome-file-list>
+	<display-name>
+	      TDSAdmin Application
+    	</display-name>
 </web-app>

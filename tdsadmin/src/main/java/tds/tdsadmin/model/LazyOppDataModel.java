@@ -95,6 +95,7 @@ public class LazyOppDataModel extends LazyDataModel<TestOpportunity> {
 			try {
 				return data.subList(first, first + pageSize);
 			} catch (IndexOutOfBoundsException e) {
+				_logger.error(e.getMessage());
 				return data.subList(first, first + (dataSize % pageSize));
 			}
 		} else {
