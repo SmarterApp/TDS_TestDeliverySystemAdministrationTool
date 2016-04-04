@@ -210,7 +210,7 @@ public class DefaultBacking implements Serializable {
 
 	public boolean searchOpportunity(String extSsId, String sessionId) {
 		if (!validateInput(extSsId, sessionId)) {
-			_logger.error("Input validation failed for Ext SSID:" + extSsId + ", SessionId=" + sessionId);
+			_logger.error(String.format("Input validation failed for Ext SSID:%s, SessionId=%s", extSsId, sessionId));
 			return false;
 		}
 		this.opportunities.clear();

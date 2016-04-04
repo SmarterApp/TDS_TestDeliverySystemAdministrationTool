@@ -27,7 +27,7 @@
 			<beans:map>
 				<beans:entry key="DBDialect" value="MYSQL" />
 				<beans:entry key="TDSSessionDBName"
-					value="${tdsadmin.TDSSessionDBName:adminSession}" />
+					value="${tdsadmin.TDSSessionDBName:session}" />
 			</beans:map>
 		</beans:constructor-arg>
 	</beans:bean>
