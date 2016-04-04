@@ -43,7 +43,8 @@ public class TDSValidator implements Validator {
 		matcher = pattern.matcher(elemValue);
 		if (elemId.equalsIgnoreCase("essid") || elemId.equalsIgnoreCase("session")) {
 			validateSessionSSID(elemId, elemValue);
-		} else if (elemId.equalsIgnoreCase("")) {
+		} else if (elemId.contains("dayincrement")) {
+			validateDayIncrement(elemId, elemValue);
 		}
 	}
 
@@ -52,11 +53,22 @@ public class TDSValidator implements Validator {
 			String msg = "Input has to be alphanumeric";
 			if (elemValue.length() > 40)
 				msg = "Maximum input length is 40";
-			FacesMessage fmsg = new FacesMessage(msg, msg);
-			fmsg.setSeverity(FacesMessage.SEVERITY_ERROR);
-			logger.error(String.format(msg + " for element:%s", elemId));
-			throw new ValidatorException(fmsg);
 		}
+	}
+
+	private void validateDayIncrement(String elemId, String elemValue) {
+		int dayincrement = Integer.parseInt(elemValue);
+		if (dayincrement < 365 || dayincrement > 365) {
+			String msg = "Value has to be between -365 and 365";
+			throwException(elemId, msg);
+		}
+	}
+
+	private void throwException(String elemId, String msg) {
+		FacesMessage fmsg = new FacesMessage(msg, msg);
+		fmsg.setSeverity(FacesMessage.SEVERITY_ERROR);
+		logger.error(String.format(msg + " for element:%s", elemId));
+		throw new ValidatorException(fmsg);
 	}
 
 }
