@@ -46,7 +46,7 @@
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<beans:property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<beans:property name="url"
-			value="${datasource.url:jdbc:mysql://tds-db.dev.opentestsystem.org:3306?useUnicode=true&amp;useFastDateParsing=false&amp;characterEncoding=UTF-8}" />
+			value="${tdsadmin.datasource.url:jdbc:mysql://tds-db.dev.opentestsystem.org:3306?useUnicode=true&amp;useFastDateParsing=false&amp;characterEncoding=UTF-8}" />
 		<beans:property name="username" value="${datasource.username:dbsbac}" />
 		<beans:property name="password"
 			value="${datasource.password:TkLsZdWnH72JDb}" />
