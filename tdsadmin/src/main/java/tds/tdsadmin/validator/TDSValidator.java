@@ -18,10 +18,9 @@ import javax.faces.validator.FacesValidator;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import tds.tdsadmin.rest.TDSAdminController;
 
 @FacesValidator("tdsValidator")
 public class TDSValidator implements Validator {
@@ -38,37 +37,27 @@ public class TDSValidator implements Validator {
 
 	@Override
 	public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
-		String elemId = component.getId();
-		String elemValue = value.toString();
+		String elemId = (StringUtils.isNotEmpty(component + "")) ? component.getId() : null;
+		String elemValue = (StringUtils.isNotEmpty(value + "")) ? value.toString() : null;
+		if (StringUtils.isEmpty(elemId) || StringUtils.isEmpty(elemValue))
+			return;
 		matcher = pattern.matcher(elemValue);
 		if (elemId.equalsIgnoreCase("essid") || elemId.equalsIgnoreCase("session")) {
 			validateSessionSSID(elemId, elemValue);
-		} else if (elemId.contains("dayincrement")) {
-			validateDayIncrement(elemId, elemValue);
+		} else if (elemId.equalsIgnoreCase("")) {
 		}
 	}
 
 	private void validateSessionSSID(String elemId, String elemValue) {
 		if (!matcher.matches() || elemValue.length() > 40) {
-			String msg = "Input has to be alphanumeric";
+			String msg = "Input can have only alphanumeric character and dash (-)";
 			if (elemValue.length() > 40)
 				msg = "Maximum input length is 40";
+			FacesMessage fmsg = new FacesMessage(msg, msg);
+			fmsg.setSeverity(FacesMessage.SEVERITY_ERROR);
+			logger.error(String.format(msg + " for element:%s", elemId));
+			throw new ValidatorException(fmsg);
 		}
-	}
-
-	private void validateDayIncrement(String elemId, String elemValue) {
-		int dayincrement = Integer.parseInt(elemValue);
-		if (dayincrement < 365 || dayincrement > 365) {
-			String msg = "Value has to be between -365 and 365";
-			throwException(elemId, msg);
-		}
-	}
-
-	private void throwException(String elemId, String msg) {
-		FacesMessage fmsg = new FacesMessage(msg, msg);
-		fmsg.setSeverity(FacesMessage.SEVERITY_ERROR);
-		logger.error(String.format(msg + " for element:%s", elemId));
-		throw new ValidatorException(fmsg);
 	}
 
 }
