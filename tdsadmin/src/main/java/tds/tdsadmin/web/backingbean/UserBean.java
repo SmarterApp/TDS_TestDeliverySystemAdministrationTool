@@ -23,15 +23,11 @@ public class UserBean {
 
 	private static final Logger _logger = LoggerFactory.getLogger(UserBean.class);
 
-	@ManagedProperty(value = "#{userServiceImpl}")
-	private UserService userService;
+	private SbacUser user;
 
-	public UserService getUserService() {
-		return userService;
-	}
-
-	public void setUserService(UserService userService) {
-		this.userService = userService;
+	public UserBean() {
+		user = (SbacUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		_logger.info(String.format("Logged in user is:%s", user.getEmail()));
 	}
 
 	public String getFullName() {
@@ -52,8 +48,8 @@ public class UserBean {
 	}
 
 	public SbacUser getUser() {
-		SbacUser user = (SbacUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		_logger.info(String.format("Logged in user is:%s", user.getEmail()));
+		if (user == null)
+			user = (SbacUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		return user;
 	}
 
