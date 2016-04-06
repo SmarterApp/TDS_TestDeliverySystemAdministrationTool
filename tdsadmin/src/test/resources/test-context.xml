@@ -46,10 +46,10 @@
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<beans:property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<beans:property name="url"
-			value="${datasource.url:jdbc:mysql://tds-db.dev.opentestsystem.org:3306?useUnicode=true&amp;useFastDateParsing=false&amp;characterEncoding=UTF-8}" />
-		<beans:property name="username" value="${datasource.username:dbsbac}" />
+			value="${tdsadmin.datasource.url:jdbc:mysql://localhost:3306?useUnicode=true&amp;useFastDateParsing=false&amp;characterEncoding=UTF-8}" />
+		<beans:property name="username" value="${datasource.username:root}" />
 		<beans:property name="password"
-			value="${datasource.password:TkLsZdWnH72JDb}" />
+			value="${datasource.password:root}" />
 	</beans:bean>
 
 
