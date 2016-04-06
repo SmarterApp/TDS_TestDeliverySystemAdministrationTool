@@ -38,7 +38,7 @@
 		<beans:property name="driverClass"
 			value="${datasource.driverClassName:com.mysql.jdbc.Driver}" />
 		<beans:property name="jdbcUrl"
-			value="${tdsadmin.datasource.url:jdbc:mysql://tds-db.dev.opentestsystem.org:3306?useUnicode=true&amp;useFastDateParsing=false&amp;characterEncoding=UTF-8}" />
+			value="${tdsadmin.datasource.url}" />
 		<beans:property name="user" value="${datasource.username:dbsbac}" />
 		<beans:property name="password"
 			value="${datasource.password:TkLsZdWnH72JDb}" />
