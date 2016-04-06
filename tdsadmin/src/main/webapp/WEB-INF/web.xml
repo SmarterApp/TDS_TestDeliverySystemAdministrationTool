@@ -15,12 +15,6 @@
 	</context-param>
 	<!--End: Added for Program Management and Monitoring and Alerting dependency -->
 	
-	<!--Start: Disable state saving -->
-	<context-param>
-    	<param-name>org.apache.myfaces.SERIALIZE_STATE_IN_SESSION</param-name>
-    	<param-value>false</param-value>
-	</context-param>
-	<!--End: Disable state saving -->
 
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
