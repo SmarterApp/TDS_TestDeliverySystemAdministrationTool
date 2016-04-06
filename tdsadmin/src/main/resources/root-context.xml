@@ -26,8 +26,7 @@
 		<beans:constructor-arg>
 			<beans:map>
 				<beans:entry key="DBDialect" value="MYSQL" />
-				<beans:entry key="TDSSessionDBName"
-					value="${tdsadmin.TDSSessionDBName:session}" />
+				<beans:entry key="TDSSessionDBName" value="${tdsadmin.TDSSessionDBName:session}" />
 			</beans:map>
 		</beans:constructor-arg>
 	</beans:bean>
@@ -37,11 +36,11 @@
 		class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<beans:property name="driverClass"
 			value="${datasource.driverClassName:com.mysql.jdbc.Driver}" />
-		<beans:property name="jdbcUrl"
-			value="${datasource.url:jdbc:mysql://tds-db.dev.opentestsystem.org:3306?useUnicode=true&amp;useFastDateParsing=false&amp;characterEncoding=UTF-8}" />
-		<beans:property name="user" value="${datasource.username:dbsbac}" />
-		<beans:property name="password"
-			value="${datasource.password:TkLsZdWnH72JDb}" />
+
+		<!-- jdbc url must be have these parameters: useUnicode=true&amp;useFastDateParsing=false&amp;characterEncoding=UTF-8 -->
+		<beans:property name="jdbcUrl" value="${tdsadmin.datasource.url}" />
+		<beans:property name="user" value="${datasource.username}" />
+		<beans:property name="password" value="${datasource.password}" />
 		<beans:property name="minPoolSize" value="${datasource.minPoolSize:5}" />
 		<beans:property name="acquireIncrement" value="${datasource.acquireIncrement:5}" />
 		<beans:property name="maxPoolSize" value="${datasource.maxPoolSize:20}" />
