@@ -37,20 +37,19 @@ public class TDSValidator implements Validator {
 
 	@Override
 	public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
-		String elemId = (StringUtils.isNotEmpty(component + "")) ? component.getId() : null;
-		String elemValue = (StringUtils.isNotEmpty(value + "")) ? value.toString() : null;
+		String elemId = (component != null) ? component.getId() : null;
+		String elemValue = (value != null) ? value.toString() : null;
 		if (StringUtils.isEmpty(elemId) || StringUtils.isEmpty(elemValue))
 			return;
 		if (elemId.equalsIgnoreCase("essid") || elemId.equalsIgnoreCase("session")) {
 			validateSessionSSID(elemId, elemValue);
-		} else if (elemId.equalsIgnoreCase("")) {
 		}
 	}
 
 	public void validateSessionSSID(String elemId, String elemValue) {
 		matcher = pattern.matcher(elemValue);
 		if (!matcher.matches() || elemValue.length() > 40) {
-			String msg = "Input can have only alphanumeric character and dash (-)";
+			String msg = "Input is limited to alphanumeric characters and the dash (-)";
 			if (elemValue.length() > 40)
 				msg = "Maximum input length is 40";
 			FacesMessage fmsg = new FacesMessage("Invalid input", msg);

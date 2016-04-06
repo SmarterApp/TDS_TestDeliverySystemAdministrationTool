@@ -218,6 +218,8 @@ public class TestOpportunity implements Serializable {
 	}
 
 	public void setDayIncrement(int dayIncrement) {
+		// Set the opportunity as selected when dayIncrement falls in range
+		// <-365,365>
 		if (dayIncrement >= -365 && dayIncrement <= 365)
 			this.setSelected(true);
 		this.dayIncrement = dayIncrement;

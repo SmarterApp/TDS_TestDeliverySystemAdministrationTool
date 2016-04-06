@@ -71,9 +71,9 @@ public class DefaultBacking implements Serializable {
 		SbacUser user = (SbacUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		this.setRequestor(user.getEmail());
 		if (trClient == null)
-			_logger.error("TrClient is null");
+			_logger.error("DefaultBacking: TrClient is null");
 		if (tdsAdminDAO == null)
-			_logger.error("tdsAdminDAO is null");
+			_logger.error("DefaultBacking: tdsAdminDAO is null");
 	}
 
 	public String getRadiossid() {
@@ -210,7 +210,8 @@ public class DefaultBacking implements Serializable {
 
 	public boolean searchOpportunity(String extSsId, String sessionId) {
 		if (!validateInput(extSsId, sessionId)) {
-			_logger.error(String.format("Input validation failed for Ext SSID:%s, SessionId=%s", extSsId, sessionId));
+			_logger.error(String.format("DefaultBacking: Input validation failed for Ext SSID:%s, SessionId=%s",
+					extSsId, sessionId));
 			return false;
 		}
 		this.opportunities.clear();
@@ -225,11 +226,11 @@ public class DefaultBacking implements Serializable {
 			opps = controller.getOpportunities(response, extSsId, ssId, sessionId, procedure);
 			setOpportunities(opps);
 			setLazyOpps(opps);
-			_logger.info(
-					String.format("Fetching opportunities successful for SSID:%s,ExtSSID=%s,SessionId=%s, Procedure=%s",
-							ssId, extSsId, sessionId, procedure));
+			_logger.info(String.format(
+					"DefaultBacking: Fetching opportunities successful for SSID:%s,ExtSSID=%s,SessionId=%s, Procedure=%s",
+					ssId, extSsId, sessionId, procedure));
 		} catch (HttpResponseException e) {
-			_logger.error(e.getMessage(), e);
+			_logger.error("DefaultBacking: " + e.getMessage(), e);
 		}
 		if (this.opportunities.size() <= 0)
 			setNomatch("No matching opportunity found");
@@ -296,9 +297,10 @@ public class DefaultBacking implements Serializable {
 
 				break;
 			}
-			_logger.info(String.format("Success for procedure=%s, oppkey=%s", procedure, testOpp.getOppKey()));
+			_logger.info(String.format("DefaultBacking: Success for procedure=%s, oppkey=%s", procedure,
+					testOpp.getOppKey()));
 		} catch (HttpResponseException e) {
-			_logger.error(e.getMessage(), e);
+			_logger.error("DefaultBacking: " + e.getMessage(), e);
 		}
 		return result;
 	}
