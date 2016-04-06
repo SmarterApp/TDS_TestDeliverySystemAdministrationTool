@@ -226,6 +226,9 @@ public class DefaultBacking implements Serializable {
 			opps = controller.getOpportunities(response, extSsId, ssId, sessionId, procedure);
 			setOpportunities(opps);
 			setLazyOpps(opps);
+			_logger.info(String.format(
+					"DefaultBacking: Fetching opportunities successful for SSID:%s,ExtSSID=%s,SessionId=%s, Procedure=%s",
+					ssId, extSsId, sessionId, procedure));
 		} catch (HttpResponseException e) {
 			_logger.error("DefaultBacking: " + e.getMessage(), e);
 		}

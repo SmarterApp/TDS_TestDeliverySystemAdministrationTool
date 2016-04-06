@@ -13,6 +13,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import javax.faces.validator.ValidatorException;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
@@ -36,6 +38,7 @@ import TDS.Shared.Exceptions.ReturnStatusException;
 import tds.tdsadmin.db.abstractions.TDSAdminDAO;
 import tds.tdsadmin.model.OpportunitySerializable;
 import tds.tdsadmin.model.ProcedureResult;
+import tds.tdsadmin.validator.TDSValidator;
 
 /**
  * Handles requests for the application home page.
@@ -111,6 +114,16 @@ public class TDSAdminController implements Serializable {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
 			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST,
 					"Needs either external ssid or ssid or session id along with procedure");
+		}
+		TDSValidator validator = new TDSValidator();
+		try {
+			String studentid = (StringUtils.isNotEmpty(ssId)) ? ssId : extSsId;
+			if (StringUtils.isNotEmpty(studentid))
+				validator.validateSessionSSID("extssid", studentid);
+			if (StringUtils.isNotEmpty(sessionId))
+				validator.validateSessionSSID("session", sessionId);
+		} catch (ValidatorException e) {
+			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST, e.getMessage());
 		}
 		try {
 			if (!StringUtils.isEmpty(ssId)) {
@@ -227,9 +240,12 @@ public class TDSAdminController implements Serializable {
 			@RequestParam(value = "doupdate", required = false) boolean v_doupdate,
 			@RequestParam(value = "reason", required = false) String v_reason) throws HttpResponseException {
 		ProcedureResult result = null;
-		if (v_oppKey == null) {
+		// selected sitting is number of sitting for an opportunity, which can't
+		// be negative, upper limit for this is 99, taken arbitrarily
+		if (v_oppKey == null || v_selectedsitting < 0 || v_selectedsitting > 99) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
-			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST, "Needs parameters: oppkey, requestor, reason");
+			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST,
+					"Needs parameters: oppkey, requestor, reason and selectedsitting range:<-365,365> ");
 		}
 		try {
 			result = getDao().extendingOppGracePeriod(v_oppKey, v_requestor, v_selectedsitting, v_doupdate, v_reason);
@@ -252,9 +268,12 @@ public class TDSAdminController implements Serializable {
 			@RequestParam(value = "reason", required = false) String v_reason) throws HttpResponseException {
 
 		ProcedureResult result = null;
-		if (v_oppKey == null) {
+		// throwing exception when oppkey is null or dayincrement is not in
+		// range <-365,365>, this is an arbitrary range
+		if (v_oppKey == null || v_dayincrement < -365 || v_dayincrement > 365) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
-			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST, "Needs parameters: oppkey, requestor, reason");
+			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST,
+					"Needs parameters: oppkey, requestor, reason and dayIncrement range:<-365,365>");
 		}
 		try {
 			result = getDao().alterOpportunityExpiration(v_oppKey, v_requestor, v_dayincrement, v_reason);
