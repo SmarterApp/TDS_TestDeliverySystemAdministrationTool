@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Educational Online Test Delivery System
+ * Copyright (c) 2016 American Institutes for Research
+ * 
+ * Distributed under the AIR Open Source License, Version 1.0
+ * See accompanying file AIR-License-1_0.txt or at 
+ * http://www.smarterapp.org/documents/American_Institutes_for_Research_Open_Source_Software_License.pdf
+ ******************************************************************************/
 package tds.tdsadmin.rest;
 
 import static org.junit.Assert.*;
@@ -71,11 +79,11 @@ public class TDSAdminControllerTest {
 	public void getOpportunities() throws Exception {
 
 		OpportunitySerializable opps = getOpps();
-		when(_dao.getOpportunities("103", "four-3", null)).thenReturn(opps);
+		when(_dao.getOpportunities("103", "four-3", "invalidate")).thenReturn(opps);
 		opps = new OpportunitySerializable();
-		when(_dao.getOpportunities("420", null, null)).thenReturn(opps);
+		when(_dao.getOpportunities("420", null, "invalidate")).thenReturn(opps);
 		// test with student id and session id
-		mockMvc.perform(get("/rest/getOpportunities?extSsId=103&sessionId=four-3")
+		mockMvc.perform(get("/rest/getOpportunities?extSsId=103&sessionId=four-3&procedure=invalidate")
 				.accept(MediaType.parseMediaType("application/json;charset=UTF-8"))).andExpect(status().isOk())
 				.andExpect(content().contentType("application/json;charset=UTF-8"))
 				.andExpect(jsonPath("$", Matchers.hasSize(2)))
@@ -88,7 +96,8 @@ public class TDSAdminControllerTest {
 		mockMvc.perform(get("/rest/getOpportunities")).andExpect(status().isBadRequest());
 
 		// test with non-existing id
-		mockMvc.perform(get("/rest/getOpportunities?extSsId=420")).andExpect(jsonPath("$", Matchers.hasSize(0)));
+		mockMvc.perform(get("/rest/getOpportunities?extSsId=420&procedure=invalidate"))
+				.andExpect(jsonPath("$", Matchers.hasSize(0)));
 	}
 
 	@Test
