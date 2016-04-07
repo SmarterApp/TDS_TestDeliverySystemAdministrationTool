@@ -8,12 +8,14 @@
  ******************************************************************************/
 package tds.tdsadmin.web.backingbean;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
@@ -40,7 +42,7 @@ public class DefaultBacking implements Serializable {
 	private static final Logger _logger = LoggerFactory.getLogger(DefaultBacking.class);
 
 	private static final long serialVersionUID = 1L;
-	private String radiossid = null;
+	private String radiossid = "extssid";
 	private String extssid = null;
 	private String sessionid = null;
 	private HashMap<String, String> procedures = null;
@@ -339,5 +341,17 @@ public class DefaultBacking implements Serializable {
 			return "color:green";
 		else
 			return "color:red";
+	}
+
+	public void reload() {
+		try {
+			procedureChange();
+			this.setSessionid(null);
+			this.setExtssid(null);
+			ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+			context.redirect(context.getRequestContextPath() + "/Default.xhtml");
+		} catch (IOException e) {
+
+		}
 	}
 }
