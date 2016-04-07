@@ -80,32 +80,45 @@ ul.adminForm {
 .tableOutput .ui-datatable-tablewrapper {
 	overflow-x: auto;
 }
+/*overwriting the selected row style*/
+.ui-state-highlight, .ui-widget-content .ui-state-highlight,
+	.ui-widget-header .ui-state-highlight {
+	background: transparent;
+	border: inherit;
+	color: inherit;
+	text-shadow: none;
+}
 </style>
 	<title>TDS Admin Home Page</title>
 </h:head>
 <h:body>
-	<div class="container">
-		<a target="_self" href="#mainContent" data-ng-click="#mainContent"
-			class="skipToContent" id="skipNavigation">Skip to Main Content</a>
-		<div class="header">
-			<div class="info ng-scope">
-				<ul>
-					<li>Logged in as: ${userBean.getFullName()}</li>
-					<li><a href="saml/logout">Logout</a></li>
-				</ul>
-			</div>
-			<div class="banner ng-scope">
-				<span class="logo"><a tabindex="0"
-					href="#{request.contextPath}"><img
-						name="SBAC_logo" alt="Logo" class="thumbnail"
-						data-ng-src="Images/logo_sbac.png" src="Images/logo_sbac.png" /></a></span>
-				<div class="title">
-					<h1>TDS Administration</h1>
+	<h:form>
+		<div class="container">
+			<a target="_self" href="#mainContent" data-ng-click="#mainContent"
+				class="skipToContent" id="skipNavigation">Skip to Main Content</a>
+			<div class="header">
+				<div class="info ng-scope">
+					<ul>
+						<li>Logged in as: ${userBean.getFullName()}</li>
+						<li><a href="saml/logout">Logout</a></li>
+					</ul>
 				</div>
-				<div class="clear"></div>
+
+				<div class="banner ng-scope">
+					<span class="logo"> <h:commandLink tabindex="0"
+							actionListener="#{defaultBacking.reload()}">
+							<img name="SBAC_logo" alt="Logo" class="thumbnail"
+								data-ng-src="Images/logo_sbac.png" src="Images/logo_sbac.png" />
+						</h:commandLink></span>
+					<div class="title">
+						<h1>TDS Administration</h1>
+					</div>
+
+					<div class="clear"></div>
+				</div>
 			</div>
 		</div>
-	</div>
+	</h:form>
 	<div id="mainContent" class="content">
 		<div class="secContent">
 			<div class="adminForm">
