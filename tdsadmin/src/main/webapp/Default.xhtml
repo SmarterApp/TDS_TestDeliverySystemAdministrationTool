@@ -80,6 +80,14 @@ ul.adminForm {
 .tableOutput .ui-datatable-tablewrapper {
 	overflow-x: auto;
 }
+/*overwriting the selected row style*/
+.ui-state-highlight, .ui-widget-content .ui-state-highlight,
+	.ui-widget-header .ui-state-highlight {
+	background: transparent;
+	border: inherit;
+	color: inherit;
+	text-shadow: none;
+}
 </style>
 	<title>TDS Admin Home Page</title>
 </h:head>
@@ -96,9 +104,9 @@ ul.adminForm {
 			</div>
 			<div class="banner ng-scope">
 				<span class="logo"><a tabindex="0"
-					href="#{request.contextPath}"><img
-						name="SBAC_logo" alt="Logo" class="thumbnail"
-						data-ng-src="Images/logo_sbac.png" src="Images/logo_sbac.png" /></a></span>
+					href="#{request.contextPath}"><img name="SBAC_logo" alt="Logo"
+						class="thumbnail" data-ng-src="Images/logo_sbac.png"
+						src="Images/logo_sbac.png" /></a></span>
 				<div class="title">
 					<h1>TDS Administration</h1>
 				</div>
