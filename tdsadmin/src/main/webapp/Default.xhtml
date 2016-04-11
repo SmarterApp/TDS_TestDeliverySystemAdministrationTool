@@ -134,14 +134,15 @@ ul.adminForm {
 	</h:form>
 	<div id="mainContent" class="content">
 		<div class="secContent">
-			<div class="adminForm">
-				<h2>Execute TDS Administrative Procedure</h2>
-				<!--Begin the admin form. Must add .adminForm class to this div. -->
-				<h5 tabindex="-1">Search Filters</h5>
-			</div>
+
 			<c:choose>
 				<c:when
 					test="#{userBean.getUser().hasPermission('ROLE_Opportunity Read') or userBean.getUser().hasPermission('ROLE_Opportunity Modify') }">
+					<div class="adminForm">
+						<h2>Execute TDS Administrative Procedure</h2>
+						<!--Begin the admin form. Must add .adminForm class to this div. -->
+						<h5 tabindex="-1">Search Filters</h5>
+					</div>
 					<h:form>
 						<ul class="adminForm">
 							<li><h:outputLabel value="Select Procedure to Execute:"></h:outputLabel>
