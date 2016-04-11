@@ -1,0 +1,25 @@
+# use glob syntax.
+syntax: glob
+#compiled code
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# mvn build output
+target/
+bin/
+
+# Eclipse project files
+.classpath
+.project
+.settings/
+.cache/
+.classpath
+
+# Mac finder
+.DS_Store
+
+*.iml
