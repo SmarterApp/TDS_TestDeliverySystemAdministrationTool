@@ -15,6 +15,13 @@
 	</context-param>
 	<!--End: Added for Program Management and Monitoring and Alerting dependency -->
 	
+	
+	<!-- Start: SB-1482 -->
+	<error-page>
+    	<exception-type>javax.faces.application.ViewExpiredException</exception-type>
+    	<location>/Error.xhtml</location>
+	</error-page>
+	<!-- End: SB-1482 -->
 
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
