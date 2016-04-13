@@ -3,7 +3,7 @@
 TDSAdmin includes the following functionality:
 
 * Viewing test opportunities
-* Extending grace period, extend expiration date, reopen, restore, reset, invalidate, change segment permeability of test opportunities
+* Extend grace period, extend expiration date, reopen, restore, reset, invalidate, change segment permeability of test opportunities
 
 ## License ##
 This project is licensed under the [AIR Open Source License v1.0](http://www.smarterapp.org/documents/American_Institutes_for_Research_Open_Source_Software_License.pdf).
