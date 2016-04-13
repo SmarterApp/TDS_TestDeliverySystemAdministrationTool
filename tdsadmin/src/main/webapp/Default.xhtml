@@ -202,7 +202,7 @@ ul.adminForm {
 							<p:dataTable value="#{defaultBacking.lazyOpps}" var="opp"
 								id="mytable" rendered="#{defaultBacking.oppCount>0}"
 								selectionMode="single" paginator="true" rows="5" lazy="true"
-								tableStyle="table-layout:auto;" resizableColumns="true"
+								tableStyle="table-layout:auto;" resizableColumns="false"
 								editable="true" rowIndexVar="index"
 								paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 								rowsPerPageTemplate="5,10,15">
