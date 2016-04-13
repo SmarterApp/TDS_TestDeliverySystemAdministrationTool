@@ -1,0 +1,358 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+	<link href="Style/core.css" rel="stylesheet" type="text/css" />
+	<link href="Style/tdsadmin.css" rel="stylesheet" type="text/css" />
+	<style type="text/css">
+.adminForm {
+	margin: auto;
+	/*width: 1024px;*/
+}
+
+ul.adminForm {
+	list-style-type: none;
+}
+
+.adminForm li {
+	line-height: 2.5em;
+}
+
+.adminForm label {
+	display: inline-block;
+	width: 200px;
+	margin: 0 1em 0 0;
+}
+
+.adminForm li>input, .adminForm select, .adminForm textarea {
+	min-width: 200px;
+	margin: 0 1em 0 0;
+}
+
+.checkHolder {
+	display: inline-block;
+}
+
+.adminForm legend {
+	display: none;
+}
+
+.adminForm fieldset {
+	display: inline;
+	line-height: 1;
+	vertical-align: middle;
+}
+
+.checkHolder label {
+	margin-left: 0;
+	margin-right: 20px;
+	width: auto;
+}
+
+.adminForm button {
+	margin-left: 257px;
+}
+/*Table style Overrides*/
+.ui-widget-header {
+	background: #3db11a none repeat scroll 0 0;
+	border: 1px solid #e4e4e4;
+	color: #ffffff;
+}
+/*overwriting the selected row style*/
+.ui-state-highlight, .ui-widget-content .ui-state-highlight,
+	.ui-widget-header .ui-state-highlight {
+	background: transparent;
+	border: inherit;
+	color: inherit;
+	text-shadow: none;
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default,
+	.ui-widget-header .ui-state-default {
+	background: rgba(255, 255, 255, 0.52)
+		-moz-linear-gradient(center top, rgba(255, 255, 255, 0.2),
+		rgba(255, 255, 255, 0)) repeat scroll 0 0;
+	background: rgba(255, 255, 255, 0.52)
+		-webkit-linear-gradient(center top, rgba(255, 255, 255, 0.2),
+		rgba(255, 255, 255, 0)) repeat scroll 0 0;
+	background: rgba(255, 255, 255, 0.52)
+		linear-gradient(center top, rgba(255, 255, 255, 0.2),
+		rgba(255, 255, 255, 0)) repeat scroll 0 0;
+	border: 1px solid #3DB11A;
+}
+
+.ui-datatable-tablewrapper {
+	margin: 0 auto;
+	overflow-x: auto !important;
+}
+
+/*Start:SB-1484 */
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active
+	{
+	background: #85b2cb
+		-moz-linear-gradient(center top, rgba(255, 255, 255, 0),
+		rgba(255, 255, 255, 0.4)) repeat scroll 0 0 !important;
+	border: 1px solid #7096ab;
+	color: #1c4257;
+	font-weight: bold;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+/*End:SB-1484 */
+</style>
+	<title>TDS Admin Home Page</title>
+</h:head>
+<h:body>
+	<h:form>
+		<div class="container">
+			<a target="_self" href="#mainContent" data-ng-click="#mainContent"
+				class="skipToContent" id="skipNavigation">Skip to Main Content</a>
+			<div class="header">
+				<div class="info ng-scope">
+					<ul>
+						<li>Logged in as: ${userBean.getFullName()}</li>
+						<li><a href="saml/logout">Logout</a></li>
+					</ul>
+				</div>
+
+				<div class="banner ng-scope">
+					<span class="logo"> <h:commandLink tabindex="0"
+							actionListener="#{defaultBacking.reload()}">
+							<img name="SBAC_logo" alt="Logo" class="thumbnail"
+								data-ng-src="Images/logo_sbac.png" src="Images/logo_sbac.png" />
+						</h:commandLink></span>
+					<div class="title">
+						<h1>TDS Administration</h1>
+					</div>
+
+					<div class="clear"></div>
+				</div>
+			</div>
+		</div>
+	</h:form>
+	<div id="mainContent" class="content">
+		<div class="secContent">
+
+			<c:choose>
+				<c:when
+					test="#{userBean.getUser().hasPermission('ROLE_Opportunity Read') or userBean.getUser().hasPermission('ROLE_Opportunity Modify') }">
+					<div class="adminForm">
+						<h2>Execute TDS Administrative Procedure</h2>
+						<!--Begin the admin form. Must add .adminForm class to this div. -->
+						<h5 tabindex="-1">Search Filters</h5>
+					</div>
+					<h:form>
+						<ul class="adminForm">
+							<li><h:outputLabel value="Select Procedure to Execute:"></h:outputLabel>
+								<h:selectOneMenu id="procedure"
+									value="#{defaultBacking.procedure}"
+									valueChangeListener="#{defaultBacking.procedureChange()}"
+									onchange="submit()">
+
+									<f:selectItems value="#{defaultBacking.procedures.entrySet()}"
+										var="entry" itemValue="#{entry.key}"
+										itemLabel="#{entry.value}"></f:selectItems>
+								</h:selectOneMenu></li>
+							<li><h:outputLabel value="Student ID:"></h:outputLabel> <h:inputText
+									id="essid" value="#{defaultBacking.extssid}" maxlength="40"
+									binding="#{studentid}">
+									<f:validator validatorId="tdsValidator" />
+								</h:inputText> <h:message for="essid" style="color:red"></h:message>
+								<fieldset>
+									<legend>Student ID</legend>
+									<div class="checkHolder">
+										<h:selectOneRadio value="#{defaultBacking.radiossid}">
+											<f:selectItem itemValue="ssid" itemLabel="Use SSID" />
+
+											<f:selectItem itemValue="extssid"
+												itemLabel="Use External SSID" />
+										</h:selectOneRadio>
+										<h:outputText value="#{defaultBacking.selectRadioText}"
+											style="color:red"></h:outputText>
+									</div>
+								</fieldset></li>
+							<li><h:outputLabel value="Session ID:"></h:outputLabel> <h:inputText
+									id="session" binding="#{sessionid}" maxlength="40"
+									value="#{defaultBacking.sessionid}">
+									<f:validator validatorId="tdsValidator" style="color:red" />
+								</h:inputText></li>
+							<li><h:message for="session" style="color:red"></h:message>
+							</li>
+						</ul>
+						<div class="adminForm">
+							<div class="buttonRow">
+								<p:commandButton id="search" ajax="false"
+									actionListener="#{defaultBacking.searchOpportunity(studentid.value,sessionid.value)}"
+									style="horizontal-align:middle;"
+									styleClass="boxBtn ng-isolate-scope ng-scope"
+									value="Search for Opportunities"></p:commandButton>
+								<h:outputText value="#{defaultBacking.selectIdText}"
+									style="color:red"></h:outputText>
+
+							</div>
+						</div>
+						<h:outputText value="#{defaultBacking.executionResult}"
+							style="color:green"></h:outputText>
+						<h:outputText value="#{defaultBacking.nomatch}" style="color:red"></h:outputText>
+						<!--Start putting the table output div here-->
+						<div class="tableOutput">
+							<p:dataTable value="#{defaultBacking.lazyOpps}" var="opp"
+								id="mytable" rendered="#{defaultBacking.oppCount>0}"
+								selectionMode="single" paginator="true" rows="5" lazy="true"
+								tableStyle="table-layout:auto;" resizableColumns="true"
+								editable="true" rowIndexVar="index"
+								paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+								rowsPerPageTemplate="5,10,15">
+								<p:column
+									rendered="#{userBean.getUser().hasPermission('ROLE_Opportunity Modify')}">
+									<h:selectBooleanCheckbox value="#{opp.selected}"
+										onchange="submit()">
+									</h:selectBooleanCheckbox>
+								</p:column>
+								<p:column sortBy="altSsid">
+									<f:facet name="header">Ext.SSID</f:facet>
+              #{opp.altSsid} </p:column>
+								<p:column sortBy="name">
+									<f:facet name="header">Name</f:facet>
+              #{opp.name} </p:column>
+								<p:column sortBy="testName">
+									<f:facet name="header">Test Name</f:facet>
+									<h:outputText id="testName" value="#{opp.testName}"></h:outputText>
+								</p:column>
+								<p:column sortBy="sessionId">
+									<f:facet name="header">Session ID</f:facet>
+              #{opp.sessionId} </p:column>
+								<p:column sortBy="status">
+									<f:facet name="header">Status</f:facet>
+              #{opp.status} </p:column>
+								<p:column sortBy="dateStarted">
+									<f:facet name="header">Started On</f:facet>
+									<h:outputText value="#{opp.dateStarted}">
+										<f:convertDateTime pattern="dd-MMM-yyyy" />
+									</h:outputText>
+								</p:column>
+								<p:column sortBy="dateExpired">
+									<f:facet name="header">Expired On</f:facet>
+									<h:outputText value="#{opp.dateExpired}">
+										<f:convertDateTime pattern="dd-MMM-yyyy" />
+									</h:outputText>
+								</p:column>
+								<p:column sortBy="dateCompleted">
+									<f:facet name="header">Completed On</f:facet>
+									<h:outputText value="#{opp.dateCompleted}">
+										<f:convertDateTime pattern="dd-MMM-yyyy" />
+									</h:outputText>
+								</p:column>
+								<p:column sortBy="datePaused">
+									<f:facet name="header">Paused On</f:facet>
+									<h:outputText value="#{opp.datePaused}">
+										<f:convertDateTime pattern="dd-MMM-yyyy" />
+									</h:outputText>
+								</p:column>
+								<p:column sortBy="restart">
+									<f:facet name="header">Restarts</f:facet>
+              #{opp.restart} </p:column>
+								<p:column sortBy="segmentPosition"
+									rendered='#{"changeperm".equals(defaultBacking.procedure)}'>
+									<f:facet name="header">Segment Position</f:facet>
+              #{opp.segmentPosition} </p:column>
+								<p:column
+									rendered='#{"changeperm".equals(defaultBacking.procedure)}'>
+									<f:facet name="header">Permeable</f:facet>
+									<h:selectBooleanCheckbox value="#{opp.permeable}" />
+								</p:column>
+								<p:column sortBy="segmentName"
+									rendered='#{"changeperm".equals(defaultBacking.procedure)}'>
+									<f:facet name="header">Segment Name</f:facet>
+              #{opp.segmentName} </p:column>
+								<p:column
+									rendered='#{"extend".equals(defaultBacking.procedure)}'>
+									<f:facet name="header">SelectedSitting</f:facet>
+									<h:inputText value="#{opp.selectedSitting}" onchange="submit()"
+										id="selectedsitting" maxlength="2"
+										onkeypress="var key=event.keyCode||event.charCode||event.which;
+											var ZERO=48, NINE=57, BACKSPACE=8, LEFT_ARROW=37, RIGHT_ARROW=39, DEL=46;
+										if(key &lt; ZERO || key &gt; NINE) 
+										if(key!=BACKSPACE)
+										if(key!=LEFT_ARROW)
+										if(key!=RIGHT_ARROW)
+										if(key!=DEL)
+											return false;">
+									</h:inputText>
+								</p:column>
+								<p:column rendered='#{"alter".equals(defaultBacking.procedure)}'>
+									<f:facet name="header">DayIncrement</f:facet>
+									<h:inputText value="#{opp.dayIncrement}" onchange="submit()"
+										id="dayincrement" maxlength="4"
+										validatorMessage="Value must be between -365 and 365 inclusive"
+										onkeypress="var key=event.keyCode||event.charCode||event.which;
+											var ZERO=48, NINE=57, BACKSPACE=8, MINUS=45, LEFT_ARROW=37, RIGHT_ARROW=39, DEL=46;
+										if(key &lt; ZERO || key &gt; NINE) 
+										if(key!=BACKSPACE)
+										if(key!=MINUS)
+										if(key!=LEFT_ARROW)
+										if(key!=RIGHT_ARROW)
+										if(key!=DEL)
+											return false;">
+										<f:validateLongRange maximum="365" minimum="-365" />
+									</h:inputText>
+									<br />
+									<h:message for="dayincrement" style="color:red" />
+								</p:column>
+								<p:column
+									rendered='#{"changeperm".equals(defaultBacking.procedure)}'>
+									<f:facet name="header">Restore On</f:facet>
+									<h:selectOneMenu value="#{opp.restoreOn}">
+										<f:selectItem itemLabel="Segment" itemValue="segment"></f:selectItem>
+										<f:selectItem itemLabel="Paused" itemValue="paused"></f:selectItem>
+										<f:selectItem itemLabel="Completed" itemValue="completed"></f:selectItem>
+									</h:selectOneMenu>
+								</p:column>
+								<p:column sortBy="result">
+									<f:facet name="header">Result</f:facet>
+									<h:outputText value="#{opp.result}" id="result"
+										style="#{defaultBacking.getStyle(opp.result)}">
+									</h:outputText>
+									<p:tooltip id="mytooltip" for="result" value="#{opp.reason}"></p:tooltip>
+								</p:column>
+							</p:dataTable>
+						</div>
+						<!--It would be nice to have a meangingful header for this part of the form-->
+						<!--<h5 tabindex="-1">Search Filters</h5>-->
+						<ul class="adminForm">
+							<li><h:outputLabel rendered="#{defaultBacking.oppCount>0}">Reason</h:outputLabel>
+								<h:inputTextarea rendered="#{defaultBacking.oppCount>0}"
+									disabled="#{defaultBacking.executeDisabled}"
+									value="#{defaultBacking.reason}"></h:inputTextarea></li>
+						</ul>
+						<div class="adminForm">
+							<div class="buttonRow">
+								<p:commandButton id="executeProcedure" ajax="false"
+									rendered="#{defaultBacking.oppCount>0}"
+									disabled="#{defaultBacking.executeDisabled}"
+									actionListener="#{defaultBacking.execute()}"
+									style="horizontal-align:middle;"
+									value="Execute Procedure on Selected Opportunities"></p:commandButton>
+							</div>
+						</div>
+
+					</h:form>
+				</c:when>
+				<c:otherwise>
+					<h:outputText style="color:red">You don't have permission to view this page</h:outputText>
+				</c:otherwise>
+			</c:choose>
+		</div>
+	</div>
+	<div class="footer ng-scope">
+		<div class="footerText ng-binding" data-ng-if="buildInfo.appVersion">
+			Version: 0.0.1-SNAPSHOT <span
+				data-ng-show="buildInfo.jenkinsBuildNumber" class="ng-binding">
+				(build #: 85)</span>
+		</div>
+	</div>
+</h:body>
+</html>
