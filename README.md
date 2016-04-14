@@ -34,11 +34,6 @@ pm.oauth.client.id={Client ID for program management client, can be shared among
 pm.oauth.client.secret={Password for program management client, can be shared amongst all client users or application/consumer specific values}
 pm.oauth.batch.account={Account name or email for OAuth2 batch}
 pm.oauth.batch.password={OAuth2 batch password}
-oauth.testreg.client={OAuth test client ID for test registration}
-oauth.testreg.client.secret={OAuth client secret for test registration}
-oauth.testreg.client.granttype={OAuth grant type for test registration}
-oauth.testreg.username={OAuth username for test registration}
-oauth.testreg.password={OAuth password for test registration} 
 
 working example:
 oauth.access.url=https://<openam-url>/auth/oauth2/access_token?realm=/your_realm
@@ -46,11 +41,6 @@ pm.oauth.client.id=pm
 pm.oauth.client.secret=OAUTHCLIENTSECRET
 pm.oauth.batch.account=test@example.com
 pm.oauth.batch.password=<password>
-oauth.testreg.client=testreg 
-oauth.testreg.client.secret=<secret> 
-oauth.testreg.client.granttype=password
-oauth.testreg.username=testreg@example.org 
-oauth.testreg.password=<password>
 ```
 Add environment variable `-DSB11_CONFIG_DIR` to application server start up as shown in Tomcat (Run Configuration).
 
@@ -64,7 +54,7 @@ Like other SBAC applications, TDSAdmin must be set up with active profiles and p
 	* `mna.client.null`  - Use the null MnA component
 * `-Dprogman.baseUri`  - This URI is the base URI for where the Program Management REST module is deployed.
 *  `-Dprogman.locator`  - The locator variable describes which combinations of name and environment (with optional overlay) should be loaded from Program Management.  For example: ```"component1-urls,dev"``` would look up the name component1-urls for the dev environment at the configured REST endpoint.  Multiple lookups can be performed by using a semicolon to delimit the pairs (or triplets with overlay): ```"component1-urls,dev;component1-other,dev"```
-*  `-DSB11_CONFIG_DIR`  - Locator string needed to find the TDSAdmin properties to load.
+*  `-DSB11_CONFIG_DIR`  - Locator string needed to find the TDSAdmin properties to load. (Directory containing 'progman' folder)
 *  `-Djavax.net.ssl.trustStore`  - Location of .jks file which contains security certificates for SSO, Program Management and Permissions URL specified inside the baseuri and Program Management configuration.
 *  `-Djavax.net.ssl.trustStorePassword`  - Password string for the keystore.jks file.
 
