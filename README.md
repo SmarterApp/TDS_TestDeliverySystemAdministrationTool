@@ -2,8 +2,7 @@
 
 TDSAdmin includes the following functionality:
 
-* Viewing test opportunities
-* Extend grace period, extend expiration date, reopen, restore, reset, invalidate, change segment permeability of test opportunities
+The TDS Administration tool allows authorized users to manage students’ test opportunities. This software provides a web interface that allows for the selection of opportunities by SSID and/or Session ID, and apply a variety of functions to those opportunities. These functions include Extend grace period, Extend expiration date, Reopen, Restore, Reset, Invalidate, and Change segment permeability of test opportunities.
 
 ## License ##
 This project is licensed under the [AIR Open Source License v1.0](http://www.smarterapp.org/documents/American_Institutes_for_Research_Open_Source_Software_License.pdf).
@@ -168,27 +167,6 @@ Example:
 tdsadmin.webapp.saml.metadata.filename=tdsadmin_local_sp.xml
 tdsadmin.security.dir=file:////usr/securitydir
 ```
-
-### Create Default Databases
-The following steps will create the DBs and all necessary objects within.
-All scripts mentioned below are located at tdsdlldev project, tds-dll-schemas module.
-
- 
-#### 'session' Database
-
-* Run the following command on the db server:
-`CREATE DATABASE 'session' DEFAULT CHARACTER SET=utf8`
-* Create tables by running the SQL script file located at tds-dll-schemas/src/main/resources/sql/MYSQL/session/create_tables.sql
-* Create constraints by running the SQL script file create_tables.sql located at tds-dll-schemas/src/main/resources/sql/MYSQL/session/create_constraints.sql
-* Create indexes by running the SQL script file located at tds-dll-schemas/src/main/resources/sql/MYSQL/session/create_indexes.sql
-* Create triggers by running the SQL script file located at tds-dll-schemas/src/main/resources/sql/MYSQL/session/Triggers/triggers.sql
-* Create views by running the SQL script file/files located in folder
-tds-dll-schemas/src/main/resources/sql/MYSQL/session/Views/
-* Create stored procedures by running the SQL script file/files located in folder
-tds-dll-schemas/src/main/resources/sql/MYSQL/session/StoredProcedures/
-* Create functions by running the SQL script file/files located in folder
-tds-dll-schemas/src/main/resources/sql/MYSQL/session/Functions/
-  
  
 ## Build Order
 These are the steps that should be taken in order to build all of the Proctor related artifacts.
