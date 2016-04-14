@@ -124,21 +124,12 @@ The following parameters need to be configured inside program management for SSO
 #### tdsadmin properties
 The following parameters need to be configured inside program management for tdsadmin
 
-* `tdsadmin.IsCheckinSite=false` 
-* `tdsadmin.DONOT_Distributed=true` 
-* `tdsadmin.ClientQueryString=false`  
-* `tdsadmin.EncryptedPassword=true` 
-* `tdsadmin.RecordSystemClient=true` 
-* `tdsadmin.AdminPassword=SeCrEtPaSsWoRd` 
 * `tdsadmin.SqlCommandTimeout=60`  
 * `tdsadmin.SessionType=0`  - Type of the testing supported: 0 is online, 1 is paper-based.
-* `tdsadmin.DBJndiName=java:/comp/env/jdbc/sessiondb` 
 * `tdsadmin.TestRegistrationApplicationUrl=http://<url-to-art-app>:port/rest`  -  URL to ART Application REST context
 * `tdsadmin.TDSSessionDBName=session`  - Name of the session schema
-* `tdsadmin.Debug.AllowFTP=true` 
 * `tdsadmin.StateCode=WI` 
 * `tdsadmin.ClientName=SBAC`
-* `tdsadmin.IsTrStubSession=true` 
 * `logLatencyInterval=55` - Define the seconds of a minute when DB latency is being logged into database table.
 * `logLatencyMaxTime=30000` - If any procedure call execution time exceeds the number of milliseconds specified here, It will be logged into the dblatency table of the database.
 * `dbLockRetrySleepInterval=116` - Database connection will wait for number of milliseconds specified here before trying to acquire the exclusive resource lock on database again.
