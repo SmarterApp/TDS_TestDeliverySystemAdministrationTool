@@ -12,7 +12,6 @@ This project is licensed under the [AIR Open Source License v1.0](http://www.sma
 We would be happy to receive feedback on its capabilities, problems, or future enhancements:
 
 * For general questions or discussions, please use the [Forum](http://forum.opentestsystem.org/viewforum.php?f=9).
-* Use the **Issues** link to file bugs or enhancement requests.
 * Feel free to **Fork** this project and develop your changes!
 
 ## Module Overview
@@ -45,7 +44,7 @@ oauth.testreg.username={OAuth username for test registration}
 oauth.testreg.password={OAuth password for test registration} 
 
 working example:
-oauth.access.url=https://drc-dev-secure.opentestsystem.org/auth/oauth2/access_token?realm=/sbac
+oauth.access.url=https://<openam-url>/auth/oauth2/access_token?realm=/your_realm
 pm.oauth.client.id=pm
 pm.oauth.client.secret=OAUTHCLIENTSECRET
 pm.oauth.batch.account=test@example.com
@@ -61,7 +60,7 @@ Add environment variable `-DSB11_CONFIG_DIR` to application server start up as s
 ### Tomcat (Run Configuration)
 Like other SBAC applications, TDSAdmin must be set up with active profiles and program management settings.
 
-* `-Dspring.profiles.active`  - Active profiles should be comma separated. Typical profiles for the `-Dspring.profiles.active` include:
+* `-Dspring.profiles.active`  - Active profiles should be comma-separated. Typical profiles for the `-Dspring.profiles.active` include:
 	* `progman.client.impl.integration`  - Use the integrated program management
 	* `progman.client.impl.null`  - Use the program management null implementation
 	* `mna.client.integration`  - Use the integrated MnA component
@@ -75,8 +74,8 @@ Like other SBAC applications, TDSAdmin must be set up with active profiles and p
 ```
  Example:
 -Dspring.profiles.active="progman.client.impl.integration,mna.client.integration" 
--Dprogman.baseUri=http://<program-management-url>/programmanagement.rest/ 
--Dprogman.locator="tdsadmin,local" 
+-Dprogman.baseUri=http://<program-management-url>/rest/ 
+-Dprogman.locator="tdsadmin,prod" 
 -DSB11_CONFIG_DIR=<CONFIG-FOLDER-NAME>
 -Djavax.net.ssl.trustStore="<filesystem_dir>/saml_keystore.jks" 
 -Djavax.net.ssl.trustStorePassword="xxxxxx"
