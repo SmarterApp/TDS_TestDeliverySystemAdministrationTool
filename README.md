@@ -1,7 +1,5 @@
 # TDSAdmin
 
-TDSAdmin includes the following functionality:
-
 The TDS Administration tool allows authorized users to manage students’ test opportunities. This software provides a web interface that allows for the selection of opportunities by SSID and/or Session ID, and apply a variety of functions to those opportunities. These functions include Extend grace period, Extend expiration date, Reopen, Restore, Reset, Invalidate, and Change segment permeability of test opportunities.
 
 ## License ##
@@ -72,12 +70,12 @@ Like other SBAC applications, TDSAdmin must be set up with active profiles and p
 
 ```
  Example:
--Dspring.profiles.active="progman.client.impl.integration,mna.client.integration" 
+-Dspring.profiles.active=progman.client.impl.integration,mna.client.integration
 -Dprogman.baseUri=http://<program-management-url>/rest/ 
--Dprogman.locator="tdsadmin,prod" 
--DSB11_CONFIG_DIR=<CONFIG-FOLDER-NAME>
--Djavax.net.ssl.trustStore="<filesystem_dir>/saml_keystore.jks" 
--Djavax.net.ssl.trustStorePassword="xxxxxx"
+-Dprogman.locator='tdsadmin,prod'
+-DSB11_CONFIG_DIR=$CATALINA_HOME/resources
+-Djavax.net.ssl.trustStore=<filesystem_dir>/saml_keystore.jks
+-Djavax.net.ssl.trustStorePassword=xxxxxx
 ```
 
 ## Program Management Properties
@@ -86,7 +84,7 @@ Program Management properties need to be set for running TDSAdmin. Example TDSAd
 #### Database Properties
 The following parameters need to be configured inside program management for database.
 
-* `tdsadmin.datasource.url=jdbc:mysql://localhost:3306/schemaname?useUnicode=yes&characterEncoding=utf8`  - The JDBC URL of the database from which Connections can and should be acquired. useUnicode is required to store unicode characters into the database
+* `tdsadmin.datasource.url=jdbc:mysql://<url.to.db>:3306/schemaname?useUnicode=yes&characterEncoding=utf8`  - The JDBC URL of the database from which Connections can and should be acquired. useUnicode is required to store unicode characters into the database
 * `datasource.username=<db-username>`  -  Username that will be used for the DataSource's default getConnection() method. 
 * `encrypt:datasource.password=<db-password>`  - Password that will be used for the DataSource's default getConnection() method.
 * `datasource.driverClassName=com.mysql.jdbc.Driver`  - The fully qualified class name of the JDBC driverClass that is expected to provide Connections.
@@ -107,19 +105,19 @@ The following parameters need to be configured inside program management for dat
 Following parameters need to be configured inside program management for MNA.	
 
 * `mna.mnaUrl=http://<mna-context-url>/mna-rest/`  - URL of the Monitoring and Alerting client server's rest url
-* `mnaServerName=tdsadmin_dev`  -  Used by the mna clients to identify which server is sending the log/metrics/alerts.
-* `mnaNodeName=dev`  - Used by the mna clients to identify who is sending the log/metrics/alerts. There is a discrete mnaServerName and a node in case say XXX for server name & node1/node2 in a clustered environment giving the ability to search across clustered nodes by server name or specifically for a given node. Itâ€™s being stored in the db for metric/log/alert, but not displayed.
-* `mna.logger.level=INFO`  - Used to control what is logged to the Monitoring and Alerting system. Logging Levels (ALL - Turn on all logging levels,  TRACE, DEBUG, INFO, WARN, ERROR, OFF - Turn off logging).
+* `mnaServerName=tdsadmin`  -  Used by the mna clients to identify which server is sending the log/metrics/alerts.
+* `mnaNodeName=prod`  - Used by the mna clients to identify who is sending the log/metrics/alerts. There is a discrete mnaServerName and a node in case say XXX for server name & node1/node2 in a clustered environment giving the ability to search across clustered nodes by server name or specifically for a given node. Itâ€™s being stored in the db for metric/log/alert, but not displayed.
+* `mna.logger.level=INFO`  - Used to control what is logged to the Monitoring and Alerting system. Logging Level values include (ALL - Turn on all logging levels, TRACE, DEBUG, INFO, WARN, ERROR, OFF - Turn off logging). IMPORTANT: In order to maintain an audit log of activity in TDSAdmin, set this to no higher than `INFO`.
 
 
 #### SSO properties
 The following parameters need to be configured inside program management for SSO.	
 
 * `permission.uri=https://<permission-app-context-url>/rest`  - The base URL of the REST api for the Permissions application.
-* `tdsadmin.security.profile=dev`  - The name of the environment the application is running in. For a production deployment this will most likely be "prod. (it must match the profile name used to name metadata files).
+* `tdsadmin.security.profile=prod`  - The name of the environment the application is running in. For a production deployment this will most likely be "prod. (it must match the profile name used to name metadata files).
 * `component.name=TDS Admin`  - The name of the component that this tdsadmin deployment represents. This must match the name of the component in Program Management and the name of the component in the Permissions application.
 * `tdsadmin.security.idp=https://<idp-url>`  - The URL of the SAML-based identity provider (OpenAM).
-* `tdsadmin.webapp.saml.metadata.filename=proctor_local_sp.xml`  -  OpenAM Metadata file name uploaded for environment and placed inside server directory. 
+* `tdsadmin.webapp.saml.metadata.filename=proctor_sp.xml`  -  OpenAM Metadata file name uploaded for environment and placed inside server directory. 
 * `tdsadmin.security.dir=file:////<sp-file-location-folder>`  - Location of the metadata file.
 * `tdsadmin.security.saml.keystore.cert=<cert-name>`  - Name of the Keystore cert being used.
 * `tdsadmin.security.saml.keystore.pass=<password>`  -  Password for keystore cert.
@@ -145,11 +143,11 @@ The following parameters need to be configured inside program management for tds
 * `tdsadmin.SqlCommandTimeout=60`  
 * `tdsadmin.SessionType=0`  - Type of the testing supported: 0 is online, 1 is paper-based.
 * `tdsadmin.DBJndiName=java:/comp/env/jdbc/sessiondb` 
-* `tdsadmin.TestRegistrationApplicationUrl=http://localhost:8083/`  -  URL to TR(ART) Application
+* `tdsadmin.TestRegistrationApplicationUrl=http://<url-to-art-app>:port/rest`  -  URL to ART Application REST context
 * `tdsadmin.TDSSessionDBName=session`  - Name of the session schema
 * `tdsadmin.Debug.AllowFTP=true` 
 * `tdsadmin.StateCode=WI` 
-* `tdsadmin.ClientName=SBAC_PT`
+* `tdsadmin.ClientName=SBAC`
 * `tdsadmin.IsTrStubSession=true` 
 * `logLatencyInterval=55` - Define the seconds of a minute when DB latency is being logged into database table.
 * `logLatencyMaxTime=30000` - If any procedure call execution time exceeds the number of milliseconds specified here, It will be logged into the dblatency table of the database.
@@ -160,11 +158,11 @@ The following parameters need to be configured inside program management for tds
 
 ## SP Metadata file for SSO
 Create metadata file for configuring the SSO. Sample SSO metadata file pointing to localhost is at /tdsadmin/docs/Installation/tdsadmin_local_sp.xml.
-Change the entity id and url according to the environment. Upload this file to OpenAM and place this file inside server file system.
-Specify `tdsadmin.webapp.saml.metadata.filename` and `tdsadmin.security.dir` in program management for metadata file name and location.
+Change the entity id and URL according to the environment (local, dev, staging, prod, etc.). Upload this file to OpenAM and place this file inside server file system.
+Specify `tdsadmin.webapp.saml.metadata.filename` and `tdsadmin.security.dir` in Program Management for metadata file name and location.
 ```
 Example:
-tdsadmin.webapp.saml.metadata.filename=tdsadmin_local_sp.xml
+tdsadmin.webapp.saml.metadata.filename=tdsadmin_prod_sp.xml
 tdsadmin.security.dir=file:////usr/securitydir
 ```
  
@@ -187,8 +185,8 @@ These are the steps that should be taken in order to build all of the Proctor re
 
 If building all components from scratch the following build order is needed:
 
-* sharedmultijardev
-* tdsdlldev
+* sharedmultijar
+* tdsdll
 * SharedBuild
 * SharedCode
 * MonitoringAndAlertingClient
@@ -222,16 +220,12 @@ TDSAdmin has a number of direct dependencies that are necessary for it to functi
 * servlet-api
 * jsp-api
 
-
-
-
 ### Test Dependencies
 * hamcrest-all
 * junit
 * mockito-core
 * json-path-assert
 * spring-test
-
 
 ### Runtime Dependencies
 * jcl-over-slf4j
