@@ -63,7 +63,7 @@ Like other SBAC applications, TDSAdmin must be set up with active profiles and p
 -Dspring.profiles.active=progman.client.impl.integration,mna.client.integration
 -Dprogman.baseUri=http://<program-management-url>/rest/ 
 -Dprogman.locator='tdsadmin,prod'
--DSB11_CONFIG_DIR=$CATALINA_HOME/resources
+-DSB11_CONFIG_DIR=$CATALINA_HOME/{CONFIG-FOLDER-NAME}
 -Djavax.net.ssl.trustStore=<filesystem_dir>/saml_keystore.jks
 -Djavax.net.ssl.trustStorePassword=xxxxxx
 ```
