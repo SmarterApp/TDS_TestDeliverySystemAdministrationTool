@@ -58,6 +58,9 @@
 	<beans:bean id="tdsSettings" class="TDS.Shared.Configuration.TDSSettings"
 		scope="prototype" />
 	<beans:bean class="tds.tdsadmin.db.dao.TDSAdminDAOImpl" />
+	<beans:bean class="tds.tdsadmin.session.PropertiesBean">
+		<beans:property name="tdsadminTimeout" value="${tdsadminTimeout}" />
+	</beans:bean>
 
 	<!-- Start TrClient -->
 	<beans:bean id="iTrClient" class="org.opentestsystem.shared.trapi.TrClient" />
