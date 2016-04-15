@@ -107,11 +107,11 @@ The following parameters need to be configured inside program management for SSO
 * `tdsadmin.security.profile=prod`  - The name of the environment the application is running in. For a production deployment this will most likely be "prod. (it must match the profile name used to name metadata files).
 * `component.name=TDS Admin`  - The name of the component that this tdsadmin deployment represents. This must match the name of the component in Program Management and the name of the component in the Permissions application.
 * `tdsadmin.security.idp=https://<idp-url>`  - The URL of the SAML-based identity provider (OpenAM).
-* `tdsadmin.webapp.saml.metadata.filename=proctor_sp.xml`  -  OpenAM Metadata file name uploaded for environment and placed inside server directory. 
+* `tdsadmin.webapp.saml.metadata.filename=tdsadmin_prod_sp.xml`  -  OpenAM Metadata file name uploaded for environment and placed inside server directory. 
 * `tdsadmin.security.dir=file:////<sp-file-location-folder>`  - Location of the metadata file.
 * `tdsadmin.security.saml.keystore.cert=<cert-name>`  - Name of the Keystore cert being used.
 * `tdsadmin.security.saml.keystore.pass=<password>`  -  Password for keystore cert.
-* `tdsadmin.security.saml.alias=proctor_webapp`  - Alias for identifying web application.
+* `tdsadmin.security.saml.alias=tdsadmin_webapp`  - Alias for identifying web application.
 * `oauth.tsb.client=tsb`  - OAuth Client id configured in OAM to allow the SAML bearer workflow to convert a SAML assertion into an OAuth token for the "coordinated web service" call to TSB.
 * `oauth.access.url=https://<oauth-url>`  - OAuth URL to OAM to allow the SAML bearer workflow to POST to get an OAuth token for any "machine to machine" calls requiring OAUTH
 * `encrypt:oauth.tsb.client.secret=<password>`  - OAuth Client secret/password configured in OAM (under the client id) to allow the SAML bearer workflow to convert a SAML assertion into an OAuth token for the "coordinated web service" call to TSB.
@@ -148,7 +148,7 @@ tdsadmin.security.dir=file:////usr/securitydir
 ```
  
 ## Build Order
-These are the steps that should be taken in order to build all of the Proctor related artifacts.
+These are the steps that should be taken in order to build all of the TDSAdmin related artifacts.
 
 ### Pre-Dependencies
 * Tomcat 6 or higher
