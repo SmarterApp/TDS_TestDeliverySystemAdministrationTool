@@ -29,10 +29,14 @@
 	<listener>
 		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
 	</listener>
+	
+	<!-- Start: SB-1463 -->
 	<listener>
 		<description>sessionListener</description>
-		<listener-class>AIR.Common.Web.Session.SessionListener</listener-class>
+		<listener-class>tds.tdsadmin.session.TdsAdminSessionListener</listener-class>
 	</listener>
+	<!-- End: SB-1463 -->
+	
 	<servlet>
 		<servlet-name>appServlet</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
