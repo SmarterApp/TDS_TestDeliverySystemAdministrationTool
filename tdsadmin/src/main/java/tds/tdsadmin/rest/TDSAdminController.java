@@ -132,9 +132,14 @@ public class TDSAdminController implements Serializable {
 				}
 			} else
 				results = getDao().getOpportunities(extSsId, sessionId, procedure);
-			logger.info(
-					String.format("Get Opportunities successful for SSID:%s, Ext SSID:%s, SessionID=%s, Procedure=%s",
-							ssId, extSsId, sessionId, procedure));
+			if (results != null && results.size() > 0)
+				logger.info(String.format(
+						"Get Opportunities successful for SSID:%s, Ext SSID:%s, SessionID=%s, Procedure=%s", ssId,
+						extSsId, sessionId, procedure));
+			else
+				logger.error(
+						String.format("No matching opportunity for SSID:%s, Ext SSID:%s, SessionID=%s, Procedure=%s",
+								ssId, extSsId, sessionId, procedure));
 		} catch (ReturnStatusException e) {
 			logger.error(e.getMessage());
 		}
@@ -156,10 +161,14 @@ public class TDSAdminController implements Serializable {
 		}
 		try {
 			result = getDao().resetOpportunity(v_oppKey, v_requestor, v_reason);
-			logger.info(String.format("Reset successful for Oppkey=%s, Requestor=%s, Reason=%s", v_oppKey, v_requestor,
-					v_reason));
+			if (result != null && "success".equalsIgnoreCase(result.getStatus()))
+				logger.info(String.format("Appeals: Reset successful for Oppkey=%s, Requestor=%s, Reason=%s", v_oppKey,
+						v_requestor, v_reason));
+			else
+				logger.error(String.format("Appeals: Reset failed for Oppkey=%s, Requestor=%s, Reason=%s", v_oppKey,
+						v_requestor, (result != null) ? result.getReason() : null));
 		} catch (ReturnStatusException e) {
-			logger.error(e.getMessage());
+			logger.error("Appeals: " + e.getMessage());
 		}
 		return result;
 	}
@@ -178,10 +187,15 @@ public class TDSAdminController implements Serializable {
 		}
 		try {
 			result = getDao().invalidateTestOpportunity(v_oppKey, v_requestor, v_reason);
-			logger.info(String.format("Invalidate successful for Oppkey=%s, Requestor=%s, Reason=%s", v_oppKey,
-					v_requestor, v_reason));
+
+			if (result != null && "success".equalsIgnoreCase(result.getStatus()))
+				logger.info(String.format("Appeals: Invalidate successful for Oppkey=%s, Requestor=%s, Reason=%s",
+						v_oppKey, v_requestor, v_reason));
+			else
+				logger.error(String.format("Appeals: Invalidate failed for Oppkey=%s, Requestor=%s, Reason=%s",
+						v_oppKey, v_requestor, (result != null) ? result.getReason() : null));
 		} catch (ReturnStatusException e) {
-			logger.error(e.getMessage());
+			logger.error("Appeals: " + e.getMessage());
 		}
 		return result;
 	}
@@ -200,10 +214,14 @@ public class TDSAdminController implements Serializable {
 		}
 		try {
 			result = getDao().restoreTestOpportunity(v_oppKey, v_requestor, v_reason);
-			logger.info(String.format("Restore successful for Oppkey=%s, Requestor=%s, Reason=%s", v_oppKey,
-					v_requestor, v_reason));
+			if (result != null && "success".equalsIgnoreCase(result.getStatus()))
+				logger.info(String.format("Appeals: Restore successful for Oppkey=%s, Requestor=%s, Reason=%s",
+						v_oppKey, v_requestor, v_reason));
+			else
+				logger.error(String.format("Appeals: Restore failed for Oppkey=%s, Requestor=%s, Reason=%s", v_oppKey,
+						v_requestor, (result != null) ? result.getReason() : null));
 		} catch (ReturnStatusException e) {
-			logger.error(e.getMessage());
+			logger.error("Appeals: " + e.getMessage());
 		}
 		return result;
 	}
@@ -222,10 +240,14 @@ public class TDSAdminController implements Serializable {
 		}
 		try {
 			result = getDao().reopenOpportunity(v_oppKey, v_requestor, v_reason);
-			logger.info(String.format("Reopen successful for Oppkey=%s, Requestor=%s, Reason=%s", v_oppKey, v_requestor,
-					v_reason));
+			if (result != null && "success".equalsIgnoreCase(result.getStatus()))
+				logger.info(String.format("Appeals: Reopen successful for Oppkey=%s, Requestor=%s, Reason=%s", v_oppKey,
+						v_requestor, v_reason));
+			else
+				logger.error(String.format("Appeals: Reopen failed for Oppkey=%s, Requestor=%s, Reason=%s", v_oppKey,
+						v_requestor, (result != null) ? result.getReason() : null));
 		} catch (ReturnStatusException e) {
-			logger.error(e.getMessage());
+			logger.error("Appeals: " + e.getMessage());
 		}
 		return result;
 	}
@@ -249,11 +271,17 @@ public class TDSAdminController implements Serializable {
 		}
 		try {
 			result = getDao().extendingOppGracePeriod(v_oppKey, v_requestor, v_selectedsitting, v_doupdate, v_reason);
-			logger.info(String.format(
-					"Extend grace period successful for Oppkey=%s, Requestor=%s, SelectedSitting=%s, Doupdate=%s, Reason=%s",
-					v_oppKey, v_requestor, v_selectedsitting, v_doupdate, v_reason));
+			if (result != null && "success".equalsIgnoreCase(result.getStatus()))
+				logger.info(String.format(
+						"Appeals: Extend grace period successful for Oppkey=%s, Requestor=%s, SelectedSitting=%s, Doupdate=%s, Reason=%s",
+						v_oppKey, v_requestor, v_selectedsitting, v_doupdate, v_reason));
+			else
+				logger.error(String.format(
+						"Appeals: Extend grace period failed for Oppkey=%s, Requestor=%s, SelectedSitting=%s, Doupdate=%s, Reason=%s",
+						v_oppKey, v_requestor, v_selectedsitting, v_doupdate,
+						(result != null) ? result.getReason() : null));
 		} catch (ReturnStatusException e) {
-			logger.error(e.getMessage());
+			logger.error("Appeals: " + e.getMessage());
 		}
 		return result;
 	}
@@ -277,10 +305,16 @@ public class TDSAdminController implements Serializable {
 		}
 		try {
 			result = getDao().alterOpportunityExpiration(v_oppKey, v_requestor, v_dayincrement, v_reason);
-			logger.info(String.format("Reset successful for Oppkey=%s, Requestor=%s, Reason=%s", v_oppKey, v_requestor,
-					v_reason));
+			if (result != null && "success".equalsIgnoreCase(result.getStatus()))
+				logger.info(String.format(
+						"Appeals: Extend expiration date successful for Oppkey=%s, DayIncrement=%s, Requestor=%s, Reason=%s",
+						v_oppKey, v_dayincrement, v_requestor, v_reason));
+			else
+				logger.error(String.format(
+						"Appeals: Extend expiration date failed for Oppkey=%s, DayIncrement=%s, Requestor=%s, Reason=%s",
+						v_oppKey, v_dayincrement, v_requestor, (result != null) ? result.getReason() : null));
 		} catch (ReturnStatusException e) {
-			logger.error(e.getMessage());
+			logger.error("Appeals: " + e.getMessage());
 		}
 		return result;
 	}
@@ -306,11 +340,17 @@ public class TDSAdminController implements Serializable {
 		try {
 			result = getDao().setOpportunitySegmentPerm(v_oppKey, v_requestor, v_segmentid, v_segmentposition,
 					v_restoreon, v_ispermeable, v_reason);
-			logger.info(String.format(
-					"Set opportunity segment permeability successful for Oppkey=%s, Requestor=%s, SegmentId=%s, SegmentPosition=%s, RestoreOn=%s, Ispermeable=%s, Reason=%s",
-					v_oppKey, v_requestor, v_segmentid, v_segmentposition, v_restoreon, v_ispermeable, v_reason));
+			if (result != null && "success".equalsIgnoreCase(result.getStatus()))
+				logger.info(String.format(
+						"Appeals: Set opportunity segment permeability successful for Oppkey=%s, Requestor=%s, SegmentId=%s, SegmentPosition=%s, RestoreOn=%s, Ispermeable=%s, Reason=%s",
+						v_oppKey, v_requestor, v_segmentid, v_segmentposition, v_restoreon, v_ispermeable, v_reason));
+			else
+				logger.error(String.format(
+						"Appeals: Set opportunity segment permeability failed for Oppkey=%s, Requestor=%s, SegmentId=%s, SegmentPosition=%s, RestoreOn=%s, Ispermeable=%s, Reason=%s",
+						v_oppKey, v_requestor, v_segmentid, v_segmentposition, v_restoreon, v_ispermeable,
+						(result != null) ? result.getReason() : null));
 		} catch (ReturnStatusException e) {
-			logger.error(e.getMessage());
+			logger.error("Appeals: " + e.getMessage());
 		}
 		return result;
 	}
@@ -318,7 +358,7 @@ public class TDSAdminController implements Serializable {
 	@ExceptionHandler(HttpResponseException.class)
 	@ResponseBody
 	public String handleException(HttpResponseException e) {
-		logger.error(e.getMessage());
+		logger.error("Appeals: " + e.getMessage());
 		return "HTTP ERROR " + e.getStatusCode() + " : " + e.getMessage();
 	}
 }
