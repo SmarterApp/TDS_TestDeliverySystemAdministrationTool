@@ -124,6 +124,7 @@ The following parameters need to be configured inside program management for SSO
 #### tdsadmin properties
 The following parameters need to be configured inside program management for tdsadmin
 
+* `tdsadmin.sessionTimeoutMinutes=15`
 * `tdsadmin.SqlCommandTimeout=60`  
 * `tdsadmin.SessionType=0`  - Type of the testing supported: 0 is online, 1 is paper-based.
 * `tdsadmin.TestRegistrationApplicationUrl=http://<url-to-art-app>:port/rest`  -  URL to ART Application REST context
