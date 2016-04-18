@@ -121,6 +121,18 @@ The following parameters need to be configured inside program management for SSO
 * `tdsadmin.oauth.resource.client.id=tdsadmin`  - OAuth Client id configured in OAM to allow get an OAuth token for the "batch" web service call to core standards.
 * `tdsadmin.oauth.checktoken.endpoint=http://<oauth-url>`  - OAuth URL to OAM to allow the SAML bearer workflow to perform a GET to check that an OAuth token is valid.
 
+
+#### testreg properties
+The following parameters need to be configured inside program management to access ART api
+
+* `oauth.testreg.client.id=testreg`
+* `oauth.testreg.client.secret=sbac12345`
+* `oauth.testreg.client.granttype=password`
+* `oauth.testreg.username=testreg@example.com`
+* `oauth.testreg.password=sbac12345` 
+
+
+
 #### tdsadmin properties
 The following parameters need to be configured inside program management for tdsadmin
 
