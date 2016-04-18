@@ -129,6 +129,7 @@ The following parameters need to be configured inside program management for tds
 * `tdsadmin.SessionType=0`  - Type of the testing supported: 0 is online, 1 is paper-based.
 * `tdsadmin.TestRegistrationApplicationUrl=http://<url-to-art-app>:port/rest`  -  URL to ART Application REST context
 * `tdsadmin.TDSSessionDBName=session`  - Name of the session schema
+* `tdsadmin.AppName=tdsadmin`
 * `tdsadmin.StateCode=WI` 
 * `tdsadmin.ClientName=SBAC`
 * `logLatencyInterval=55` - Define the seconds of a minute when DB latency is being logged into database table.
