@@ -208,8 +208,6 @@ public class TestOpportunity implements Serializable {
 	}
 
 	public void setSelectedSitting(int selectedSitting) {
-		if (selectedSitting > 0)
-			this.setSelected(true);
 		this.selectedSitting = selectedSitting;
 	}
 
