@@ -122,14 +122,14 @@ The following parameters need to be added into a Program Management TDSAdmin con
 * `tdsadmin.oauth.checktoken.endpoint=http://<oauth-url>`  - OAuth URL to OAM to allow the SAML bearer workflow to perform a GET to check that an OAuth token is valid.
 
 
-#### testreg properties
+#### ART (testreg) properties
 The following parameters need to be added into a Program Management TDSAdmin configuration for accessing the ART API:
 
-* `oauth.testreg.client.id=` - OAuth test client ID for ART
-* `oauth.testreg.client.secret` - OAuth client secret for ART
+* `oauth.testreg.client.id=art` - OAuth test client ID for ART
+* `oauth.testreg.client.secret=<client-secret>` - OAuth client secret for ART
 * `oauth.testreg.client.granttype=password` - OAuth grant type for ART, should be password
-* `oauth.testreg.username=` - OAuth username for test registration
-* `oauth.testreg.password=` - OAuth password for test registration
+* `oauth.testreg.username=<email>` - OAuth username for test registration
+* `oauth.testreg.password=<password>` - OAuth password for test registration
 
 #### TDS Admin properties
 The following parameters need to be added into a Program Management TDSAdmin configuration for TDS Admin itself to function:
