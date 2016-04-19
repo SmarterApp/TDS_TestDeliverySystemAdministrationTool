@@ -11,6 +11,7 @@ package tds.tdsadmin.web.backingbean;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -353,5 +354,12 @@ public class DefaultBacking implements Serializable {
 		} catch (IOException e) {
 
 		}
+	}
+
+	public String getTime(Date date) {
+		if (date != null)
+			return date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+		else
+			return null;
 	}
 }
