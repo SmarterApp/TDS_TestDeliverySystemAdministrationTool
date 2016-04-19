@@ -126,10 +126,10 @@ The following parameters need to be configured inside program management for SSO
 The following parameters need to be configured inside program management to access ART api
 
 * `oauth.testreg.client.id=testreg`
-* `oauth.testreg.client.secret=sbac12345`
+* `oauth.testreg.client.secret=<clientsecret>`
 * `oauth.testreg.client.granttype=password`
-* `oauth.testreg.username=testreg@example.com`
-* `oauth.testreg.password=sbac12345` 
+* `oauth.testreg.username=<username>`
+* `oauth.testreg.password=<password>` 
 
 
 
