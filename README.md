@@ -125,13 +125,11 @@ The following parameters need to be configured inside program management for SSO
 #### testreg properties
 The following parameters need to be configured inside program management to access ART api
 
-* `oauth.testreg.client.id=testreg`
-* `oauth.testreg.client.secret=<clientsecret>`
-* `oauth.testreg.client.granttype=password`
-* `oauth.testreg.username=<username>`
-* `oauth.testreg.password=<password>` 
-
-
+* `oauth.testreg.client.id=`{OAuth test client ID for ART}
+* `oauth.testreg.client.secret`={OAuth client secret for ART}
+* `oauth.testreg.client.granttype=password`{OAuth grant type for ART, should be password}
+* `oauth.testreg.username=`{OAuth username for test registration}
+* `oauth.testreg.password=`{OAuth password for test registration}
 
 #### tdsadmin properties
 The following parameters need to be configured inside program management for tdsadmin
@@ -142,14 +140,13 @@ The following parameters need to be configured inside program management for tds
 * `tdsadmin.TestRegistrationApplicationUrl=http://<url-to-art-app>:port/rest`  -  URL to ART Application REST context
 * `tdsadmin.TDSSessionDBName=session`  - Name of the session schema
 * `tdsadmin.AppName=tdsadmin`
-* `tdsadmin.StateCode=WI` 
-* `tdsadmin.ClientName=SBAC`
-* `logLatencyInterval=55` - Define the seconds of a minute when DB latency is being logged into database table.
-* `logLatencyMaxTime=30000` - If any procedure call execution time exceeds the number of milliseconds specified here, It will be logged into the dblatency table of the database.
+* `tdsadmin.StateCode=WI` - State code for TDS Admin requests
+* `tdsadmin.ClientName=SBAC` - Top-level client name
+* `logLatencyInterval=55` - Defines the seconds of a minute when DB latency is being logged into database table.
+* `logLatencyMaxTime=30000` - If any procedure call execution time exceeds the number of milliseconds specified here, it will be logged into the dblatency table of the database.
 * `dbLockRetrySleepInterval=116` - Database connection will wait for number of milliseconds specified here before trying to acquire the exclusive resource lock on database again.
-* `dbLockRetryAttemptMax=500` - If  database connection will not get the exclusive resource lock, It will retry number of times specified here.
+* `dbLockRetryAttemptMax=500` - If  database connection will not get the exclusive resource lock, it will retry number of times specified here.
 * `EncryptionKey=testKey123456789123456789`  - Encryption key is used for encrypting the cookies and item file path. There is no default value set for this property. It must be set in program management. Minimum length of this key is 24 characters.
-
 
 ## SP Metadata file for SSO
 Create metadata file for configuring the SSO. Sample SSO metadata file pointing to localhost is at /tdsadmin/docs/Installation/tdsadmin_local_sp.xml.
