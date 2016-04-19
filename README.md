@@ -112,9 +112,7 @@ The following parameters need to be added into a Program Management TDSAdmin con
 * `tdsadmin.security.saml.keystore.cert=<cert-name>`  - Name of the Keystore cert being used.
 * `tdsadmin.security.saml.keystore.pass=<password>`  -  Password for keystore cert.
 * `tdsadmin.security.saml.alias=tdsadmin_webapp`  - Alias for identifying web application.
-* `oauth.tsb.client=tsb`  - OAuth Client id configured in OAM to allow the SAML bearer workflow to convert a SAML assertion into an OAuth token for the "coordinated web service" call to TSB.
 * `oauth.access.url=https://<oauth-url>`  - OAuth URL to OAM to allow the SAML bearer workflow to POST to get an OAuth token for any "machine to machine" calls requiring OAUTH
-* `encrypt:oauth.tsb.client.secret=<password>`  - OAuth Client secret/password configured in OAM (under the client id) to allow the SAML bearer workflow to convert a SAML assertion into an OAuth token for the "coordinated web service" call to TSB.
 * `encrypt:mna.oauth.client.secret=<password>`  -  OAuth Client secret/password configured in OAM to allow get an OAuth token for the "batch" web service call to MnA.
 * `mna.oauth.client.id=mna`  - OAuth Client id configured in OAM to allow get an OAuth token for the "batch" web service call to MnA.
 * `encrypt:tdsadmin.oauth.resource.client.secret=<password>`  - OAuth Client secret/password configured in OAM to allow get an OAuth token for the "batch" web service call to core standards.
