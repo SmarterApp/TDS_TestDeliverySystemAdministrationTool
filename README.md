@@ -69,10 +69,10 @@ Like other SBAC applications, TDSAdmin must be set up with active profiles and p
 ```
 
 ## Program Management Properties
-Program Management properties need to be set for running TDSAdmin. Example TDSAdmin properties at /tdsadmin/docs/Installation/tdsadmin-progman-config.txt.
+Program Management properties need to be set for running the TDS Admin app. Example TDS Admin properties at /tdsadmin/docs/Installation/tdsadmin-progman-config.txt. All Program Management properties defined below belong in a single TDS Admin configuration.
 
 #### Database Properties
-The following parameters need to be configured inside program management for database.
+The following parameters need to be configured inside Program Management for database access.
 
 * `tdsadmin.datasource.url=jdbc:mysql://<url.to.db>:3306/schemaname?useUnicode=yes&characterEncoding=utf8`  - The JDBC URL of the database from which Connections can and should be acquired. useUnicode is required to store unicode characters into the database
 * `datasource.username=<db-username>`  -  Username that will be used for the DataSource's default getConnection() method. 
@@ -92,7 +92,7 @@ The following parameters need to be configured inside program management for dat
 * `datasource.maxStatementsPerConnection=100`  - The number of PreparedStatements c3p0 will cache for a single pooled Connection. If both maxStatements and maxStatementsPerConnection are zero, statement caching will not be enabled. If maxStatementsPerConnection is zero but maxStatements is a non-zero value, statement caching will be enabled, and a global limit enforced, but otherwise no limit will be set on the number of cached statements for a single Connection. If set, maxStatementsPerConnection should be set to about the number distinct PreparedStatements that are used frequently in your application, plus two or three extra so infrequently statements don't force the more common cached statements to be culled. 
 
 #### MNA properties
-Following parameters need to be configured inside program management for MNA.	
+Following parameters need to be configured inside Program Management for MNA.	
 
 * `mna.mnaUrl=http://<mna-context-url>/mna-rest/`  - URL of the Monitoring and Alerting client server's rest url
 * `mnaServerName=tdsadmin`  -  Used by the mna clients to identify which server is sending the log/metrics/alerts.
@@ -101,7 +101,7 @@ Following parameters need to be configured inside program management for MNA.
 
 
 #### SSO properties
-The following parameters need to be configured inside program management for SSO.	
+The following parameters need to be configured inside Program Management for SSO.	
 
 * `permission.uri=https://<permission-app-context-url>/rest`  - The base URL of the REST api for the Permissions application.
 * `tdsadmin.security.profile=prod`  - The name of the environment the application is running in. For a production deployment this will most likely be "prod. (it must match the profile name used to name metadata files).
@@ -123,16 +123,16 @@ The following parameters need to be configured inside program management for SSO
 
 
 #### testreg properties
-The following parameters need to be configured inside program management to access ART api
+The following parameters need to be configured inside Program Management to access ART API
 
-* `oauth.testreg.client.id=`{OAuth test client ID for ART}
-* `oauth.testreg.client.secret`={OAuth client secret for ART}
-* `oauth.testreg.client.granttype=password`{OAuth grant type for ART, should be password}
-* `oauth.testreg.username=`{OAuth username for test registration}
-* `oauth.testreg.password=`{OAuth password for test registration}
+* `oauth.testreg.client.id=` - OAuth test client ID for ART
+* `oauth.testreg.client.secret` - OAuth client secret for ART
+* `oauth.testreg.client.granttype=password` - OAuth grant type for ART, should be password
+* `oauth.testreg.username=` - OAuth username for test registration
+* `oauth.testreg.password=` - OAuth password for test registration
 
-#### tdsadmin properties
-The following parameters need to be configured inside program management for tdsadmin
+#### TDS Admin properties
+The following parameters need to be configured inside Program Management for TDS Admin
 
 * `tdsadmin.sessionTimeoutMinutes=15`
 * `tdsadmin.SqlCommandTimeout=60`  
