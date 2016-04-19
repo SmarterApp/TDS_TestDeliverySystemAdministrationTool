@@ -230,27 +230,35 @@ ul.adminForm {
               #{opp.status} </p:column>
 								<p:column sortBy="dateStarted">
 									<f:facet name="header">Started On</f:facet>
-									<h:outputText value="#{opp.dateStarted}">
+									<h:outputText value="#{opp.dateStarted}" id="dateStarted">
 										<f:convertDateTime pattern="dd-MMM-yyyy" />
 									</h:outputText>
+									<p:tooltip for="dateStarted"
+										value="#{defaultBacking.getTime(opp.dateStarted)}" />
 								</p:column>
 								<p:column sortBy="dateExpired">
 									<f:facet name="header">Expired On</f:facet>
-									<h:outputText value="#{opp.dateExpired}">
+									<h:outputText value="#{opp.dateExpired}" id="dateExpired">
 										<f:convertDateTime pattern="dd-MMM-yyyy" />
 									</h:outputText>
+									<p:tooltip for="dateExpired"
+										value="#{defaultBacking.getTime(opp.dateExpired)}" />
 								</p:column>
 								<p:column sortBy="dateCompleted">
 									<f:facet name="header">Completed On</f:facet>
-									<h:outputText value="#{opp.dateCompleted}">
+									<h:outputText value="#{opp.dateCompleted}" id="dateCompleted">
 										<f:convertDateTime pattern="dd-MMM-yyyy" />
 									</h:outputText>
+									<p:tooltip for="dateCompleted"
+										value="#{defaultBacking.getTime(opp.dateCompleted)}" />
 								</p:column>
 								<p:column sortBy="datePaused">
 									<f:facet name="header">Paused On</f:facet>
-									<h:outputText value="#{opp.datePaused}">
+									<h:outputText value="#{opp.datePaused}" id="datePaused">
 										<f:convertDateTime pattern="dd-MMM-yyyy" />
 									</h:outputText>
+									<p:tooltip for="datePaused"
+										value="#{defaultBacking.getTime(opp.datePaused)}" />
 								</p:column>
 								<p:column sortBy="restart">
 									<f:facet name="header">Restarts</f:facet>
