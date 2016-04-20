@@ -115,6 +115,8 @@ The following parameters need to be added into a Program Management TDSAdmin con
 * `encrypt:tdsadmin.oauth.resource.client.secret=<password>`  - OAuth Client secret/password configured in OAM to allow get an OAuth token for the "batch" web service call to core standards.
 * `tdsadmin.oauth.resource.client.id=tdsadmin`  - OAuth Client id configured in OAM to allow get an OAuth token for the "batch" web service call to core standards.
 * `tdsadmin.oauth.checktoken.endpoint=http://<oauth-url>`  - OAuth URL to OAM to allow the SAML bearer workflow to perform a GET to check that an OAuth token is valid.
+* `mna.oauth.batch.account=<mna-client-user>`
+* `mna.oauth.batch.password=<password>`
 
 
 #### ART (testreg) properties
