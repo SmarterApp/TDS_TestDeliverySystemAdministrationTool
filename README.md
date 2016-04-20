@@ -132,19 +132,18 @@ The following parameters need to be added into a Program Management TDSAdmin con
 #### TDS Admin properties
 The following parameters need to be added into a Program Management TDSAdmin configuration for TDS Admin itself to function:
 
-* `tdsadmin.sessionTimeoutMinutes=15`
-* `tdsadmin.SqlCommandTimeout=60`  
-* `tdsadmin.SessionType=0`  - Type of the testing supported: 0 is online, 1 is paper-based.
+* `tdsadmin.sessionTimeoutMinutes=15` - Number of minutes before the login session times out. Default is 15. A negative value here will force no timeout.
+* `tdsadmin.SqlCommandTimeout=60` - Number of seconds before a SQL command is considered to have timed out.
 * `tdsadmin.TestRegistrationApplicationUrl=http://<url-to-art-app>:port/rest`  -  URL to ART Application REST context
 * `tdsadmin.TDSSessionDBName=session`  - Name of the session schema
-* `tdsadmin.AppName=tdsadmin`
-* `tdsadmin.StateCode=WI` - State code for TDS Admin requests
-* `tdsadmin.ClientName=SBAC` - Top-level client name
+* `tdsadmin.AppName=tdsadmin` - Name if this application
 * `logLatencyInterval=55` - Defines the seconds of a minute when DB latency is being logged into database table.
 * `logLatencyMaxTime=30000` - If any procedure call execution time exceeds the number of milliseconds specified here, it will be logged into the dblatency table of the database.
 * `dbLockRetrySleepInterval=116` - Database connection will wait for number of milliseconds specified here before trying to acquire the exclusive resource lock on database again.
 * `dbLockRetryAttemptMax=500` - If  database connection will not get the exclusive resource lock, it will retry number of times specified here.
 * `EncryptionKey=testKey123456789123456789`  - Encryption key is used for encrypting the cookies and item file path. There is no default value set for this property. It must be set in program management. Minimum length of this key is 24 characters.
+* `tdsadmin.StateCode=WI` - State code for TDS Admin requests
+* `tdsadmin.ClientName=SBAC` - Top-level client name
 
 ## SP Metadata file for SSO
 Create metadata file for configuring the SSO. Sample SSO metadata file pointing to localhost is at /tdsadmin/docs/Installation/tdsadmin_local_sp.xml.
