@@ -130,12 +130,8 @@ The following parameters need to be added into a Program Management TDSAdmin con
 The following parameters need to be added into a Program Management TDSAdmin configuration for TDS Admin itself to function:
 
 * `tdsadmin.sessionTimeoutMinutes=15` - Number of minutes before the login session times out. Default is 15. A negative value here will force no timeout.
-* `tdsadmin.SqlCommandTimeout=60` - Number of seconds before a SQL command is considered to have timed out.
 * `tdsadmin.TestRegistrationApplicationUrl=http://<url-to-art-app>:port/rest`  -  URL to ART Application REST context
 * `tdsadmin.TDSSessionDBName=session`  - Name of the session schema
-* `tdsadmin.AppName=tdsadmin` - Name if this application
-* `logLatencyInterval=55` - Defines the seconds of a minute when DB latency is being logged into database table.
-* `logLatencyMaxTime=30000` - If any procedure call execution time exceeds the number of milliseconds specified here, it will be logged into the dblatency table of the database.
 
 
 ## SP Metadata file for SSO
