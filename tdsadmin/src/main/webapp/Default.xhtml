@@ -102,6 +102,36 @@ ul.adminForm {
 	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
 }
 /*End:SB-1484 */
+
+/*Start: SB-1488 */
+.ui-datatable-tablewrapper table {
+	margin-bottom: 0.25em;
+}
+
+.tableOutput {
+	margin: 0.5em 0;
+}
+
+.buttonRow {
+	margin-top: .5em;
+	margin-bottom: .5em;
+}
+
+.w180 {
+	display: block;
+	min-width: 18em;
+}
+
+.w100 {
+	display: block;
+	min-width: 10em;
+}
+
+.w60 {
+	display: block;
+	min-width: 6em;
+}
+/*End: SB-1488 */
 </style>
 	<title>TDS Admin Home Page</title>
 </h:head>
@@ -217,20 +247,24 @@ ul.adminForm {
               #{opp.altSsid} </p:column>
 								<p:column sortBy="name">
 									<f:facet name="header">Name</f:facet>
-              #{opp.name} </p:column>
+									<h:outputText styleClass="w100">#{opp.name}</h:outputText>
+								</p:column>
 								<p:column sortBy="testName">
 									<f:facet name="header">Test Name</f:facet>
-									<h:outputText id="testName" value="#{opp.testName}"></h:outputText>
+									<h:outputText id="testName" value="#{opp.testName}"
+										styleClass="w180"></h:outputText>
 								</p:column>
 								<p:column sortBy="sessionId">
 									<f:facet name="header">Session ID</f:facet>
-              #{opp.sessionId} </p:column>
+									<h:outputText styleClass="w60">#{opp.sessionId}</h:outputText>
+								</p:column>
 								<p:column sortBy="status">
 									<f:facet name="header">Status</f:facet>
               #{opp.status} </p:column>
 								<p:column sortBy="dateStarted">
 									<f:facet name="header">Started On</f:facet>
-									<h:outputText value="#{opp.dateStarted}" id="dateStarted">
+									<h:outputText value="#{opp.dateStarted}" id="dateStarted"
+										styleClass="w60">
 										<f:convertDateTime pattern="dd-MMM-yyyy" />
 									</h:outputText>
 									<p:tooltip for="dateStarted"
@@ -238,7 +272,8 @@ ul.adminForm {
 								</p:column>
 								<p:column sortBy="dateExpired">
 									<f:facet name="header">Expired On</f:facet>
-									<h:outputText value="#{opp.dateExpired}" id="dateExpired">
+									<h:outputText value="#{opp.dateExpired}" id="dateExpired"
+										styleClass="w60">
 										<f:convertDateTime pattern="dd-MMM-yyyy" />
 									</h:outputText>
 									<p:tooltip for="dateExpired"
@@ -246,7 +281,8 @@ ul.adminForm {
 								</p:column>
 								<p:column sortBy="dateCompleted">
 									<f:facet name="header">Completed On</f:facet>
-									<h:outputText value="#{opp.dateCompleted}" id="dateCompleted">
+									<h:outputText value="#{opp.dateCompleted}" id="dateCompleted"
+										styleClass="w60">
 										<f:convertDateTime pattern="dd-MMM-yyyy" />
 									</h:outputText>
 									<p:tooltip for="dateCompleted"
@@ -254,7 +290,8 @@ ul.adminForm {
 								</p:column>
 								<p:column sortBy="datePaused">
 									<f:facet name="header">Paused On</f:facet>
-									<h:outputText value="#{opp.datePaused}" id="datePaused">
+									<h:outputText value="#{opp.datePaused}" id="datePaused"
+										styleClass="w60">
 										<f:convertDateTime pattern="dd-MMM-yyyy" />
 									</h:outputText>
 									<p:tooltip for="datePaused"
