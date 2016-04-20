@@ -85,8 +85,7 @@ The following parameters need to be added into a Program Management TDSAdmin con
 * `datasource.maxConnectionAge=0`  - Seconds, effectively a time to live. A Connection older than maxConnectionAge will be destroyed and purged from the pool. This differs from maxIdleTime in that it refers to absolute age. Even a Connection which has not had much idle time will be purged from the pool if it exceeds maxConnectionAge. Zero means no maximum absolute age is enforced. 
 * `datasource.acquireRetryAttempts=5`  - Defines how many times datasource will try to acquire a new Connection from the database before giving up. If this value is less than or equal to zero, datasource will keep trying to fetch a Connection indefinitely.
 * `datasource.idleConnectionTestPeriod=14400`  - If this is a number greater than 0, Datasource will test all idle, pooled but unchecked-out connections, every this number of seconds.
-* `datasource.testConnectionOnCheckout=false`  - If true, an operation will be performed at every connection checkout to verify that the connection is valid. 
-* `datasource.testConnectionOnCheckin=false`  -  If true, an operation will be performed asynchronously at every connection checkin to verify that the connection is valid. 
+
 
 
 #### MNA properties
@@ -137,11 +136,7 @@ The following parameters need to be added into a Program Management TDSAdmin con
 * `tdsadmin.AppName=tdsadmin` - Name if this application
 * `logLatencyInterval=55` - Defines the seconds of a minute when DB latency is being logged into database table.
 * `logLatencyMaxTime=30000` - If any procedure call execution time exceeds the number of milliseconds specified here, it will be logged into the dblatency table of the database.
-* `dbLockRetrySleepInterval=116` - Database connection will wait for number of milliseconds specified here before trying to acquire the exclusive resource lock on database again.
-* `dbLockRetryAttemptMax=500` - If  database connection will not get the exclusive resource lock, it will retry number of times specified here.
-* `EncryptionKey=testKey123456789123456789`  - Encryption key is used for encrypting the cookies and item file path. There is no default value set for this property. It must be set in program management. Minimum length of this key is 24 characters.
-* `tdsadmin.StateCode=WI` - State code for TDS Admin requests
-* `tdsadmin.ClientName=SBAC` - Top-level client name
+
 
 ## SP Metadata file for SSO
 Create metadata file for configuring the SSO. Sample SSO metadata file pointing to localhost is at /tdsadmin/docs/Installation/tdsadmin_local_sp.xml.
