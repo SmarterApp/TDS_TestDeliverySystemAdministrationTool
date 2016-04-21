@@ -86,21 +86,19 @@ The following parameters need to be added into a Program Management TDSAdmin con
 * `datasource.acquireRetryAttempts=5`  - Defines how many times datasource will try to acquire a new Connection from the database before giving up. If this value is less than or equal to zero, datasource will keep trying to fetch a Connection indefinitely.
 * `datasource.idleConnectionTestPeriod=14400`  - If this is a number greater than 0, Datasource will test all idle, pooled but unchecked-out connections, every this number of seconds.
 
-
-
 #### MNA properties
 The following parameters need to be added into a Program Management TDSAdmin configuration for integration with MNA:
 
-* `mna.mnaUrl=http://<mna-context-url>/mna-rest/`  - URL of the Monitoring and Alerting client server's rest url
-* `mnaServerName=tdsadmin`  -  Used by the mna clients to identify which server is sending the log/metrics/alerts.
-* `mnaNodeName=prod`  - Used by the mna clients to identify who is sending the log/metrics/alerts. There is a discrete mnaServerName and a node in case say XXX for server name & node1/node2 in a clustered environment giving the ability to search across clustered nodes by server name or specifically for a given node. Itâ€™s being stored in the db for metric/log/alert, but not displayed.
-* `mna.logger.level=INFO`  - Used to control what is logged to the Monitoring and Alerting system. Logging Level values include (ALL - Turn on all logging levels, TRACE, DEBUG, INFO, WARN, ERROR, OFF - Turn off logging). IMPORTANT: In order to maintain an audit log of activity in TDSAdmin, set this to no higher than `INFO`.
+* `mna.mnaUrl=http://<mna-context-url>/rest/`  - URL of the Monitoring and Alerting client server's REST context.
+* `mnaServerName=tdsadmin`  -  Used by the MNA clients to identify which server is sending the log/metrics/alerts.
+* `mnaNodeName=prod`  - Used by the MNA clients to identify who is sending the log/metrics/alerts. There is a discrete mnaServerName and an mnaNodeName to provide the ability to search across clustered nodes by server name or specifically for a given node. It's being stored in the db for metric/log/alert, but not displayed.
+* `mna.logger.level=INFO`  - Used to control what is logged to the Monitoring and Alerting system. Logging Level values include (ALL - Turn on all logging levels, TRACE, DEBUG, INFO, WARN, ERROR, OFF - Turn off logging). IMPORTANT: The audit log of TDSAdmin activity is provided at the `INFO` level. Setting this value to anything higher will prevent successful actions from being logged in MNA.
 
 
 #### SSO properties
 The following parameters need to be added into a Program Management TDSAdmin configuration for integration with SSO:
 
-* `permission.uri=https://<permission-app-context-url>/rest`  - The base URL of the REST api for the Permissions application.
+* `permission.uri=https://<permission-app-context-url>/rest`  - The base URL of the REST API for the Permissions application.
 * `tdsadmin.security.profile=prod`  - The name of the environment the application is running in. For a production deployment this will most likely be "prod. (it must match the profile name used to name metadata files).
 * `component.name=TDS Admin`  - The name of the component that this tdsadmin deployment represents. This must match the name of the component in Program Management and the name of the component in the Permissions application.
 * `tdsadmin.security.idp=https://<idp-url>`  - The URL of the SAML-based identity provider (OpenAM).
@@ -133,7 +131,7 @@ The following parameters need to be added into a Program Management TDSAdmin con
 
 * `tdsadmin.sessionTimeoutMinutes=15` - Number of minutes before the login session times out. Default is 15. A negative value here will force no timeout.
 * `tdsadmin.TestRegistrationApplicationUrl=http://<url-to-art-app>:port/rest`  -  URL to ART Application REST context
-* `tdsadmin.TDSSessionDBName=session`  - Name of the session schema
+* `tdsadmin.TDSSessionDBName=session`  - Name of the TDS session schema
 
 
 ## SP Metadata file for SSO
