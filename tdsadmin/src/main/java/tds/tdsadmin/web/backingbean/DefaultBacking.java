@@ -244,8 +244,10 @@ public class DefaultBacking implements Serializable {
 		String msg = "";
 		int success = 0, failure = 0;
 		for (TestOpportunity opp : this.opportunities) {
-			if (!opp.getSelected())
+			if (!opp.getSelected()) {
+				opp.setResult(null);
 				continue;
+			}
 			ProcedureResult result = executeProcedure(opp);
 			if (result != null) {
 				opp.setResult(result.getStatus());
