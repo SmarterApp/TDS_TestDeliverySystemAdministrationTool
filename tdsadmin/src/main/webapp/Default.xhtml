@@ -316,7 +316,7 @@ ul.adminForm {
 								<p:column
 									rendered='#{"extend".equals(defaultBacking.procedure)}'>
 									<f:facet name="header">SelectedSitting</f:facet>
-									<h:inputText value="#{opp.selectedSitting}" onchange="submit()"
+									<h:inputText value="#{opp.selectedSitting}"
 										id="selectedsitting" maxlength="2"
 										onkeypress="var key=event.keyCode||event.charCode||event.which;
 											var ZERO=48, NINE=57, BACKSPACE=8, LEFT_ARROW=37, RIGHT_ARROW=39, DEL=46;
@@ -326,12 +326,13 @@ ul.adminForm {
 										if(key!=RIGHT_ARROW)
 										if(key!=DEL)
 											return false;">
+										<p:ajax />
 									</h:inputText>
 								</p:column>
 								<p:column rendered='#{"alter".equals(defaultBacking.procedure)}'>
 									<f:facet name="header">DayIncrement</f:facet>
-									<h:inputText value="#{opp.dayIncrement}" onchange="submit()"
-										id="dayincrement" maxlength="4"
+									<h:inputText value="#{opp.dayIncrement}" id="dayincrement"
+										maxlength="4"
 										validatorMessage="Value must be between -365 and 365 inclusive"
 										onkeypress="var key=event.keyCode||event.charCode||event.which;
 											var ZERO=48, NINE=57, BACKSPACE=8, MINUS=45, LEFT_ARROW=37, RIGHT_ARROW=39, DEL=46;
@@ -342,6 +343,7 @@ ul.adminForm {
 										if(key!=RIGHT_ARROW)
 										if(key!=DEL)
 											return false;">
+										<p:ajax />
 										<f:validateLongRange maximum="365" minimum="-365" />
 									</h:inputText>
 									<br />
