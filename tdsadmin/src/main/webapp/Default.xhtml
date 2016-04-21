@@ -174,14 +174,14 @@ ul.adminForm {
 						<!--Begin the admin form. Must add .adminForm class to this div. -->
 						<h5 tabindex="-1">Search Filters</h5>
 					</div>
-					<h:form>
+					<h:form id="myForm">
 						<ul class="adminForm">
 							<li><h:outputLabel value="Select Procedure to Execute:"></h:outputLabel>
 								<h:selectOneMenu id="procedure"
-									value="#{defaultBacking.procedure}"
-									valueChangeListener="#{defaultBacking.procedureChange()}"
-									onchange="submit()">
-
+									value="#{defaultBacking.procedure}">
+									<p:ajax event="change"
+										listener="#{defaultBacking.procedureChange()}"
+										update="mytable" />
 									<f:selectItems value="#{defaultBacking.procedures.entrySet()}"
 										var="entry" itemValue="#{entry.key}"
 										itemLabel="#{entry.value}"></f:selectItems>
@@ -229,96 +229,96 @@ ul.adminForm {
 						<h:outputText value="#{defaultBacking.nomatch}" style="color:red"></h:outputText>
 						<!--Start putting the table output div here-->
 						<div class="tableOutput">
-							<p:dataTable value="#{defaultBacking.lazyOpps}" var="opp"
-								id="mytable" rendered="#{defaultBacking.oppCount>0}"
-								paginator="true" rows="5" lazy="true"
-								tableStyle="table-layout:auto;" resizableColumns="false"
-								editable="true" rowIndexVar="index"
-								paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-								rowsPerPageTemplate="5,10,15">
-								<p:column
-									rendered="#{userBean.getUser().hasPermission('ROLE_Opportunity Modify')}">
-									<h:selectBooleanCheckbox value="#{opp.selected}"
-										onchange="submit()">
-									</h:selectBooleanCheckbox>
-								</p:column>
-								<p:column sortBy="altSsid">
-									<f:facet name="header">Ext.SSID</f:facet>
+							<h:panelGroup id="mytable">
+								<p:dataTable value="#{defaultBacking.lazyOpps}" var="opp"
+									rendered="#{defaultBacking.oppCount>0}" paginator="true"
+									rows="5" lazy="true" tableStyle="table-layout:auto;"
+									resizableColumns="false" editable="true" rowIndexVar="index"
+									paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+									rowsPerPageTemplate="5,10,15">
+									<p:column
+										rendered="#{userBean.getUser().hasPermission('ROLE_Opportunity Modify')}">
+										<h:selectBooleanCheckbox value="#{opp.selected}">
+											<p:ajax event="change" update=":myForm:reasonExecute" />
+										</h:selectBooleanCheckbox>
+									</p:column>
+									<p:column sortBy="altSsid">
+										<f:facet name="header">Ext.SSID</f:facet>
               #{opp.altSsid} </p:column>
-								<p:column sortBy="name">
-									<f:facet name="header">Name</f:facet>
-									<h:outputText styleClass="w100">#{opp.name}</h:outputText>
-								</p:column>
-								<p:column sortBy="testName">
-									<f:facet name="header">Test Name</f:facet>
-									<h:outputText id="testName" value="#{opp.testName}"
-										styleClass="w180"></h:outputText>
-								</p:column>
-								<p:column sortBy="sessionId">
-									<f:facet name="header">Session ID</f:facet>
-									<h:outputText styleClass="w60">#{opp.sessionId}</h:outputText>
-								</p:column>
-								<p:column sortBy="status">
-									<f:facet name="header">Status</f:facet>
+									<p:column sortBy="name">
+										<f:facet name="header">Name</f:facet>
+										<h:outputText styleClass="w100">#{opp.name}</h:outputText>
+									</p:column>
+									<p:column sortBy="testName">
+										<f:facet name="header">Test Name</f:facet>
+										<h:outputText id="testName" value="#{opp.testName}"
+											styleClass="w180"></h:outputText>
+									</p:column>
+									<p:column sortBy="sessionId">
+										<f:facet name="header">Session ID</f:facet>
+										<h:outputText styleClass="w60">#{opp.sessionId}</h:outputText>
+									</p:column>
+									<p:column sortBy="status">
+										<f:facet name="header">Status</f:facet>
               #{opp.status} </p:column>
-								<p:column sortBy="dateStarted">
-									<f:facet name="header">Started On</f:facet>
-									<h:outputText value="#{opp.dateStarted}" id="dateStarted"
-										styleClass="w60">
-										<f:convertDateTime pattern="dd-MMM-yyyy" />
-									</h:outputText>
-									<p:tooltip for="dateStarted"
-										value="#{defaultBacking.getTime(opp.dateStarted)}" />
-								</p:column>
-								<p:column sortBy="dateExpired">
-									<f:facet name="header">Expired On</f:facet>
-									<h:outputText value="#{opp.dateExpired}" id="dateExpired"
-										styleClass="w60">
-										<f:convertDateTime pattern="dd-MMM-yyyy" />
-									</h:outputText>
-									<p:tooltip for="dateExpired"
-										value="#{defaultBacking.getTime(opp.dateExpired)}" />
-								</p:column>
-								<p:column sortBy="dateCompleted">
-									<f:facet name="header">Completed On</f:facet>
-									<h:outputText value="#{opp.dateCompleted}" id="dateCompleted"
-										styleClass="w60">
-										<f:convertDateTime pattern="dd-MMM-yyyy" />
-									</h:outputText>
-									<p:tooltip for="dateCompleted"
-										value="#{defaultBacking.getTime(opp.dateCompleted)}" />
-								</p:column>
-								<p:column sortBy="datePaused">
-									<f:facet name="header">Paused On</f:facet>
-									<h:outputText value="#{opp.datePaused}" id="datePaused"
-										styleClass="w60">
-										<f:convertDateTime pattern="dd-MMM-yyyy" />
-									</h:outputText>
-									<p:tooltip for="datePaused"
-										value="#{defaultBacking.getTime(opp.datePaused)}" />
-								</p:column>
-								<p:column sortBy="restart">
-									<f:facet name="header">Restarts</f:facet>
+									<p:column sortBy="dateStarted">
+										<f:facet name="header">Started On</f:facet>
+										<h:outputText value="#{opp.dateStarted}" id="dateStarted"
+											styleClass="w60">
+											<f:convertDateTime pattern="dd-MMM-yyyy" />
+										</h:outputText>
+										<p:tooltip for="dateStarted"
+											value="#{defaultBacking.getTime(opp.dateStarted)}" />
+									</p:column>
+									<p:column sortBy="dateExpired">
+										<f:facet name="header">Expired On</f:facet>
+										<h:outputText value="#{opp.dateExpired}" id="dateExpired"
+											styleClass="w60">
+											<f:convertDateTime pattern="dd-MMM-yyyy" />
+										</h:outputText>
+										<p:tooltip for="dateExpired"
+											value="#{defaultBacking.getTime(opp.dateExpired)}" />
+									</p:column>
+									<p:column sortBy="dateCompleted">
+										<f:facet name="header">Completed On</f:facet>
+										<h:outputText value="#{opp.dateCompleted}" id="dateCompleted"
+											styleClass="w60">
+											<f:convertDateTime pattern="dd-MMM-yyyy" />
+										</h:outputText>
+										<p:tooltip for="dateCompleted"
+											value="#{defaultBacking.getTime(opp.dateCompleted)}" />
+									</p:column>
+									<p:column sortBy="datePaused">
+										<f:facet name="header">Paused On</f:facet>
+										<h:outputText value="#{opp.datePaused}" id="datePaused"
+											styleClass="w60">
+											<f:convertDateTime pattern="dd-MMM-yyyy" />
+										</h:outputText>
+										<p:tooltip for="datePaused"
+											value="#{defaultBacking.getTime(opp.datePaused)}" />
+									</p:column>
+									<p:column sortBy="restart">
+										<f:facet name="header">Restarts</f:facet>
               #{opp.restart} </p:column>
-								<p:column sortBy="segmentPosition"
-									rendered='#{"changeperm".equals(defaultBacking.procedure)}'>
-									<f:facet name="header">Segment Position</f:facet>
+									<p:column sortBy="segmentPosition"
+										rendered='#{"changeperm".equals(defaultBacking.procedure)}'>
+										<f:facet name="header">Segment Position</f:facet>
               #{opp.segmentPosition} </p:column>
-								<p:column
-									rendered='#{"changeperm".equals(defaultBacking.procedure)}'>
-									<f:facet name="header">Permeable</f:facet>
-									<h:selectBooleanCheckbox value="#{opp.permeable}" />
-								</p:column>
-								<p:column sortBy="segmentName"
-									rendered='#{"changeperm".equals(defaultBacking.procedure)}'>
-									<f:facet name="header">Segment Name</f:facet>
+									<p:column
+										rendered='#{"changeperm".equals(defaultBacking.procedure)}'>
+										<f:facet name="header">Permeable</f:facet>
+										<h:selectBooleanCheckbox value="#{opp.permeable}" />
+									</p:column>
+									<p:column sortBy="segmentName"
+										rendered='#{"changeperm".equals(defaultBacking.procedure)}'>
+										<f:facet name="header">Segment Name</f:facet>
               #{opp.segmentName} </p:column>
-								<p:column
-									rendered='#{"extend".equals(defaultBacking.procedure)}'>
-									<f:facet name="header">SelectedSitting</f:facet>
-									<h:inputText value="#{opp.selectedSitting}"
-										id="selectedsitting" maxlength="2"
-										onkeypress="var key=event.keyCode||event.charCode||event.which;
+									<p:column
+										rendered='#{"extend".equals(defaultBacking.procedure)}'>
+										<f:facet name="header">SelectedSitting</f:facet>
+										<h:inputText value="#{opp.selectedSitting}"
+											id="selectedsitting" maxlength="2"
+											onkeypress="var key=event.keyCode||event.charCode||event.which;
 											var ZERO=48, NINE=57, BACKSPACE=8, LEFT_ARROW=37, RIGHT_ARROW=39, DEL=46;
 										if(key &lt; ZERO || key &gt; NINE) 
 										if(key!=BACKSPACE)
@@ -326,15 +326,16 @@ ul.adminForm {
 										if(key!=RIGHT_ARROW)
 										if(key!=DEL)
 											return false;">
-										<p:ajax />
-									</h:inputText>
-								</p:column>
-								<p:column rendered='#{"alter".equals(defaultBacking.procedure)}'>
-									<f:facet name="header">DayIncrement</f:facet>
-									<h:inputText value="#{opp.dayIncrement}" id="dayincrement"
-										maxlength="4"
-										validatorMessage="Value must be between -365 and 365 inclusive"
-										onkeypress="var key=event.keyCode||event.charCode||event.which;
+											<p:ajax />
+										</h:inputText>
+									</p:column>
+									<p:column
+										rendered='#{"alter".equals(defaultBacking.procedure)}'>
+										<f:facet name="header">DayIncrement</f:facet>
+										<h:inputText value="#{opp.dayIncrement}" id="dayincrement"
+											maxlength="4"
+											validatorMessage="Value must be between -365 and 365 inclusive"
+											onkeypress="var key=event.keyCode||event.charCode||event.which;
 											var ZERO=48, NINE=57, BACKSPACE=8, MINUS=45, LEFT_ARROW=37, RIGHT_ARROW=39, DEL=46;
 										if(key &lt; ZERO || key &gt; NINE) 
 										if(key!=BACKSPACE)
@@ -343,48 +344,52 @@ ul.adminForm {
 										if(key!=RIGHT_ARROW)
 										if(key!=DEL)
 											return false;">
-										<p:ajax />
-										<f:validateLongRange maximum="365" minimum="-365" />
-									</h:inputText>
-									<br />
-									<h:message for="dayincrement" style="color:red" />
-								</p:column>
-								<p:column
-									rendered='#{"changeperm".equals(defaultBacking.procedure)}'>
-									<f:facet name="header">Restore On</f:facet>
-									<h:selectOneMenu value="#{opp.restoreOn}">
-										<f:selectItem itemLabel="Segment" itemValue="segment"></f:selectItem>
-										<f:selectItem itemLabel="Paused" itemValue="paused"></f:selectItem>
-										<f:selectItem itemLabel="Completed" itemValue="completed"></f:selectItem>
-									</h:selectOneMenu>
-								</p:column>
-								<p:column sortBy="result">
-									<f:facet name="header">Result</f:facet>
-									<h:outputText value="#{opp.result}" id="result"
-										style="#{defaultBacking.getStyle(opp.result)}">
-									</h:outputText>
-									<p:tooltip id="mytooltip" for="result" value="#{opp.reason}"></p:tooltip>
-								</p:column>
-							</p:dataTable>
+											<p:ajax />
+											<f:validateLongRange maximum="365" minimum="-365" />
+										</h:inputText>
+										<br />
+										<h:message for="dayincrement" style="color:red" />
+									</p:column>
+									<p:column
+										rendered='#{"changeperm".equals(defaultBacking.procedure)}'>
+										<f:facet name="header">Restore On</f:facet>
+										<h:selectOneMenu value="#{opp.restoreOn}">
+											<f:selectItem itemLabel="Segment" itemValue="segment"></f:selectItem>
+											<f:selectItem itemLabel="Paused" itemValue="paused"></f:selectItem>
+											<f:selectItem itemLabel="Completed" itemValue="completed"></f:selectItem>
+										</h:selectOneMenu>
+									</p:column>
+									<p:column sortBy="result">
+										<f:facet name="header">Result</f:facet>
+										<h:outputText value="#{opp.result}" id="result"
+											style="#{defaultBacking.getStyle(opp.result)}">
+										</h:outputText>
+										<p:tooltip id="mytooltip" for="result" value="#{opp.reason}"></p:tooltip>
+									</p:column>
+								</p:dataTable>
+								<h:panelGroup id="reasonExecute">
+									<ul class="adminForm">
+										<li><h:outputLabel
+												rendered="#{defaultBacking.oppCount>0}">Reason</h:outputLabel>
+											<h:inputTextarea rendered="#{defaultBacking.oppCount>0}"
+												disabled="#{defaultBacking.executeDisabled}"
+												value="#{defaultBacking.reason}"></h:inputTextarea></li>
+									</ul>
+									<div class="adminForm">
+										<div class="buttonRow">
+											<p:commandButton id="executeProcedure" ajax="false"
+												rendered="#{defaultBacking.oppCount>0}"
+												disabled="#{defaultBacking.executeDisabled}"
+												actionListener="#{defaultBacking.execute()}"
+												style="horizontal-align:middle;"
+												value="Execute Procedure on Selected Opportunities"></p:commandButton>
+										</div>
+									</div>
+								</h:panelGroup>
+							</h:panelGroup>
 						</div>
 						<!--It would be nice to have a meangingful header for this part of the form-->
 						<!--<h5 tabindex="-1">Search Filters</h5>-->
-						<ul class="adminForm">
-							<li><h:outputLabel rendered="#{defaultBacking.oppCount>0}">Reason</h:outputLabel>
-								<h:inputTextarea rendered="#{defaultBacking.oppCount>0}"
-									disabled="#{defaultBacking.executeDisabled}"
-									value="#{defaultBacking.reason}"></h:inputTextarea></li>
-						</ul>
-						<div class="adminForm">
-							<div class="buttonRow">
-								<p:commandButton id="executeProcedure" ajax="false"
-									rendered="#{defaultBacking.oppCount>0}"
-									disabled="#{defaultBacking.executeDisabled}"
-									actionListener="#{defaultBacking.execute()}"
-									style="horizontal-align:middle;"
-									value="Execute Procedure on Selected Opportunities"></p:commandButton>
-							</div>
-						</div>
 
 					</h:form>
 				</c:when>
