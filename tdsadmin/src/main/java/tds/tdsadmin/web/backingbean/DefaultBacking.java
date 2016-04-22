@@ -264,7 +264,7 @@ public class DefaultBacking implements Serializable {
 			else
 				failure++;
 		}
-		msg += "Succes:" + success + ", failure:" + failure;
+		msg += "Success:" + success + ", failure:" + failure;
 		this.setExecutionResult(msg);
 	}
 
