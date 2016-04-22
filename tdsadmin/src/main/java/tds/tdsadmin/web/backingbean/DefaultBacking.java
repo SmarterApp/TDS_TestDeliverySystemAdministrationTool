@@ -246,6 +246,8 @@ public class DefaultBacking implements Serializable {
 		for (TestOpportunity opp : this.opportunities) {
 			if (!opp.getSelected()) {
 				opp.setResult(null);
+				opp.setDayIncrement(0);
+				opp.setSelectedSitting(0);
 				continue;
 			}
 			ProcedureResult result = executeProcedure(opp);

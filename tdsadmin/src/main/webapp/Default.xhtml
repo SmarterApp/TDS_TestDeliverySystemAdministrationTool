@@ -181,7 +181,7 @@ ul.adminForm {
 									value="#{defaultBacking.procedure}">
 									<p:ajax event="change"
 										listener="#{defaultBacking.procedureChange()}"
-										update="mytable" />
+										update="mytable executionResult" />
 									<f:selectItems value="#{defaultBacking.procedures.entrySet()}"
 										var="entry" itemValue="#{entry.key}"
 										itemLabel="#{entry.value}"></f:selectItems>
@@ -225,7 +225,7 @@ ul.adminForm {
 							</div>
 						</div>
 						<h:outputText value="#{defaultBacking.executionResult}"
-							style="color:green"></h:outputText>
+							id="executionResult" style="color:green"></h:outputText>
 						<h:outputText value="#{defaultBacking.nomatch}" style="color:red"></h:outputText>
 						<!--Start putting the table output div here-->
 						<div class="tableOutput">
