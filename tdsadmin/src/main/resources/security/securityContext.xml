@@ -57,13 +57,15 @@
 		</constructor-arg>
 		<property name="defaultEntryPoint" ref="samlEntryPoint" />
 	</bean>
-
+	
+	  <bean id="tokenStore" class="org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore" ></bean>
 	<!-- oauth -->
 	<bean id="tokenServices" class="org.opentestsystem.shared.security.oauth.resource.RemoteTokenAccess">
 		<property name="clientId" value="${tdsadmin.oauth.resource.client.id}" />
 		<property name="clientSecret" value="${tdsadmin.oauth.resource.client.secret}" />
 		<property name="checkTokenEndpointUrl" value="${tdsadmin.oauth.checktoken.endpoint}" />
 		<property name="accessTokenConverter" ref="tokenConverter" />
+		<property name="tokenStore" ref="tokenStore"/>
 	</bean>
 
 	<bean id="tokenConverter" class="org.opentestsystem.shared.security.oauth.resource.SbacTokenConverter" />
