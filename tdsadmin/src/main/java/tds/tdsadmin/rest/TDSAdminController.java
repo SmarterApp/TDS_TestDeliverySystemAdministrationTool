@@ -115,6 +115,10 @@ public class TDSAdminController implements Serializable {
 			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST,
 					"Needs either external ssid or ssid or session id along with procedure");
 		}
+		if (!this.validProcedure(procedure)) {
+			response.setStatus(HttpStatus.SC_BAD_REQUEST);
+			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST, "Not a valid procedure");
+		}
 		TDSValidator validator = new TDSValidator();
 		try {
 			String studentid = (StringUtils.isNotEmpty(ssId)) ? ssId : extSsId;
@@ -252,7 +256,7 @@ public class TDSAdminController implements Serializable {
 		return result;
 	}
 
-	@RequestMapping(value = "/rest/extendingOppGracePeriod", method = RequestMethod.POST)
+	@RequestMapping(value = "/rest/extendOppGracePeriod", method = RequestMethod.POST)
 	@ResponseBody
 	@Secured({ "ROLE_Opportunity Modify" })
 	public ProcedureResult extendingOppGracePeriod(HttpServletResponse response,
