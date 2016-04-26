@@ -92,6 +92,15 @@ public class TDSAdminController implements Serializable {
 		return externalssid;
 	}
 
+	private boolean validProcedure(String proc) {
+		String[] procedures = { "changeperm", "reset", "invalidate", "restore", "reopen", "extend", "alter" };
+		for (String procedure : procedures) {
+			if (StringUtils.equals(procedure, proc))
+				return true;
+		}
+		return false;
+	}
+
 	/**
 	 * @param extSsId
 	 * @param ssId
@@ -117,7 +126,7 @@ public class TDSAdminController implements Serializable {
 		}
 		if (!this.validProcedure(procedure)) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
-			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST, "Not a valid procedure");
+			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST, procedure + " is not a valid procedure name");
 		}
 		TDSValidator validator = new TDSValidator();
 		try {
