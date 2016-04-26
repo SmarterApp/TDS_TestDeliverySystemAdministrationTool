@@ -186,7 +186,7 @@ public class TDSAdminController implements Serializable {
 		return result;
 	}
 
-	@RequestMapping(value = "/rest/invalidateTestOpportunity", method = RequestMethod.POST)
+	@RequestMapping(value = "/rest/invalidateOpportunity", method = RequestMethod.POST)
 	@ResponseBody
 	@Secured({ "ROLE_Opportunity Modify" })
 	public ProcedureResult invalidateTestOpportunity(HttpServletResponse response,
@@ -213,7 +213,7 @@ public class TDSAdminController implements Serializable {
 		return result;
 	}
 
-	@RequestMapping(value = "/rest/restoreTestOpportunity", method = RequestMethod.POST)
+	@RequestMapping(value = "/rest/restoreOpportunity", method = RequestMethod.POST)
 	@ResponseBody
 	@Secured({ "ROLE_Opportunity Modify" })
 	public ProcedureResult restoreTestOpportunity(HttpServletResponse response,
