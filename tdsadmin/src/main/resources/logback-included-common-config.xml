@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<included>
+
+    <if condition='property("spring.profiles.active").contains("mna.client.integration")'>
+        <then>
+            <property scope="local" name="mnaAppenderActive" value="${mna.appender.active:-false}" />
+        </then>
+        <else>
+            <property scope="local" name="mnaAppenderActive" value="false" />
+        </else>    
+    </if>
+    
+    <if condition='property("stdout.appender.active").contains("true")'>
+        <then>
+            <property scope="local" name="stdout.appender.active" value="${stdout.appender.active:-false}" />
+        </then>
+        <else>
+            <property scope="local" name="stdout.appender.active" value="false" />
+        </else>    
+    </if>
+    
+    <property scope="local" name="logfile.path" value="${catalina.home:-${user.home}}" />
+
+    <contextName>${app.context.name:-shared}</contextName>
+    <property scope="local" name="logfile.directory" value="${logfile.path}/logs/${app.context.name:-shared}" />
+
+    <jmxConfigurator/>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- encoders are assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="MDCAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!--<pattern>%d{HH:mm:ss.SSS} [%X{request.id},%X{request.context},%X{request.user}] %-5level %logger{36} - %msg%n</pattern>-->
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="filelog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logfile.directory}/${CONTEXT_NAME}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <fileNamePattern>${logfile.directory}/${CONTEXT_NAME}.log.%d{yyyy-MM-dd}.gz</fileNamePattern>
+            <maxHistory>28</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <!--<pattern>%d{HH:mm:ss.SSS} [%X{request.id},%X{request.context},%X{request.user}] %-5level %logger{36} - %msg%n</pattern>-->
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <if condition='property("mnaAppenderActive").contains("true")'>
+        <then>
+            <appender name="monitoringAndAlertingLogAppender" class="org.opentestsystem.shared.mna.client.logging.MonitoringAlertingAppender"/>
+        </then>
+    </if>
+
+    <logger name="${app.base.package.name:-org.opentestsystem}" level="${app.base.package.loglevel:-debug}" />
+    <logger name="org.springframework.data" level="info" />
+    <logger name="org.springframework.core" level="info" />
+    <logger name="org.springframework.beans" level="info" />
+    <logger name="org.springframework.context" level="info" />
+    <logger name="org.springframework.web" level="info" />
+    <logger name="org.springframework.security.saml" level="debug" />
+
+    <!-- Performance loggers -->
+    <logger name="PERFORMANCE_REST" additivity="false" level="debug">
+        <appender-ref ref="MDCAppender" />
+    </logger>
+
+    <root level="INFO">
+    
+        <appender-ref ref="filelog" />
+    
+        <if condition='property("stdout.appender.active").contains("true")'>
+            <then>
+                <appender-ref ref="STDOUT" />
+            </then>
+        </if>
+        
+        <if condition='property("mnaAppenderActive").contains("true")'>
+            <then>
+                <appender-ref ref="monitoringAndAlertingLogAppender" />
+            </then>
+        </if>
+    </root>
+
+</included>

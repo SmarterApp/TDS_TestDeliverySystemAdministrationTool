@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+	<link href="Style/core.css" rel="stylesheet" type="text/css" />
+	<link href="Style/tdsadmin.css" rel="stylesheet" type="text/css" />
+	<style type="text/css">
+</style>
+	<title>Session Expired</title>
+</h:head>
+<h:body>
+	<div class="container">
+		<a target="_self" href="#mainContent" data-ng-click="#mainContent"
+			class="skipToContent" id="skipNavigation">Skip to Main Content</a>
+		<div class="header">
+			<div class="info ng-scope">
+				<ul>
+					<li><a href="saml/logout">Logout</a></li>
+				</ul>
+			</div>
+
+			<div class="banner ng-scope">
+				<span class="logo"> <a tabindex="0"> <img
+						name="SBAC_logo" alt="Logo" class="thumbnail"
+						data-ng-src="Images/logo_sbac.png" src="Images/logo_sbac.png" />
+				</a></span>
+				<div class="title">
+					<h1>TDS Administration</h1>
+				</div>
+
+				<div class="clear"></div>
+			</div>
+		</div>
+	</div>
+	<div id="mainContent" class="content">
+		<div class="secContent">
+			<h3>
+				Your session has expired. Please go to login page here <a
+					href="saml/logout">Login</a>
+			</h3>
+		</div>
+	</div>
+	<div class="footer ng-scope">
+		<div class="footerText ng-binding" data-ng-if="buildInfo.appVersion">
+			Version: 0.0.1-SNAPSHOT <span
+				data-ng-show="buildInfo.jenkinsBuildNumber" class="ng-binding">
+				(build #: 85)</span>
+		</div>
+	</div>
+</h:body>
+</html>
