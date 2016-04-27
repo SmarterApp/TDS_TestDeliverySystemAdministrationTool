@@ -364,6 +364,11 @@ public class TDSAdminController implements Serializable {
 			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST,
 					v_restoreon + " is not a valid value for restoreon");
 		}
+		if (v_ispermeable < 0 || v_ispermeable > 1) {
+			response.setStatus(HttpStatus.SC_BAD_REQUEST);
+			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST,
+					v_ispermeable + " is not a valid value for ispermeable");
+		}
 		try {
 			result = getDao().setOpportunitySegmentPerm(v_oppKey, v_requestor, v_segmentid, v_segmentposition,
 					v_restoreon, v_ispermeable, v_reason);
