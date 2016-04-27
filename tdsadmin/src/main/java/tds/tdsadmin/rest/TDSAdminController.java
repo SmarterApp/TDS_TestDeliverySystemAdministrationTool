@@ -332,6 +332,15 @@ public class TDSAdminController implements Serializable {
 		return result;
 	}
 
+	private boolean validRestoreOn(String restoreOn) {
+		String[] values = { "segment", "paused", "completed" };
+		for (String value : values) {
+			if (StringUtils.equals(value, restoreOn))
+				return true;
+		}
+		return false;
+	}
+
 	@RequestMapping(value = "/rest/setOpportunitySegmentPerm", method = RequestMethod.POST)
 	@ResponseBody
 	@Secured({ "ROLE_Opportunity Modify" })
@@ -349,6 +358,11 @@ public class TDSAdminController implements Serializable {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
 			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST,
 					"Needs parameters: oppkey, segmentid, restoreon");
+		}
+		if (!validRestoreOn(v_restoreon)) {
+			response.setStatus(HttpStatus.SC_BAD_REQUEST);
+			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST,
+					v_restoreon + " is not a valid value for restoreon");
 		}
 		try {
 			result = getDao().setOpportunitySegmentPerm(v_oppKey, v_requestor, v_segmentid, v_segmentposition,
