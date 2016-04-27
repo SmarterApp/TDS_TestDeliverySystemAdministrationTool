@@ -3,4 +3,5 @@
 <properties>
 	<entry key="TestRegistrationApplicationUrl">${tdsadmin.TestRegistrationApplicationUrl}</entry>
 	<entry key="tdsadminTimeout">${tdsadmin.sessionTimeoutMinutes:15}</entry>
+	<entry key="component.name">${tdsadmin.component.name}</entry>
 </properties>
