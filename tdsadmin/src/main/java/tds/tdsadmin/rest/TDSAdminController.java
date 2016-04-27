@@ -11,7 +11,10 @@ package tds.tdsadmin.rest;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.faces.validator.ValidatorException;
@@ -47,6 +50,8 @@ import tds.tdsadmin.validator.TDSValidator;
 public class TDSAdminController implements Serializable {
 
 	private static final Logger logger = LoggerFactory.getLogger(TDSAdminController.class);
+
+	private static Set<String> restoreOnValues = new HashSet<String>(Arrays.asList("segment", "paused", "completed"));
 
 	@Autowired
 	private TDSAdminDAO _dao = null;
@@ -332,15 +337,6 @@ public class TDSAdminController implements Serializable {
 		return result;
 	}
 
-	private boolean validRestoreOn(String restoreOn) {
-		String[] values = { "segment", "paused", "completed" };
-		for (String value : values) {
-			if (StringUtils.equals(value, restoreOn))
-				return true;
-		}
-		return false;
-	}
-
 	@RequestMapping(value = "/rest/setOpportunitySegmentPerm", method = RequestMethod.POST)
 	@ResponseBody
 	@Secured({ "ROLE_Opportunity Modify" })
@@ -350,7 +346,7 @@ public class TDSAdminController implements Serializable {
 			@RequestParam(value = "segmentid", required = false) String v_segmentid,
 			@RequestParam(value = "segmentposition", required = false, defaultValue = "0") int v_segmentposition,
 			@RequestParam(value = "restoreon", required = false) String v_restoreon,
-			@RequestParam(value = "ispermeable", required = false, defaultValue = "0") int v_ispermeable,
+			@RequestParam(value = "ispermeable", required = false, defaultValue = "-1") int v_ispermeable,
 			@RequestParam(value = "reason", required = false) String v_reason) throws HttpResponseException {
 
 		ProcedureResult result = null;
@@ -359,12 +355,12 @@ public class TDSAdminController implements Serializable {
 			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST,
 					"Needs parameters: oppkey, segmentid, restoreon");
 		}
-		if (!validRestoreOn(v_restoreon)) {
+		if (!restoreOnValues.contains(v_restoreon)) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
 			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST,
 					v_restoreon + " is not a valid value for restoreon");
 		}
-		if (v_ispermeable < 0 || v_ispermeable > 1) {
+		if (v_ispermeable != -1 && v_ispermeable != 1) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
 			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST,
 					v_ispermeable + " is not a valid value for ispermeable");
