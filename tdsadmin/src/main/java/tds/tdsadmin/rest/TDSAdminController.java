@@ -360,6 +360,7 @@ public class TDSAdminController implements Serializable {
 			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST,
 					v_restoreon + " is not a valid value for restoreon");
 		}
+		// ispermeable stores only -1 and 1 in the database
 		if (v_ispermeable != -1 && v_ispermeable != 1) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
 			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST,
