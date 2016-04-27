@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:oauth2="http://www.springframework.org/schema/security/oauth2"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/security/oauth2
+        http://www.springframework.org/schema/security/spring-security-oauth2.xsd">
+	<beans:import resource="classpath:security/securityContext.xml" />
+	<beans:import resource="classpath:security/samlmetadata-context.xml" />
+
+
+	<context:property-placeholder
+		local-override="true" location="classpath:settings.xml"
+		ignore-resource-not-found="true" />
+
+	<beans:bean id="configurationManager"
+		class="AIR.Common.Configuration.ConfigurationManager" />
+
+	<beans:bean id="appSettings1" factory-bean="configurationManager"
+		factory-method="getAppSettings" />
+	<beans:bean id="appSettings" factory-bean="appSettings1"
+		factory-method="updateProperties">
+		<beans:constructor-arg>
+			<beans:map>
+				<beans:entry key="DBDialect" value="MYSQL" />
+				<beans:entry key="TDSSessionDBName" value="${tdsadmin.TDSSessionDBName:session}" />
+			</beans:map>
+		</beans:constructor-arg>
+	</beans:bean>
+
+	<!--Start: c3p0 Datasource Configuration -->
+	<beans:bean id="applicationDataSource" destroy-method="close"
+		class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<beans:property name="driverClass"
+			value="${datasource.driverClassName:com.mysql.jdbc.Driver}" />
+
+		<!-- jdbc url must be have these parameters: useUnicode=true&amp;useFastDateParsing=false&amp;characterEncoding=UTF-8 -->
+		<beans:property name="jdbcUrl" value="${tdsadmin.datasource.url}" />
+		<beans:property name="user" value="${datasource.username}" />
+		<beans:property name="password" value="${datasource.password}" />
+		<beans:property name="minPoolSize" value="${datasource.minPoolSize:5}" />
+		<beans:property name="acquireIncrement" value="${datasource.acquireIncrement:5}" />
+		<beans:property name="maxPoolSize" value="${datasource.maxPoolSize:20}" />
+		<beans:property name="checkoutTimeout"
+			value="${datasource.checkoutTimeout:60000}" />
+		<beans:property name="preferredTestQuery" value="SELECT 1" />
+		<beans:property name="maxConnectionAge" value="${datasource.maxConnectionAge:0}" />
+		<beans:property name="acquireRetryAttempts"
+			value="${datasource.acquireRetryAttempts:5}" />
+	</beans:bean>
+	<!--End: c3p0 Datasource Configuration -->
+
+
+	<beans:bean id="_tdsAdminDLL" class="tds.dll.mysql.TDSAdminDLL" />
+	<beans:bean id="tdsSettings" class="TDS.Shared.Configuration.TDSSettings"
+		scope="prototype" />
+	<beans:bean class="tds.tdsadmin.db.dao.TDSAdminDAOImpl" />
+	<beans:bean class="tds.tdsadmin.session.PropertiesBean">
+		<beans:property name="tdsadminTimeout" value="${tdsadminTimeout}" />
+	</beans:bean>
+
+	<!-- Start TrClient -->
+	<beans:bean id="iTrClient" class="org.opentestsystem.shared.trapi.TrClient" />
+
+	<beans:bean id="iTrRestApiClient"
+		class="org.opentestsystem.shared.trapi.TrOauthRestApiClient">
+		<beans:constructor-arg index="0"
+			ref="trOauthRestTemplate" />
+	</beans:bean>
+
+	<oauth2:client id="oauth2ClientFilter" />
+
+	<oauth2:resource id="trResource" type="password"
+		client-authentication-scheme="form" client-id="${oauth.testreg.client.id}"
+		client-secret="${oauth.testreg.client.secret}" access-token-uri="${oauth.access.url}"
+		username="${oauth.testreg.username}" password="${oauth.testreg.password}" />
+
+	<beans:bean id="httpClient"
+		class="org.apache.http.impl.client.DefaultHttpClient">
+		<beans:constructor-arg>
+			<beans:bean
+				class="org.apache.http.impl.conn.PoolingClientConnectionManager">
+				<beans:property name="maxTotal" value="${httpClientPool.maxTotal:200}" />
+				<beans:property name="defaultMaxPerRoute"
+					value="${httpClientPool.defaultMaxPerRoute:10}" />
+			</beans:bean>
+		</beans:constructor-arg>
+	</beans:bean>
+
+	<beans:bean id="trClientHttpRequestFactory"
+		class="org.springframework.http.client.HttpComponentsClientHttpRequestFactory">
+		<beans:constructor-arg ref="httpClient" />
+		<beans:property name="connectTimeout" value="60000" />
+		<beans:property name="readTimeout" value="60000" />
+	</beans:bean>
+
+	<beans:bean id="trOauthRestTemplate"
+		class="org.springframework.security.oauth2.client.OAuth2RestTemplate">
+		<beans:constructor-arg ref="trResource" />
+		<beans:property name="requestFactory" ref="trClientHttpRequestFactory" />
+	</beans:bean>
+	<!-- End TrClient -->
+
+</beans:beans>
