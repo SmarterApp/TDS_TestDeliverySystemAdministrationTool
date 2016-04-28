@@ -1,4 +1,4 @@
-# TDSAdmin
+# Welcome to the TDS Administration Tool (TDSAdmin)
 
 The TDS Administration tool allows authorized users to manage students’ test opportunities. This software provides a web interface that allows for the selection of opportunities by SSID and/or Session ID, and apply a variety of functions to those opportunities. These functions include Extend grace period, Extend expiration date, Reopen, Restore, Reset, Invalidate, and Change segment permeability of test opportunities.
 
