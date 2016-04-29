@@ -170,21 +170,22 @@ public class TDSAdminController implements Serializable {
 	@Secured({ "ROLE_Opportunity Modify" })
 	public ProcedureResult resetOpportunity(HttpServletResponse response,
 			@RequestParam(value = "oppkey", required = false) UUID v_oppKey,
-			@RequestParam(value = "requestor", required = false) String v_requestor,
+			@RequestParam(value = "requester", required = false) String v_requester,
 			@RequestParam(value = "reason", required = false) String v_reason) throws HttpResponseException {
 		ProcedureResult result = null;
-		if (v_oppKey == null || v_requestor == null) {
+		if (v_oppKey == null || v_requester == null) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
-			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST, "Needs parameters: oppkey, requestor, reason");
+			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST,
+					"oppkey, requester are required parameters. Reason is accepted as an optional parameter.");
 		}
 		try {
-			result = getDao().resetOpportunity(v_oppKey, v_requestor, v_reason);
+			result = getDao().resetOpportunity(v_oppKey, v_requester, v_reason);
 			if (result != null && "success".equalsIgnoreCase(result.getStatus()))
-				logger.info(String.format("Appeals: Reset successful for Oppkey=%s, Requestor=%s, Reason=%s", v_oppKey,
-						v_requestor, v_reason));
+				logger.info(String.format("Appeals: Reset successful for Oppkey=%s, requester=%s, Reason=%s", v_oppKey,
+						v_requester, v_reason));
 			else
-				logger.error(String.format("Appeals: Reset failed for Oppkey=%s, Requestor=%s, Reason=%s", v_oppKey,
-						v_requestor, (result != null) ? result.getReason() : null));
+				logger.error(String.format("Appeals: Reset failed for Oppkey=%s, requester=%s, Reason=%s", v_oppKey,
+						v_requester, (result != null) ? result.getReason() : null));
 		} catch (ReturnStatusException e) {
 			logger.error("Appeals: " + e.getMessage());
 		}
@@ -196,22 +197,23 @@ public class TDSAdminController implements Serializable {
 	@Secured({ "ROLE_Opportunity Modify" })
 	public ProcedureResult invalidateTestOpportunity(HttpServletResponse response,
 			@RequestParam(value = "oppkey", required = false) UUID v_oppKey,
-			@RequestParam(value = "requestor", required = false) String v_requestor,
+			@RequestParam(value = "requester", required = false) String v_requester,
 			@RequestParam(value = "reason", required = false) String v_reason) throws HttpResponseException {
 		ProcedureResult result = null;
-		if (v_oppKey == null || v_requestor == null) {
+		if (v_oppKey == null || v_requester == null) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
-			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST, "Needs parameters: oppkey, requestor");
+			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST,
+					"oppkey, requester are required parameters. Reason is accepted as an optional parameter.");
 		}
 		try {
-			result = getDao().invalidateTestOpportunity(v_oppKey, v_requestor, v_reason);
+			result = getDao().invalidateTestOpportunity(v_oppKey, v_requester, v_reason);
 
 			if (result != null && "success".equalsIgnoreCase(result.getStatus()))
-				logger.info(String.format("Appeals: Invalidate successful for Oppkey=%s, Requestor=%s, Reason=%s",
-						v_oppKey, v_requestor, v_reason));
+				logger.info(String.format("Appeals: Invalidate successful for Oppkey=%s, requester=%s, Reason=%s",
+						v_oppKey, v_requester, v_reason));
 			else
-				logger.error(String.format("Appeals: Invalidate failed for Oppkey=%s, Requestor=%s, Reason=%s",
-						v_oppKey, v_requestor, (result != null) ? result.getReason() : null));
+				logger.error(String.format("Appeals: Invalidate failed for Oppkey=%s, requester=%s, Reason=%s",
+						v_oppKey, v_requester, (result != null) ? result.getReason() : null));
 		} catch (ReturnStatusException e) {
 			logger.error("Appeals: " + e.getMessage());
 		}
@@ -223,21 +225,22 @@ public class TDSAdminController implements Serializable {
 	@Secured({ "ROLE_Opportunity Modify" })
 	public ProcedureResult restoreTestOpportunity(HttpServletResponse response,
 			@RequestParam(value = "oppkey", required = false) UUID v_oppKey,
-			@RequestParam(value = "requestor", required = false) String v_requestor,
+			@RequestParam(value = "requester", required = false) String v_requester,
 			@RequestParam(value = "reason", required = false) String v_reason) throws HttpResponseException {
 		ProcedureResult result = null;
-		if (v_oppKey == null || v_requestor == null) {
+		if (v_oppKey == null || v_requester == null) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
-			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST, "Needs parameters: oppkey, requestor");
+			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST,
+					"oppkey, requester are required parameters. Reason is accepted as an optional parameter.");
 		}
 		try {
-			result = getDao().restoreTestOpportunity(v_oppKey, v_requestor, v_reason);
+			result = getDao().restoreTestOpportunity(v_oppKey, v_requester, v_reason);
 			if (result != null && "success".equalsIgnoreCase(result.getStatus()))
-				logger.info(String.format("Appeals: Restore successful for Oppkey=%s, Requestor=%s, Reason=%s",
-						v_oppKey, v_requestor, v_reason));
+				logger.info(String.format("Appeals: Restore successful for Oppkey=%s, requester=%s, Reason=%s",
+						v_oppKey, v_requester, v_reason));
 			else
-				logger.error(String.format("Appeals: Restore failed for Oppkey=%s, Requestor=%s, Reason=%s", v_oppKey,
-						v_requestor, (result != null) ? result.getReason() : null));
+				logger.error(String.format("Appeals: Restore failed for Oppkey=%s, requester=%s, Reason=%s", v_oppKey,
+						v_requester, (result != null) ? result.getReason() : null));
 		} catch (ReturnStatusException e) {
 			logger.error("Appeals: " + e.getMessage());
 		}
@@ -249,21 +252,22 @@ public class TDSAdminController implements Serializable {
 	@Secured({ "ROLE_Opportunity Modify" })
 	public ProcedureResult reopenOpportunity(HttpServletResponse response,
 			@RequestParam(value = "oppkey", required = false) UUID v_oppKey,
-			@RequestParam(value = "requestor", required = false) String v_requestor,
+			@RequestParam(value = "requester", required = false) String v_requester,
 			@RequestParam(value = "reason", required = false) String v_reason) throws HttpResponseException {
 		ProcedureResult result = null;
-		if (v_oppKey == null || v_requestor == null) {
+		if (v_oppKey == null || v_requester == null) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
-			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST, "Needs parameters: oppkey, requestor");
+			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST,
+					"oppkey, requester are required parameters. Reason is accepted as an optional parameter.");
 		}
 		try {
-			result = getDao().reopenOpportunity(v_oppKey, v_requestor, v_reason);
+			result = getDao().reopenOpportunity(v_oppKey, v_requester, v_reason);
 			if (result != null && "success".equalsIgnoreCase(result.getStatus()))
-				logger.info(String.format("Appeals: Reopen successful for Oppkey=%s, Requestor=%s, Reason=%s", v_oppKey,
-						v_requestor, v_reason));
+				logger.info(String.format("Appeals: Reopen successful for Oppkey=%s, requester=%s, Reason=%s", v_oppKey,
+						v_requester, v_reason));
 			else
-				logger.error(String.format("Appeals: Reopen failed for Oppkey=%s, Requestor=%s, Reason=%s", v_oppKey,
-						v_requestor, (result != null) ? result.getReason() : null));
+				logger.error(String.format("Appeals: Reopen failed for Oppkey=%s, requester=%s, Reason=%s", v_oppKey,
+						v_requester, (result != null) ? result.getReason() : null));
 		} catch (ReturnStatusException e) {
 			logger.error("Appeals: " + e.getMessage());
 		}
@@ -275,28 +279,28 @@ public class TDSAdminController implements Serializable {
 	@Secured({ "ROLE_Opportunity Modify" })
 	public ProcedureResult extendingOppGracePeriod(HttpServletResponse response,
 			@RequestParam(value = "oppkey", required = false) UUID v_oppKey,
-			@RequestParam(value = "requestor", required = false) String v_requestor,
+			@RequestParam(value = "requester", required = false) String v_requester,
 			@RequestParam(value = "selectedsitting", required = false, defaultValue = "0") int v_selectedsitting,
 			@RequestParam(value = "doupdate", required = false) boolean v_doupdate,
 			@RequestParam(value = "reason", required = false) String v_reason) throws HttpResponseException {
 		ProcedureResult result = null;
 		// selected sitting is number of sitting for an opportunity, which can't
 		// be negative, upper limit for this is 99, taken arbitrarily
-		if (v_oppKey == null || v_requestor == null || v_selectedsitting < 0 || v_selectedsitting > 99) {
+		if (v_oppKey == null || v_requester == null || v_selectedsitting < 0 || v_selectedsitting > 99) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
 			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST,
-					"Needs parameters: oppkey, requestor and selectedsitting range:<0,99> ");
+					"oppkey, requester are required parameters. Reason is accepted as an optional parameter and selectedsitting range:<0,99> ");
 		}
 		try {
-			result = getDao().extendingOppGracePeriod(v_oppKey, v_requestor, v_selectedsitting, v_doupdate, v_reason);
+			result = getDao().extendingOppGracePeriod(v_oppKey, v_requester, v_selectedsitting, v_doupdate, v_reason);
 			if (result != null && "success".equalsIgnoreCase(result.getStatus()))
 				logger.info(String.format(
-						"Appeals: Extend grace period successful for Oppkey=%s, Requestor=%s, SelectedSitting=%s, Doupdate=%s, Reason=%s",
-						v_oppKey, v_requestor, v_selectedsitting, v_doupdate, v_reason));
+						"Appeals: Extend grace period successful for Oppkey=%s, requester=%s, SelectedSitting=%s, Doupdate=%s, Reason=%s",
+						v_oppKey, v_requester, v_selectedsitting, v_doupdate, v_reason));
 			else
 				logger.error(String.format(
-						"Appeals: Extend grace period failed for Oppkey=%s, Requestor=%s, SelectedSitting=%s, Doupdate=%s, Reason=%s",
-						v_oppKey, v_requestor, v_selectedsitting, v_doupdate,
+						"Appeals: Extend grace period failed for Oppkey=%s, requester=%s, SelectedSitting=%s, Doupdate=%s, Reason=%s",
+						v_oppKey, v_requester, v_selectedsitting, v_doupdate,
 						(result != null) ? result.getReason() : null));
 		} catch (ReturnStatusException e) {
 			logger.error("Appeals: " + e.getMessage());
@@ -309,28 +313,28 @@ public class TDSAdminController implements Serializable {
 	@Secured({ "ROLE_Opportunity Modify" })
 	public ProcedureResult alterOpportunityExpiration(HttpServletResponse response,
 			@RequestParam(value = "oppkey", required = false) UUID v_oppKey,
-			@RequestParam(value = "requestor", required = false) String v_requestor,
+			@RequestParam(value = "requester", required = false) String v_requester,
 			@RequestParam(value = "dayincrement", required = false, defaultValue = "0") int v_dayincrement,
 			@RequestParam(value = "reason", required = false) String v_reason) throws HttpResponseException {
 
 		ProcedureResult result = null;
 		// throwing exception when oppkey is null or dayincrement is not in
 		// range <-365,365>, this is an arbitrary range
-		if (v_oppKey == null || v_requestor == null || v_dayincrement < -365 || v_dayincrement > 365) {
+		if (v_oppKey == null || v_requester == null || v_dayincrement < -365 || v_dayincrement > 365) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
 			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST,
-					"Needs parameters: oppkey, requestor and dayIncrement range:<-365,365>");
+					"oppkey, requesterare required parameters. Reason is accepted as an optional parameter and dayIncrement range:<-365,365> ");
 		}
 		try {
-			result = getDao().alterOpportunityExpiration(v_oppKey, v_requestor, v_dayincrement, v_reason);
+			result = getDao().alterOpportunityExpiration(v_oppKey, v_requester, v_dayincrement, v_reason);
 			if (result != null && "success".equalsIgnoreCase(result.getStatus()))
 				logger.info(String.format(
-						"Appeals: Extend expiration date successful for Oppkey=%s, DayIncrement=%s, Requestor=%s, Reason=%s",
-						v_oppKey, v_dayincrement, v_requestor, v_reason));
+						"Appeals: Extend expiration date successful for Oppkey=%s, DayIncrement=%s, requester=%s, Reason=%s",
+						v_oppKey, v_dayincrement, v_requester, v_reason));
 			else
 				logger.error(String.format(
-						"Appeals: Extend expiration date failed for Oppkey=%s, DayIncrement=%s, Requestor=%s, Reason=%s",
-						v_oppKey, v_dayincrement, v_requestor, (result != null) ? result.getReason() : null));
+						"Appeals: Extend expiration date failed for Oppkey=%s, DayIncrement=%s, requester=%s, Reason=%s",
+						v_oppKey, v_dayincrement, v_requester, (result != null) ? result.getReason() : null));
 		} catch (ReturnStatusException e) {
 			logger.error("Appeals: " + e.getMessage());
 		}
@@ -342,7 +346,7 @@ public class TDSAdminController implements Serializable {
 	@Secured({ "ROLE_Opportunity Modify" })
 	public ProcedureResult setOpportunitySegmentPerm(HttpServletResponse response,
 			@RequestParam(value = "oppkey", required = false) UUID v_oppKey,
-			@RequestParam(value = "requestor", required = false) String v_requestor,
+			@RequestParam(value = "requester", required = false) String v_requester,
 			@RequestParam(value = "segmentid", required = false) String v_segmentid,
 			@RequestParam(value = "segmentposition", required = false, defaultValue = "0") int v_segmentposition,
 			@RequestParam(value = "restoreon", required = false) String v_restoreon,
@@ -350,11 +354,11 @@ public class TDSAdminController implements Serializable {
 			@RequestParam(value = "reason", required = false) String v_reason) throws HttpResponseException {
 
 		ProcedureResult result = null;
-		if (v_oppKey == null || v_requestor == null || StringUtils.isEmpty(v_segmentid)
+		if (v_oppKey == null || v_requester == null || StringUtils.isEmpty(v_segmentid)
 				|| StringUtils.isEmpty(v_restoreon)) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
 			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST,
-					"Needs parameters: oppkey, requestor, segmentid, restoreon");
+					"oppkey, requester, segmentid, restoreon are required, reason are required parameters. Reason is accepted as an optional parameter.");
 		}
 		if (!restoreOnValues.contains(v_restoreon)) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
@@ -368,16 +372,16 @@ public class TDSAdminController implements Serializable {
 					v_ispermeable + " is not a valid value for ispermeable");
 		}
 		try {
-			result = getDao().setOpportunitySegmentPerm(v_oppKey, v_requestor, v_segmentid, v_segmentposition,
+			result = getDao().setOpportunitySegmentPerm(v_oppKey, v_requester, v_segmentid, v_segmentposition,
 					v_restoreon, v_ispermeable, v_reason);
 			if (result != null && "success".equalsIgnoreCase(result.getStatus()))
 				logger.info(String.format(
-						"Appeals: Set opportunity segment permeability successful for Oppkey=%s, Requestor=%s, SegmentId=%s, SegmentPosition=%s, RestoreOn=%s, Ispermeable=%s, Reason=%s",
-						v_oppKey, v_requestor, v_segmentid, v_segmentposition, v_restoreon, v_ispermeable, v_reason));
+						"Appeals: Set opportunity segment permeability successful for Oppkey=%s, requester=%s, SegmentId=%s, SegmentPosition=%s, RestoreOn=%s, Ispermeable=%s, Reason=%s",
+						v_oppKey, v_requester, v_segmentid, v_segmentposition, v_restoreon, v_ispermeable, v_reason));
 			else
 				logger.error(String.format(
-						"Appeals: Set opportunity segment permeability failed for Oppkey=%s, Requestor=%s, SegmentId=%s, SegmentPosition=%s, RestoreOn=%s, Ispermeable=%s, Reason=%s",
-						v_oppKey, v_requestor, v_segmentid, v_segmentposition, v_restoreon, v_ispermeable,
+						"Appeals: Set opportunity segment permeability failed for Oppkey=%s, requester=%s, SegmentId=%s, SegmentPosition=%s, RestoreOn=%s, Ispermeable=%s, Reason=%s",
+						v_oppKey, v_requester, v_segmentid, v_segmentposition, v_restoreon, v_ispermeable,
 						(result != null) ? result.getReason() : null));
 		} catch (ReturnStatusException e) {
 			logger.error("Appeals: " + e.getMessage());
