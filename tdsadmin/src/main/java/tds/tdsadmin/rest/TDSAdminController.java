@@ -323,7 +323,7 @@ public class TDSAdminController implements Serializable {
 		if (v_oppKey == null || v_requester == null || v_dayincrement < -365 || v_dayincrement > 365) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
 			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST,
-					"oppkey, requesterare required parameters. Reason is accepted as an optional parameter and dayIncrement range:<-365,365> ");
+					"oppkey, requester are required parameters. Reason is accepted as an optional parameter and dayIncrement range:<-365,365> ");
 		}
 		try {
 			result = getDao().alterOpportunityExpiration(v_oppKey, v_requester, v_dayincrement, v_reason);
