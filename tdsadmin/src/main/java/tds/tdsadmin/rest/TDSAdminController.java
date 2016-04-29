@@ -285,7 +285,7 @@ public class TDSAdminController implements Serializable {
 		if (v_oppKey == null || v_selectedsitting < 0 || v_selectedsitting > 99) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
 			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST,
-					"Needs parameters: oppkey, requestor, reason and selectedsitting range:<-365,365> ");
+					"Needs parameters: oppkey, requestor, reason and selectedsitting range:<0,99> ");
 		}
 		try {
 			result = getDao().extendingOppGracePeriod(v_oppKey, v_requestor, v_selectedsitting, v_doupdate, v_reason);
