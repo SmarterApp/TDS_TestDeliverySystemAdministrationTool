@@ -354,7 +354,7 @@ public class TDSAdminController implements Serializable {
 				|| StringUtils.isEmpty(v_restoreon)) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
 			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST,
-					"Needs parameters: oppkey, segmentid, restoreon");
+					"Needs parameters: oppkey, requestor, segmentid, restoreon");
 		}
 		if (!restoreOnValues.contains(v_restoreon)) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
