@@ -173,7 +173,7 @@ public class TDSAdminController implements Serializable {
 			@RequestParam(value = "requestor", required = false) String v_requestor,
 			@RequestParam(value = "reason", required = false) String v_reason) throws HttpResponseException {
 		ProcedureResult result = null;
-		if (v_oppKey == null) {
+		if (v_oppKey == null || v_requestor == null) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
 			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST, "Needs parameters: oppkey, requestor, reason");
 		}
@@ -199,9 +199,9 @@ public class TDSAdminController implements Serializable {
 			@RequestParam(value = "requestor", required = false) String v_requestor,
 			@RequestParam(value = "reason", required = false) String v_reason) throws HttpResponseException {
 		ProcedureResult result = null;
-		if (v_oppKey == null) {
+		if (v_oppKey == null || v_requestor == null) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
-			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST, "Needs parameters: oppkey, requestor, reason");
+			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST, "Needs parameters: oppkey, requestor");
 		}
 		try {
 			result = getDao().invalidateTestOpportunity(v_oppKey, v_requestor, v_reason);
@@ -226,9 +226,9 @@ public class TDSAdminController implements Serializable {
 			@RequestParam(value = "requestor", required = false) String v_requestor,
 			@RequestParam(value = "reason", required = false) String v_reason) throws HttpResponseException {
 		ProcedureResult result = null;
-		if (v_oppKey == null) {
+		if (v_oppKey == null || v_requestor == null) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
-			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST, "Needs parameters: oppkey, requestor, reason");
+			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST, "Needs parameters: oppkey, requestor");
 		}
 		try {
 			result = getDao().restoreTestOpportunity(v_oppKey, v_requestor, v_reason);
@@ -252,9 +252,9 @@ public class TDSAdminController implements Serializable {
 			@RequestParam(value = "requestor", required = false) String v_requestor,
 			@RequestParam(value = "reason", required = false) String v_reason) throws HttpResponseException {
 		ProcedureResult result = null;
-		if (v_oppKey == null) {
+		if (v_oppKey == null || v_requestor == null) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
-			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST, "Needs parameters: oppkey, requestor, reason");
+			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST, "Needs parameters: oppkey, requestor");
 		}
 		try {
 			result = getDao().reopenOpportunity(v_oppKey, v_requestor, v_reason);
@@ -282,10 +282,10 @@ public class TDSAdminController implements Serializable {
 		ProcedureResult result = null;
 		// selected sitting is number of sitting for an opportunity, which can't
 		// be negative, upper limit for this is 99, taken arbitrarily
-		if (v_oppKey == null || v_selectedsitting < 0 || v_selectedsitting > 99) {
+		if (v_oppKey == null || v_requestor == null || v_selectedsitting < 0 || v_selectedsitting > 99) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
 			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST,
-					"Needs parameters: oppkey, requestor, reason and selectedsitting range:<0,99> ");
+					"Needs parameters: oppkey, requestor and selectedsitting range:<0,99> ");
 		}
 		try {
 			result = getDao().extendingOppGracePeriod(v_oppKey, v_requestor, v_selectedsitting, v_doupdate, v_reason);
@@ -316,10 +316,10 @@ public class TDSAdminController implements Serializable {
 		ProcedureResult result = null;
 		// throwing exception when oppkey is null or dayincrement is not in
 		// range <-365,365>, this is an arbitrary range
-		if (v_oppKey == null || v_dayincrement < -365 || v_dayincrement > 365) {
+		if (v_oppKey == null || v_requestor == null || v_dayincrement < -365 || v_dayincrement > 365) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
 			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST,
-					"Needs parameters: oppkey, requestor, reason and dayIncrement range:<-365,365>");
+					"Needs parameters: oppkey, requestor and dayIncrement range:<-365,365>");
 		}
 		try {
 			result = getDao().alterOpportunityExpiration(v_oppKey, v_requestor, v_dayincrement, v_reason);
@@ -350,7 +350,8 @@ public class TDSAdminController implements Serializable {
 			@RequestParam(value = "reason", required = false) String v_reason) throws HttpResponseException {
 
 		ProcedureResult result = null;
-		if (v_oppKey == null || StringUtils.isEmpty(v_segmentid) || StringUtils.isEmpty(v_restoreon)) {
+		if (v_oppKey == null || v_requestor == null || StringUtils.isEmpty(v_segmentid)
+				|| StringUtils.isEmpty(v_restoreon)) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
 			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST,
 					"Needs parameters: oppkey, segmentid, restoreon");
