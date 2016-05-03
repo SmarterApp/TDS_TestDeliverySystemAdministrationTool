@@ -173,7 +173,7 @@ public class TDSAdminController implements Serializable {
 			@RequestParam(value = "requester", required = false) String v_requester,
 			@RequestParam(value = "reason", required = false) String v_reason) throws HttpResponseException {
 		ProcedureResult result = null;
-		if (v_oppKey == null || v_requester == null) {
+		if (v_oppKey == null || StringUtils.isEmpty(v_requester)) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
 			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST,
 					"oppkey, requester are required parameters. Reason is accepted as an optional parameter.");
@@ -200,7 +200,7 @@ public class TDSAdminController implements Serializable {
 			@RequestParam(value = "requester", required = false) String v_requester,
 			@RequestParam(value = "reason", required = false) String v_reason) throws HttpResponseException {
 		ProcedureResult result = null;
-		if (v_oppKey == null || v_requester == null) {
+		if (v_oppKey == null || StringUtils.isEmpty(v_requester)) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
 			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST,
 					"oppkey, requester are required parameters. Reason is accepted as an optional parameter.");
@@ -228,7 +228,7 @@ public class TDSAdminController implements Serializable {
 			@RequestParam(value = "requester", required = false) String v_requester,
 			@RequestParam(value = "reason", required = false) String v_reason) throws HttpResponseException {
 		ProcedureResult result = null;
-		if (v_oppKey == null || v_requester == null) {
+		if (v_oppKey == null || StringUtils.isEmpty(v_requester)) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
 			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST,
 					"oppkey, requester are required parameters. Reason is accepted as an optional parameter.");
@@ -255,7 +255,7 @@ public class TDSAdminController implements Serializable {
 			@RequestParam(value = "requester", required = false) String v_requester,
 			@RequestParam(value = "reason", required = false) String v_reason) throws HttpResponseException {
 		ProcedureResult result = null;
-		if (v_oppKey == null || v_requester == null) {
+		if (v_oppKey == null || StringUtils.isEmpty(v_requester)) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
 			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST,
 					"oppkey, requester are required parameters. Reason is accepted as an optional parameter.");
@@ -286,7 +286,7 @@ public class TDSAdminController implements Serializable {
 		ProcedureResult result = null;
 		// selected sitting is number of sitting for an opportunity, which can't
 		// be negative, upper limit for this is 99, taken arbitrarily
-		if (v_oppKey == null || v_requester == null || v_selectedsitting < 0 || v_selectedsitting > 99) {
+		if (v_oppKey == null || StringUtils.isEmpty(v_requester) || v_selectedsitting < 0 || v_selectedsitting > 99) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
 			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST,
 					"oppkey, requester are required parameters. Reason is accepted as an optional parameter and selectedsitting range:<0,99> ");
@@ -320,7 +320,7 @@ public class TDSAdminController implements Serializable {
 		ProcedureResult result = null;
 		// throwing exception when oppkey is null or dayincrement is not in
 		// range <-365,365>, this is an arbitrary range
-		if (v_oppKey == null || v_requester == null || v_dayincrement < -365 || v_dayincrement > 365) {
+		if (v_oppKey == null || StringUtils.isEmpty(v_requester) || v_dayincrement < -365 || v_dayincrement > 365) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
 			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST,
 					"oppkey, requester are required parameters. Reason is accepted as an optional parameter and dayIncrement range:<-365,365> ");
@@ -354,7 +354,7 @@ public class TDSAdminController implements Serializable {
 			@RequestParam(value = "reason", required = false) String v_reason) throws HttpResponseException {
 
 		ProcedureResult result = null;
-		if (v_oppKey == null || v_requester == null || StringUtils.isEmpty(v_segmentid)
+		if (v_oppKey == null || StringUtils.isEmpty(v_requester) || StringUtils.isEmpty(v_segmentid)
 				|| StringUtils.isEmpty(v_restoreon)) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
 			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST,
