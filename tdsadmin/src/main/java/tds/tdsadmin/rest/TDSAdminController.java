@@ -290,7 +290,7 @@ public class TDSAdminController implements Serializable {
 				|| v_doupdate == null || v_doupdate != true) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
 			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST,
-					"oppkey, requester, selectedsitting and doupdate are required parameters. Reason is accepted as an optional parameter. selectedsitting has range:<1,99> and doupdate accepts only true or 1");
+					"oppkey, requester, selectedsitting and doupdate are required parameters. reason is accepted as an optional parameter. selectedsitting has range:<1,99> and doupdate accepts only true or 1");
 		}
 		try {
 			result = getDao().extendingOppGracePeriod(v_oppKey, v_requester, v_selectedsitting, v_doupdate, v_reason);
@@ -359,7 +359,7 @@ public class TDSAdminController implements Serializable {
 				|| StringUtils.isEmpty(v_restoreon) || v_segmentposition == null || v_segmentposition <= 0) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
 			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST,
-					"Oppkey, segmentid, restoreon, ispermeable, segmentposition and requester are required parameters. Reason is accepted as optional parameter.");
+					"oppkey, segmentid, restoreon, ispermeable, segmentposition, and requester are required parameters. reason is accepted as an optional parameter.");
 		}
 		if (!restoreOnValues.contains(v_restoreon)) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
