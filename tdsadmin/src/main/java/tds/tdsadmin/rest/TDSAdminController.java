@@ -281,15 +281,16 @@ public class TDSAdminController implements Serializable {
 			@RequestParam(value = "oppkey", required = false) UUID v_oppKey,
 			@RequestParam(value = "requester", required = false) String v_requester,
 			@RequestParam(value = "selectedsitting", required = false, defaultValue = "0") int v_selectedsitting,
-			@RequestParam(value = "doupdate", required = false) boolean v_doupdate,
+			@RequestParam(value = "doupdate", required = false) Boolean v_doupdate,
 			@RequestParam(value = "reason", required = false) String v_reason) throws HttpResponseException {
 		ProcedureResult result = null;
 		// selected sitting is number of sitting for an opportunity, which can't
 		// be negative, upper limit for this is 99, taken arbitrarily
-		if (v_oppKey == null || StringUtils.isEmpty(v_requester) || v_selectedsitting < 0 || v_selectedsitting > 99) {
+		if (v_oppKey == null || StringUtils.isEmpty(v_requester) || v_selectedsitting <= 0 || v_selectedsitting > 99
+				|| v_doupdate == null || v_doupdate != true) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
 			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST,
-					"oppkey, requester are required parameters. Reason is accepted as an optional parameter and selectedsitting range:<0,99> ");
+					"oppkey, requester, selectedsitting and doupdate are required parameters. Reason is accepted as an optional parameter. selectedsitting has range:<1,99> and doupdate accepts only ture or 1");
 		}
 		try {
 			result = getDao().extendingOppGracePeriod(v_oppKey, v_requester, v_selectedsitting, v_doupdate, v_reason);
@@ -355,10 +356,10 @@ public class TDSAdminController implements Serializable {
 
 		ProcedureResult result = null;
 		if (v_oppKey == null || StringUtils.isEmpty(v_requester) || StringUtils.isEmpty(v_segmentid)
-				|| StringUtils.isEmpty(v_restoreon)) {
+				|| StringUtils.isEmpty(v_restoreon) || v_segmentposition <= 0) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
 			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST,
-					"oppkey, requester, segmentid, restoreon are required, reason are required parameters. Reason is accepted as an optional parameter.");
+					"Oppkey, segmentid, restoreon, ispermeable, segmentposition and requester are required parameters. Reason is accepted as optional parameter.");
 		}
 		if (!restoreOnValues.contains(v_restoreon)) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
