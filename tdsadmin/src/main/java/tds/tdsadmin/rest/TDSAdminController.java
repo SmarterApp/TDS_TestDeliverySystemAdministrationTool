@@ -280,7 +280,7 @@ public class TDSAdminController implements Serializable {
 	public ProcedureResult extendingOppGracePeriod(HttpServletResponse response,
 			@RequestParam(value = "oppkey", required = false) UUID v_oppKey,
 			@RequestParam(value = "requester", required = false) String v_requester,
-			@RequestParam(value = "selectedsitting", required = false, defaultValue = "0") Integer v_selectedsitting,
+			@RequestParam(value = "selectedsitting", required = false) Integer v_selectedsitting,
 			@RequestParam(value = "doupdate", required = false) Boolean v_doupdate,
 			@RequestParam(value = "reason", required = false) String v_reason) throws HttpResponseException {
 		ProcedureResult result = null;
@@ -315,7 +315,7 @@ public class TDSAdminController implements Serializable {
 	public ProcedureResult alterOpportunityExpiration(HttpServletResponse response,
 			@RequestParam(value = "oppkey", required = false) UUID v_oppKey,
 			@RequestParam(value = "requester", required = false) String v_requester,
-			@RequestParam(value = "dayincrement", required = false, defaultValue = "0") Integer v_dayincrement,
+			@RequestParam(value = "dayincrement", required = false) Integer v_dayincrement,
 			@RequestParam(value = "reason", required = false) String v_reason) throws HttpResponseException {
 
 		ProcedureResult result = null;
