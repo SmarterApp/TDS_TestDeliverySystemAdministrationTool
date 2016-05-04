@@ -350,9 +350,9 @@ public class TDSAdminController implements Serializable {
 			@RequestParam(value = "oppkey", required = false) UUID v_oppKey,
 			@RequestParam(value = "requester", required = false) String v_requester,
 			@RequestParam(value = "segmentid", required = false) String v_segmentid,
-			@RequestParam(value = "segmentposition", required = false, defaultValue = "0") Integer v_segmentposition,
+			@RequestParam(value = "segmentposition", required = false) Integer v_segmentposition,
 			@RequestParam(value = "restoreon", required = false) String v_restoreon,
-			@RequestParam(value = "ispermeable", required = false, defaultValue = "-1") Integer v_ispermeable,
+			@RequestParam(value = "ispermeable", required = false) Integer v_ispermeable,
 			@RequestParam(value = "reason", required = false) String v_reason) throws HttpResponseException {
 
 		ProcedureResult result = null;
