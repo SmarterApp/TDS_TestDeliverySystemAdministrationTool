@@ -349,14 +349,14 @@ public class TDSAdminController implements Serializable {
 			@RequestParam(value = "oppkey", required = false) UUID v_oppKey,
 			@RequestParam(value = "requester", required = false) String v_requester,
 			@RequestParam(value = "segmentid", required = false) String v_segmentid,
-			@RequestParam(value = "segmentposition", required = false, defaultValue = "0") int v_segmentposition,
+			@RequestParam(value = "segmentposition", required = false, defaultValue = "0") Integer v_segmentposition,
 			@RequestParam(value = "restoreon", required = false) String v_restoreon,
 			@RequestParam(value = "ispermeable", required = false, defaultValue = "-1") int v_ispermeable,
 			@RequestParam(value = "reason", required = false) String v_reason) throws HttpResponseException {
 
 		ProcedureResult result = null;
 		if (v_oppKey == null || StringUtils.isEmpty(v_requester) || StringUtils.isEmpty(v_segmentid)
-				|| StringUtils.isEmpty(v_restoreon) || v_segmentposition <= 0) {
+				|| StringUtils.isEmpty(v_restoreon) || v_segmentposition == null || v_segmentposition <= 0) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
 			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST,
 					"Oppkey, segmentid, restoreon, ispermeable, segmentposition and requester are required parameters. Reason is accepted as optional parameter.");
