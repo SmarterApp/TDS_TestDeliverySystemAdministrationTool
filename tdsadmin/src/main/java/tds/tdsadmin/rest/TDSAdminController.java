@@ -176,7 +176,7 @@ public class TDSAdminController implements Serializable {
 		if (v_oppKey == null || StringUtils.isEmpty(v_requester)) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
 			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST,
-					"oppkey, requester are required parameters. Reason is accepted as an optional parameter.");
+					"oppkey, requester are required parameters. reason is accepted as an optional parameter.");
 		}
 		try {
 			result = getDao().resetOpportunity(v_oppKey, v_requester, v_reason);
@@ -203,7 +203,7 @@ public class TDSAdminController implements Serializable {
 		if (v_oppKey == null || StringUtils.isEmpty(v_requester)) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
 			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST,
-					"oppkey, requester are required parameters. Reason is accepted as an optional parameter.");
+					"oppkey, requester are required parameters. reason is accepted as an optional parameter.");
 		}
 		try {
 			result = getDao().invalidateTestOpportunity(v_oppKey, v_requester, v_reason);
@@ -231,7 +231,7 @@ public class TDSAdminController implements Serializable {
 		if (v_oppKey == null || StringUtils.isEmpty(v_requester)) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
 			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST,
-					"oppkey, requester are required parameters. Reason is accepted as an optional parameter.");
+					"oppkey, requester are required parameters. reason is accepted as an optional parameter.");
 		}
 		try {
 			result = getDao().restoreTestOpportunity(v_oppKey, v_requester, v_reason);
@@ -258,7 +258,7 @@ public class TDSAdminController implements Serializable {
 		if (v_oppKey == null || StringUtils.isEmpty(v_requester)) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
 			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST,
-					"oppkey, requester are required parameters. Reason is accepted as an optional parameter.");
+					"oppkey, requester are required parameters. reason is accepted as an optional parameter.");
 		}
 		try {
 			result = getDao().reopenOpportunity(v_oppKey, v_requester, v_reason);
@@ -280,17 +280,17 @@ public class TDSAdminController implements Serializable {
 	public ProcedureResult extendingOppGracePeriod(HttpServletResponse response,
 			@RequestParam(value = "oppkey", required = false) UUID v_oppKey,
 			@RequestParam(value = "requester", required = false) String v_requester,
-			@RequestParam(value = "selectedsitting", required = false, defaultValue = "0") int v_selectedsitting,
+			@RequestParam(value = "selectedsitting", required = false, defaultValue = "0") Integer v_selectedsitting,
 			@RequestParam(value = "doupdate", required = false) Boolean v_doupdate,
 			@RequestParam(value = "reason", required = false) String v_reason) throws HttpResponseException {
 		ProcedureResult result = null;
 		// selected sitting is number of sitting for an opportunity, which can't
 		// be negative, upper limit for this is 99, taken arbitrarily
-		if (v_oppKey == null || StringUtils.isEmpty(v_requester) || v_selectedsitting <= 0 || v_selectedsitting > 99
-				|| v_doupdate == null || v_doupdate == false) {
+		if (v_oppKey == null || StringUtils.isEmpty(v_requester) || v_selectedsitting == null || v_selectedsitting <= 0
+				|| v_selectedsitting > 99 || v_doupdate == null || v_doupdate == false) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
 			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST,
-					"oppkey, requester, selectedsitting and doupdate are required parameters. reason is accepted as an optional parameter. selectedsitting has range:<1,99> and doupdate accepts only true or 1");
+					"oppkey, requester, selectedsitting, and doupdate are required parameters. reason is accepted as an optional parameter. selectedsitting has range:<1,99> and doupdate accepts only true or 1");
 		}
 		try {
 			result = getDao().extendingOppGracePeriod(v_oppKey, v_requester, v_selectedsitting, v_doupdate, v_reason);
@@ -315,16 +315,17 @@ public class TDSAdminController implements Serializable {
 	public ProcedureResult alterOpportunityExpiration(HttpServletResponse response,
 			@RequestParam(value = "oppkey", required = false) UUID v_oppKey,
 			@RequestParam(value = "requester", required = false) String v_requester,
-			@RequestParam(value = "dayincrement", required = false, defaultValue = "0") int v_dayincrement,
+			@RequestParam(value = "dayincrement", required = false, defaultValue = "0") Integer v_dayincrement,
 			@RequestParam(value = "reason", required = false) String v_reason) throws HttpResponseException {
 
 		ProcedureResult result = null;
 		// throwing exception when oppkey is null or dayincrement is not in
 		// range <-365,365>, this is an arbitrary range
-		if (v_oppKey == null || StringUtils.isEmpty(v_requester) || v_dayincrement < -365 || v_dayincrement > 365) {
+		if (v_oppKey == null || StringUtils.isEmpty(v_requester) || v_dayincrement == null || v_dayincrement < -365
+				|| v_dayincrement > 365) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
 			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST,
-					"oppkey, requester are required parameters. Reason is accepted as an optional parameter and dayIncrement range:<-365,365> ");
+					"oppkey, requester and dayincrement are required parameters. reason is accepted as an optional parameter and dayIncrement range:<-365,365> ");
 		}
 		try {
 			result = getDao().alterOpportunityExpiration(v_oppKey, v_requester, v_dayincrement, v_reason);
@@ -351,12 +352,13 @@ public class TDSAdminController implements Serializable {
 			@RequestParam(value = "segmentid", required = false) String v_segmentid,
 			@RequestParam(value = "segmentposition", required = false, defaultValue = "0") Integer v_segmentposition,
 			@RequestParam(value = "restoreon", required = false) String v_restoreon,
-			@RequestParam(value = "ispermeable", required = false, defaultValue = "-1") int v_ispermeable,
+			@RequestParam(value = "ispermeable", required = false, defaultValue = "-1") Integer v_ispermeable,
 			@RequestParam(value = "reason", required = false) String v_reason) throws HttpResponseException {
 
 		ProcedureResult result = null;
 		if (v_oppKey == null || StringUtils.isEmpty(v_requester) || StringUtils.isEmpty(v_segmentid)
-				|| StringUtils.isEmpty(v_restoreon) || v_segmentposition == null || v_segmentposition <= 0) {
+				|| StringUtils.isEmpty(v_restoreon) || v_segmentposition == null || v_segmentposition <= 0
+				|| v_ispermeable == null) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
 			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST,
 					"oppkey, segmentid, restoreon, ispermeable, segmentposition, and requester are required parameters. reason is accepted as an optional parameter.");
