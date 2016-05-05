@@ -286,11 +286,11 @@ public class TDSAdminController implements Serializable {
 		ProcedureResult result = null;
 		// selected sitting is number of sitting for an opportunity, which can't
 		// be negative, upper limit for this is 99, taken arbitrarily
-		if (v_oppKey == null || StringUtils.isEmpty(v_requester) || v_selectedsitting == null || v_selectedsitting <= 0
+		if (v_oppKey == null || StringUtils.isEmpty(v_requester) || v_selectedsitting == null || v_selectedsitting < 0
 				|| v_selectedsitting > 99 || v_doupdate == null || v_doupdate == false) {
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
 			throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST,
-					"oppkey, requester, selectedsitting, and doupdate are required parameters. reason is accepted as an optional parameter. selectedsitting has range:<1,99> and doupdate accepts only true or 1");
+					"oppkey, requester, selectedsitting, and doupdate are required parameters. reason is accepted as an optional parameter. selectedsitting has range:<0,99> and doupdate accepts only true or 1");
 		}
 		try {
 			result = getDao().extendingOppGracePeriod(v_oppKey, v_requester, v_selectedsitting, v_doupdate, v_reason);
