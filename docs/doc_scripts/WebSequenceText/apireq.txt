@@ -1,0 +1,23 @@
+title TDS Admin API Request Using OAuth 2.0
+
+participant "Requester" as r
+participant "SSO" as sso
+participant "TDSAdmin\nREST API" as rest
+participant "Shared Security" as ss
+participant "TDSAdmin\nDAO" as dao
+participant "TDS DLL" as dll
+
+r->sso: rest call with credentials
+sso-->r: no token if credentials\nnot valid
+sso-->r: provide token on valid credentials
+r->rest:make rest api call with token
+rest-->r: Failure with invalid token
+rest->ss:verify user permission with token
+ss-->rest: invalid permissions
+rest-->r: invalid permissions
+ss-->rest: user authorized
+rest->+dao: invoke dao layer
+dao->+dll: invoke dll 
+dll-->dao:return result
+dao-->rest: return result
+rest-->r:return result
