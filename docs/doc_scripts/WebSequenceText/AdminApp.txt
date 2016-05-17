@@ -1,0 +1,32 @@
+title TDS Admin Application
+
+participant "User" as u
+participant "TDSAdmin\nUI" as ui
+participant "SSO" as sso
+participant "Permissions" as perm
+participant "TDSAdmin\nManaged Bean" as mb
+participant "ART\nREST API" as arest
+participant "TDSAdmin\nREST API" as rest
+participant "TDSAdmin\nDAO" as dao
+participant "TDS DLL" as dll
+
+u->+ui:start app
+loop until user logged in
+ui->+sso: authenticate\nuser
+sso-->-ui: user\nauthenticated
+ui->+perm: authorize\nuser
+perm-->-ui:user\nauthorized
+end
+u->ui: search\nopportunities/\nperform operation
+ui->+mb:search opportunities/operation
+mb->+arest: get student\ninfo by ssid
+arest-->-mb: return student
+mb->+rest: get opportunities/operation
+rest->+dao: get\nopportunities/operation
+dao->+dll: get\nopportunities/operation
+note right of dll: fetch opportunites\nfrom db/\nperform operation
+dll-->-dao:return\nopportunities/status
+dao-->-rest:return\nopportunities/status
+rest-->-mb:return\nopportunities/status
+mb-->-ui:show opportunities/status
+ui->u:show opportunities/status
