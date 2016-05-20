@@ -1,0 +1,24 @@
+Title Extend Opportunity Grace Period
+
+participant "User" as u
+participant "TDSAdmin UI" as ui
+participant "TDSAdmin Managed Bean" as mb
+participant "TDSAdmin REST API" as rest
+participant "TDSAdmin DAO" as dao
+participant "TDS DLL" as dll
+
+u->+ui:select opportunities
+ui->+mb:update selected\nopportunities
+ui->u: show execute button
+u->ui: input value for selectedsitting
+u->ui:execute procedure
+ui->mb:execute procedure
+mb->+rest: method call to\nextendingOppGracePeriod()
+rest->+dao: extendingOppGracePeriod()
+dao->+dll: extendingOppGracePeriod()
+dll-->-dao: return ProcedureResult
+dao-->-rest: return ProcedureResult
+rest-->-mb: return ProcedureResult
+note right of mb: deserialize the json\nresponse into\nProcedureResult object
+mb->-ui:show status
+ui->u:show status

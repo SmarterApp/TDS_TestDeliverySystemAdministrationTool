@@ -1,0 +1,32 @@
+Title Search Opportunities by SSID and/or Session ID
+
+participant "User" as u
+participant "TDSAdmin UI" as ui
+participant "TDSAdmin Managed Bean" as mb
+participant "ART REST" as arest
+participant "TDSAdmin REST API" as rest
+participant "TDSAdmin DAO" as dao
+participant "TDS DLL" as dll
+
+u->+ui:start app
+ui->+mb: get properties
+ui->u: show input fields
+loop until valid input entered
+u->ui: enter ssid\nand/or sessionid
+note right of ui:validate input
+ui->u:notify invalid\ninput
+end
+u->ui:search\nopportunities
+ui->mb:search-\nOpportunities()
+mb->+arest:searchStudent()
+arest-->-mb: return student info
+note right of mb: parse external ssid\nfrom response
+mb->+rest:getOpportunites()
+rest->+dao: getOpportunities()
+dao->+dll: getOpportunities()
+dll-->-dao: return opportunities
+dao-->-rest: return opportunities
+rest-->-mb: return opportunities
+note right of mb: deserialize the json\nresponse into\ntestOpportunites
+mb->-ui:populate table with\ntestOpportunities\nproperty
+ui->u:show table and\nprocedures
