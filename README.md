@@ -100,6 +100,7 @@ The following parameters need to be added into a Program Management TDSAdmin con
 
 #### Permissions properties
 The following parameters need to be added into a Program Management TDSAdmin configuration for integration with Permissions:
+
 * `permission.uri=https://<permission-app-context-url>/rest`  - The base URL of the REST API for the Permissions application.
 * `component.name=TDS Admin`  - The name of the component that this tdsadmin deployment represents. This must match the name of the component in Program Management and the name of the component in the Permissions application.
 
