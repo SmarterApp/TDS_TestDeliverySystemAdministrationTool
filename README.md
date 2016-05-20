@@ -96,13 +96,17 @@ The following parameters need to be added into a Program Management TDSAdmin con
 * `mna.oauth.batch.account=<mna-client-user>`
 * `mna.oauth.batch.password=<password>`
 * `mna.oauth.client.id=mna`  - OAuth Client id configured in OAM to allow get an OAuth token for the "batch" web service call to MnA.
+* `encrypt:mna.oauth.client.secret=<password>`  -  OAuth Client secret/password configured in OAM to allow get an OAuth token for the "batch" web service call to MnA.
+
+#### Permissions properties
+The following parameters need to be added into a Program Management TDSAdmin configuration for integration with Permissions:
+* `permission.uri=https://<permission-app-context-url>/rest`  - The base URL of the REST API for the Permissions application.
+* `component.name=TDS Admin`  - The name of the component that this tdsadmin deployment represents. This must match the name of the component in Program Management and the name of the component in the Permissions application.
 
 #### SSO properties
 The following parameters need to be added into a Program Management TDSAdmin configuration for integration with SSO:
 
-* `permission.uri=https://<permission-app-context-url>/rest`  - The base URL of the REST API for the Permissions application.
 * `tdsadmin.security.profile=prod`  - The name of the environment the application is running in. For a production deployment this will most likely be "prod. (it must match the profile name used to name metadata files).
-* `component.name=TDS Admin`  - The name of the component that this tdsadmin deployment represents. This must match the name of the component in Program Management and the name of the component in the Permissions application.
 * `tdsadmin.security.idp=https://<idp-url>`  - The URL of the SAML-based identity provider (OpenAM).
 * `tdsadmin.webapp.saml.metadata.filename=tdsadmin_prod_sp.xml`  -  OpenAM Metadata file name uploaded for environment and placed inside server directory. 
 * `tdsadmin.security.dir=file:////<sp-file-location-folder>`  - Location of the metadata file.
@@ -110,7 +114,6 @@ The following parameters need to be added into a Program Management TDSAdmin con
 * `tdsadmin.security.saml.keystore.pass=<password>`  -  Password for keystore cert.
 * `tdsadmin.security.saml.alias=tdsadmin_webapp`  - Alias for identifying web application.
 * `oauth.access.url=https://<oauth-url>`  - OAuth URL to OAM to allow the SAML bearer workflow to POST to get an OAuth token for any "machine to machine" calls requiring OAUTH
-* `encrypt:mna.oauth.client.secret=<password>`  -  OAuth Client secret/password configured in OAM to allow get an OAuth token for the "batch" web service call to MnA.
 * `encrypt:tdsadmin.oauth.resource.client.secret=<password>`  - OAuth Client secret/password configured in OAM to allow get an OAuth token for the "batch" web service call to core standards.
 * `tdsadmin.oauth.resource.client.id=tdsadmin`  - OAuth Client id configured in OAM to allow get an OAuth token for the "batch" web service call to core standards.
 * `tdsadmin.oauth.checktoken.endpoint=http://<oauth-url>`  - OAuth URL to OAM to allow the SAML bearer workflow to perform a GET to check that an OAuth token is valid.
