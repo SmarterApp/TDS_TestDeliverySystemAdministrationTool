@@ -93,7 +93,9 @@ The following parameters need to be added into a Program Management TDSAdmin con
 * `mnaServerName=tdsadmin`  -  Used by the MNA clients to identify which server is sending the log/metrics/alerts.
 * `mnaNodeName=prod`  - Used by the MNA clients to identify who is sending the log/metrics/alerts. There is a discrete mnaServerName and an mnaNodeName to provide the ability to search across clustered nodes by server name or specifically for a given node. It's being stored in the db for metric/log/alert, but not displayed.
 * `mna.logger.level=INFO`  - Used to control what is logged to the Monitoring and Alerting system. Logging Level values include (ALL - Turn on all logging levels, TRACE, DEBUG, INFO, WARN, ERROR, OFF - Turn off logging). IMPORTANT: The audit log of TDSAdmin activity is provided at the `INFO` level. Setting this value to anything higher will prevent successful actions from being logged in MNA.
-
+* `mna.oauth.batch.account=<mna-client-user>`
+* `mna.oauth.batch.password=<password>`
+* `mna.oauth.client.id=mna`  - OAuth Client id configured in OAM to allow get an OAuth token for the "batch" web service call to MnA.
 
 #### SSO properties
 The following parameters need to be added into a Program Management TDSAdmin configuration for integration with SSO:
@@ -109,12 +111,9 @@ The following parameters need to be added into a Program Management TDSAdmin con
 * `tdsadmin.security.saml.alias=tdsadmin_webapp`  - Alias for identifying web application.
 * `oauth.access.url=https://<oauth-url>`  - OAuth URL to OAM to allow the SAML bearer workflow to POST to get an OAuth token for any "machine to machine" calls requiring OAUTH
 * `encrypt:mna.oauth.client.secret=<password>`  -  OAuth Client secret/password configured in OAM to allow get an OAuth token for the "batch" web service call to MnA.
-* `mna.oauth.client.id=mna`  - OAuth Client id configured in OAM to allow get an OAuth token for the "batch" web service call to MnA.
 * `encrypt:tdsadmin.oauth.resource.client.secret=<password>`  - OAuth Client secret/password configured in OAM to allow get an OAuth token for the "batch" web service call to core standards.
 * `tdsadmin.oauth.resource.client.id=tdsadmin`  - OAuth Client id configured in OAM to allow get an OAuth token for the "batch" web service call to core standards.
 * `tdsadmin.oauth.checktoken.endpoint=http://<oauth-url>`  - OAuth URL to OAM to allow the SAML bearer workflow to perform a GET to check that an OAuth token is valid.
-* `mna.oauth.batch.account=<mna-client-user>`
-* `mna.oauth.batch.password=<password>`
 
 
 #### ART (testreg) properties
