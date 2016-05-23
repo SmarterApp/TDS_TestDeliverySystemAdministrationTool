@@ -74,7 +74,7 @@ Program Management properties need to be set for running the TDS Admin app. Exam
 #### Database Properties
 The following parameters need to be added into a Program Management TDSAdmin configuration for database access:
 
-* `tdsadmin.datasource.url=jdbc:mysql://<url.to.db>:3306/schemaname?useUnicode=yes&characterEncoding=utf8`  - The JDBC URL of the database from which Connections can and should be acquired. useUnicode is required to store unicode characters into the database.
+
 * `tdsadmin.datasource.url=jdbc:mysql://<url.to.db>:3306/schemaname?useUnicode=true&characterEncoding=utf8&useFastDateParsing=false` - The JDBC URL of the database from which connections can and should be acquired. useUnicode is required to store unicode characters into the database. Turning off useFastDateParsing allows the column values of DateTime type to be read, given the underlying database is MySQL.
 * `datasource.username=<db-username>`  -  Username that will be used for the DataSource's default getConnection() method. 
 * `encrypt:datasource.password=<db-password>`  - Password that will be used for the DataSource's default getConnection() method.
