@@ -139,8 +139,7 @@ The following parameters need to be added into a Program Management TDSAdmin con
 
 
 ## SP Metadata file for SSO
-Create metadata file for configuring the SSO. Sample SSO metadata file pointing to localhost is at /tdsadmin/docs/Installation/tdsadmin_local_sp.xml.
-Change the entity id and URL according to the environment (local, dev, staging, prod, etc.). Upload this file to OpenAM and place this file inside server file system.
+Create metadata file for configuring the SSO. Directions for creating an SP (service provider) Metadata file are available at http://docs.spring.io/spring-security-saml/docs/current/reference/html/configuration-metadata.html. Change the entity id and URL according to the environment (local, dev, staging, prod, etc.). Upload this file to OpenAM and place this file inside the server's file system.
 Specify `tdsadmin.webapp.saml.metadata.filename` and `tdsadmin.security.dir` in Program Management for metadata file name and location.
 ```
 Example:
