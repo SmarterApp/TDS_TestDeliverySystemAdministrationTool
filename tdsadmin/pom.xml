@@ -6,11 +6,11 @@
 	<artifactId>tdsadmin</artifactId>
 	<name>tdsadmin</name>
 	<packaging>war</packaging>
-	<version>1.0.0-BUILD-SNAPSHOT</version>
+	<version>R02.00.03</version>
 	<parent>
 		<groupId>org.opentestsystem.shared</groupId>
 		<artifactId>shared-master</artifactId>
-		<version>1.0.1-BUILD-SNAPSHOT</version>
+		<version>1.0.1</version>
 	</parent>
 
 	<licenses>
@@ -26,9 +26,9 @@
 		<org.springframework-version>3.1.1.RELEASE</org.springframework-version>
 		<org.aspectj-version>1.6.10</org.aspectj-version>
 		<org.slf4j-version>1.6.6</org.slf4j-version>
-		<prog.mgmnt.client.version>0.0.4-SNAPSHOT</prog.mgmnt.client.version>
-		<sb11-mna-client.version>0.0.4-SNAPSHOT</sb11-mna-client.version>
-		<sb11-shared-code.version>0.0.6-SNAPSHOT</sb11-shared-code.version>
+		<prog.mgmnt.client.version>0.0.4</prog.mgmnt.client.version>
+		<sb11-mna-client.version>0.0.4</sb11-mna-client.version>
+		<sb11-shared-code.version>0.0.6</sb11-shared-code.version>
 		<org.springframework.security-version>3.2.9.RELEASE</org.springframework.security-version>
 	</properties>
 	<dependencies>
@@ -36,7 +36,7 @@
 		<dependency>
 			<groupId>org.opentestsystem.shared</groupId>
 			<artifactId>sb11-shared-security</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.0.1</version>
 			<exclusions>
 				<exclusion>
 					<artifactId>bcprov-jdk15on</artifactId>
