@@ -69,15 +69,14 @@ Like other SBAC applications, TDSAdmin must be set up with active profiles and P
 ```
 
 ## Program Management Properties
-Program Management properties need to be set for running the TDS Admin app. Example TDS Admin properties at /tdsadmin/docs/Installation/tdsadmin-progman-config.txt. All Program Management properties defined below belong in a single TDS Admin configuration.
+Program Management properties need to be set for running the TDS Admin app. Example TDS Admin properties inside the docs/Installation/tdsadmin-progman-config.txt file. All Program Management properties defined below belong in a single TDS Admin configuration.
 
 #### Database Properties
 The following parameters need to be added into a Program Management TDSAdmin configuration for database access:
 
-
 * `tdsadmin.datasource.url=jdbc:mysql://<url.to.db>:3306/schemaname?useUnicode=true&characterEncoding=utf8&useFastDateParsing=false` - The JDBC URL of the database from which connections can and should be acquired. useUnicode is required to store unicode characters into the database. Turning off useFastDateParsing allows the column values of DateTime type to be read, given the underlying database is MySQL.
 * `datasource.username=<db-username>`  -  Username that will be used for the DataSource's default getConnection() method. 
-* `encrypt:datasource.password=<db-password>`  - Password that will be used for the DataSource's default getConnection() method.
+* `datasource.password=<db-password>`  - Password that will be used for the DataSource's default getConnection() method.
 * `datasource.driverClassName=com.mysql.jdbc.Driver`  - The fully qualified class name of the JDBC driverClass that is expected to provide Connections.
 * `datasource.minPoolSize=5`  - Minimum number of Connections a pool will maintain at any given time.
 * `datasource.acquireIncrement=5`  - Determines how many connections at a time datasource will try to acquire when the pool is exhausted.
@@ -97,7 +96,7 @@ The following parameters need to be added into a Program Management TDSAdmin con
 * `mna.oauth.batch.account=<mna-client-user>`
 * `mna.oauth.batch.password=<password>`
 * `mna.oauth.client.id=mna`  - OAuth Client id configured in OAM to allow get an OAuth token for the "batch" web service call to MnA.
-* `encrypt:mna.oauth.client.secret=<password>`  -  OAuth Client secret/password configured in OAM to allow get an OAuth token for the "batch" web service call to MnA.
+* `mna.oauth.client.secret=<password>`  -  OAuth Client secret/password configured in OAM to allow get an OAuth token for the "batch" web service call to MnA.
 
 #### Permissions properties
 The following parameters need to be added into a Program Management TDSAdmin configuration for integration with Permissions:
@@ -116,7 +115,7 @@ The following parameters need to be added into a Program Management TDSAdmin con
 * `tdsadmin.security.saml.keystore.pass=<password>`  -  Password for keystore cert.
 * `tdsadmin.security.saml.alias=tdsadmin_webapp`  - Alias for identifying web application.
 * `oauth.access.url=https://<oauth-url>`  - OAuth URL to OAM to allow the SAML bearer workflow to POST to get an OAuth token for any "machine to machine" calls requiring OAUTH
-* `encrypt:tdsadmin.oauth.resource.client.secret=<password>`  - OAuth Client secret/password configured in OAM to allow get an OAuth token for the "batch" web service call to core standards.
+* `tdsadmin.oauth.resource.client.secret=<password>`  - OAuth Client secret/password configured in OAM to allow get an OAuth token for the "batch" web service call to core standards.
 * `tdsadmin.oauth.resource.client.id=tdsadmin`  - OAuth Client id configured in OAM to allow get an OAuth token for the "batch" web service call to core standards.
 * `tdsadmin.oauth.checktoken.endpoint=http://<oauth-url>`  - OAuth URL to OAM to allow the SAML bearer workflow to perform a GET to check that an OAuth token is valid.
 
