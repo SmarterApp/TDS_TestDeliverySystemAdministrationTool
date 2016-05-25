@@ -110,7 +110,7 @@ The following parameters need to be added into a Program Management TDSAdmin con
 * `tdsadmin.security.profile=prod`  - The name of the environment the application is running in. For a production deployment this will most likely be "prod. (it must match the profile name used to name metadata files).
 * `tdsadmin.security.idp=https://<idp-url>`  - The URL of the SAML-based identity provider (OpenAM).
 * `tdsadmin.webapp.saml.metadata.filename=tdsadmin_prod_sp.xml`  -  OpenAM Metadata file name uploaded for environment and placed inside server directory. 
-* `tdsadmin.security.dir=file:////<sp-file-location-folder>`  - Location of the metadata file.
+* `tdsadmin.security.dir=file:/path/to/<sp-file-location-folder>`  - Location of the metadata file.
 * `tdsadmin.security.saml.keystore.cert=<cert-name>`  - Name of the Keystore cert being used.
 * `tdsadmin.security.saml.keystore.pass=<password>`  -  Password for keystore cert.
 * `tdsadmin.security.saml.alias=tdsadmin_webapp`  - Alias for identifying web application.
@@ -143,7 +143,7 @@ Specify `tdsadmin.webapp.saml.metadata.filename` and `tdsadmin.security.dir` in 
 ```
 Example:
 tdsadmin.webapp.saml.metadata.filename=tdsadmin_prod_sp.xml
-tdsadmin.security.dir=file:////usr/securitydir
+tdsadmin.security.dir=file:/path/to/usr/securitydir
 ```
  
 ## Build Order
